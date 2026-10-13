@@ -1,0 +1,41 @@
+import { NavLink, Outlet } from 'react-router-dom'
+import { cn } from '@/lib/utils'
+
+const navItems = [
+  { to: '/', label: 'Home' },
+  { to: '/form', label: 'Form' },
+]
+
+export function AppLayout() {
+  return (
+    <div className="flex min-h-svh flex-col bg-muted/40">
+      <header className="bg-primary text-primary-foreground shadow-sm">
+        <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
+          <span className="text-lg font-semibold tracking-tight">
+            Cross Section Viz
+          </span>
+          <nav className="flex gap-1">
+            {navItems.map(({ to, label }) => (
+              <NavLink
+                key={to}
+                to={to}
+                end
+                className={({ isActive }) =>
+                  cn(
+                    'rounded-md px-3 py-1.5 text-sm font-medium transition-colors hover:bg-white/15',
+                    isActive && 'bg-white/20',
+                  )
+                }
+              >
+                {label}
+              </NavLink>
+            ))}
+          </nav>
+        </div>
+      </header>
+      <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-10">
+        <Outlet />
+      </main>
+    </div>
+  )
+}
