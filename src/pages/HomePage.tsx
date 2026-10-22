@@ -1,7 +1,7 @@
-import { useAtomValue } from 'jotai'
-import { Link } from 'react-router-dom'
-import { submittedNameAtom } from '@/atoms'
-import { Button } from '@/components/ui/button'
+import { useAtomValue } from 'jotai';
+import { Link } from 'react-router-dom';
+import { submittedNameAtom } from '@/atoms';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -9,17 +9,18 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
+} from '@/components/ui/card';
 
 export function HomePage() {
-  const submittedName = useAtomValue(submittedNameAtom)
+  const submittedName = useAtomValue(submittedNameAtom);
 
   return (
     <Card className="mx-auto max-w-md">
       <CardHeader>
         <CardTitle>Welcome</CardTitle>
         <CardDescription>
-          This value lives in a jotai atom and is set from the form page.
+          This value lives in a jotai atom and is set from the existing
+          cross-section page.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -33,9 +34,9 @@ export function HomePage() {
       </CardContent>
       <CardFooter>
         <Button asChild variant="secondary">
-          <Link to="/form">Go to form</Link>
+          <Link to="/existing-cross-section">Go to existing cross section</Link>
         </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

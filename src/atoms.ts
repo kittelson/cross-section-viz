@@ -1,3 +1,3 @@
-import { atom } from 'jotai'
+import { atom } from 'jotai';
 
-export const submittedNameAtom = atom<string | null>(null)
+export const submittedNameAtom = atom<string | null>(null);
