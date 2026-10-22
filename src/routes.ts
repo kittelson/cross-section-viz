@@ -1,5 +1,6 @@
 import type { RouteObject } from 'react-router-dom';
 import { AppLayout } from '@/components/layout/AppLayout';
+import { paths } from '@/paths';
 import { AboutPage } from '@/pages/AboutPage';
 import { EditCrossSectionPage } from '@/pages/EditCrossSectionPage';
 import { ExistingCrossSectionPage } from '@/pages/ExistingCrossSectionPage';
@@ -8,15 +9,7 @@ import { MinSafeDimensionPage } from '@/pages/MinSafeDimensionPage';
 import { OutputPage } from '@/pages/OutputPage';
 import { ProjectDetailsPage } from '@/pages/ProjectDetailsPage';
 
-export const paths = {
-  home: '/',
-  about: '/about',
-  existingCrossSection: '/existing-cross-section',
-  projectDetails: '/project-details',
-  minSafeDimension: '/min-safe-dimension',
-  editCrossSection: '/edit-cross-section',
-  output: '/output',
-} as const;
+export { paths };
 
 export const routes: RouteObject[] = [
   {
