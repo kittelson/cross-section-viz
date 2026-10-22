@@ -18,7 +18,9 @@ describe('App', () => {
   it('shows the tool title on the home page', () => {
     renderAt(paths.home);
     expect(
-      screen.getByText('MassDOT Cross Section Reallocation Tool'),
+      screen.getByRole('heading', {
+        name: 'MassDOT Cross Section Reallocation Tool',
+      }),
     ).toBeTruthy();
   });
 
@@ -36,9 +38,7 @@ describe('App', () => {
     const user = userEvent.setup();
     renderAt(paths.home);
 
-    await user.click(
-      screen.getByRole('link', { name: 'Go to existing cross section' }),
-    );
+    await user.click(screen.getByRole('link', { name: 'Start Analysis' }));
 
     expect(await screen.findByRole('link', { name: 'Home' })).toBeTruthy();
     expect(screen.queryByRole('link', { name: 'Project Details' })).toBeNull();
