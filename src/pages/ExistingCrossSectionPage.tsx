@@ -1,10 +1,10 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useSetAtom } from 'jotai'
-import { Controller, useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
-import { z } from 'zod'
-import { submittedNameAtom } from '@/atoms'
-import { Button } from '@/components/ui/button'
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useSetAtom } from 'jotai';
+import { Controller, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { z } from 'zod';
+import { submittedNameAtom } from '@/atoms';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -12,14 +12,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
+} from '@/components/ui/card';
 import {
   Field,
   FieldDescription,
   FieldError,
   FieldLabel,
-} from '@/components/ui/field'
-import { Input } from '@/components/ui/input'
+} from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
 
 const formSchema = z.object({
   name: z
@@ -27,28 +27,28 @@ const formSchema = z.object({
     .trim()
     .min(2, 'Name must be at least 2 characters.')
     .max(50, 'Name must be at most 50 characters.'),
-})
+});
 
-type FormValues = z.infer<typeof formSchema>
+type FormValues = z.infer<typeof formSchema>;
 
-export function FormPage() {
-  const setSubmittedName = useSetAtom(submittedNameAtom)
-  const navigate = useNavigate()
+export function ExistingCrossSectionPage() {
+  const setSubmittedName = useSetAtom(submittedNameAtom);
+  const navigate = useNavigate();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: { name: '' },
-  })
+  });
 
   function onSubmit(values: FormValues) {
-    setSubmittedName(values.name)
-    navigate('/')
+    setSubmittedName(values.name);
+    navigate('/');
   }
 
   return (
     <Card className="mx-auto max-w-md">
       <CardHeader>
-        <CardTitle>Your name</CardTitle>
+        <CardTitle>Existing Cross Section</CardTitle>
         <CardDescription>
           Submitting saves the name to jotai and returns you home.
         </CardDescription>
@@ -89,5 +89,5 @@ export function FormPage() {
         </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

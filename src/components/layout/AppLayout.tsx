@@ -1,10 +1,16 @@
-import { NavLink, Outlet } from 'react-router-dom'
-import { cn } from '@/lib/utils'
+import { NavLink, Outlet } from 'react-router-dom';
+import { cn } from '@/lib/utils';
+import { paths } from '@/routes';
 
 const navItems = [
-  { to: '/', label: 'Home' },
-  { to: '/form', label: 'Form' },
-]
+  { to: paths.home, label: 'Home' },
+  { to: paths.about, label: 'About' },
+  { to: paths.existingCrossSection, label: 'Existing' },
+  { to: paths.projectDetails, label: 'Project Details' },
+  { to: paths.minSafeDimension, label: 'Min Safe Dimension' },
+  { to: paths.editCrossSection, label: 'Edit' },
+  { to: paths.output, label: 'Output' },
+];
 
 export function AppLayout() {
   return (
@@ -12,7 +18,7 @@ export function AppLayout() {
       <header className="bg-primary text-primary-foreground shadow-sm">
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
           <span className="text-lg font-semibold tracking-tight">
-            Cross Section Viz
+            MassDOT Cross Section Reallocation Tool
           </span>
           <nav className="flex gap-1">
             {navItems.map(({ to, label }) => (
@@ -37,5 +43,5 @@ export function AppLayout() {
         <Outlet />
       </main>
     </div>
-  )
+  );
 }
