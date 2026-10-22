@@ -4,6 +4,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { submittedNameAtom } from '@/atoms';
+import { paths } from '@/paths';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -42,7 +43,7 @@ export function ExistingCrossSectionPage() {
 
   function onSubmit(values: FormValues) {
     setSubmittedName(values.name);
-    navigate('/');
+    navigate(paths.home);
   }
 
   return (

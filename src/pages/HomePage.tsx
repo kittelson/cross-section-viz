@@ -1,6 +1,7 @@
 import { useAtomValue } from 'jotai';
 import { Link } from 'react-router-dom';
 import { submittedNameAtom } from '@/atoms';
+import { paths } from '@/paths';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -34,7 +35,9 @@ export function HomePage() {
       </CardContent>
       <CardFooter>
         <Button asChild variant="secondary">
-          <Link to="/existing-cross-section">Go to existing cross section</Link>
+          <Link to={paths.existingCrossSection}>
+            Go to existing cross section
+          </Link>
         </Button>
       </CardFooter>
     </Card>
