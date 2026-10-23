@@ -3,10 +3,13 @@ import userEvent from '@testing-library/user-event';
 import { createStore, Provider } from 'jotai';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { paths } from '@/paths';
-import { routes } from '@/routes';
+import { basename, routes } from '@/routes';
 
 function renderAt(path: string) {
-  const router = createMemoryRouter(routes, { initialEntries: [path] });
+  const router = createMemoryRouter(routes, {
+    basename,
+    initialEntries: [path],
+  });
   render(
     <Provider store={createStore()}>
       <RouterProvider router={router} />

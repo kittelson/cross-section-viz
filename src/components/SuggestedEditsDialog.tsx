@@ -13,8 +13,8 @@ export function SuggestedEditsDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button type="button" variant="outline" className="w-full">
-          Suggested Cross Section Edits
+        <Button type="button" variant="default" className="w-full">
+          View Suggested Edits
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-6xl">

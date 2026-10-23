@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
+    "deploy": "robocopy ./dist \\\\web02\\web\\cross-section\\ /mir /mt /z",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
