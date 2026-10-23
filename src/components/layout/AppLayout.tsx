@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom';
+import { ExportAnalysisDialog } from '@/components/ExportAnalysisDialog';
 import { Stepper } from '@/components/layout/Stepper';
 import { cn } from '@/lib/utils';
 import { paths } from '@/paths';
@@ -11,17 +12,20 @@ export function AppLayout() {
           <span className="text-lg font-semibold tracking-tight">
             MassDOT Cross Section Reallocation Tool
           </span>
-          <NavLink
-            to={paths.about}
-            className={({ isActive }) =>
-              cn(
-                'rounded-md px-3 py-1.5 text-sm font-medium transition-colors hover:bg-white/15',
-                isActive && 'bg-white/20',
-              )
-            }
-          >
-            About
-          </NavLink>
+          <div className="flex items-center gap-1">
+            <ExportAnalysisDialog />
+            <NavLink
+              to={paths.about}
+              className={({ isActive }) =>
+                cn(
+                  'rounded-md px-3 py-1.5 text-sm font-medium transition-colors hover:bg-white/15',
+                  isActive && 'bg-white/20',
+                )
+              }
+            >
+              About
+            </NavLink>
+          </div>
         </div>
       </header>
       <div className="flex flex-1">
