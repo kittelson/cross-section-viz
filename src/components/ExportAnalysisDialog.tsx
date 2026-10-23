@@ -36,7 +36,7 @@ export function ExportAnalysisDialog() {
         <DialogFooter>
           <Button type="button" onClick={() => alert('Coming soon')}>
             <Download />
-            Download .cross
+            Download file
           </Button>
         </DialogFooter>
       </DialogContent>
