@@ -6,8 +6,11 @@ import { SuggestedEditsDialog } from '@/components/SuggestedEditsDialog';
 import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { YesNoField } from '@/components/ui/yes-no-field';
 import minSafeDimension from '@/images/streetmixPlaceholders/minSafeDimension.png';
+import showDetails from '@/images/streetmixPlaceholders/showDetails.png';
+import tooWide from '@/images/streetmixPlaceholders/tooWide.png';
 import { paths } from '@/paths';
 
 export function EditCrossSectionPage() {
@@ -50,11 +53,34 @@ export function EditCrossSectionPage() {
               to reflect future conditions.
             </p>
           </div>
-          <img
-            src={minSafeDimension}
-            alt="Minimum safe dimension cross section"
-            className="mt-6 w-full"
-          />
+          <Tabs defaultValue="default" className="mt-6">
+            <TabsList>
+              <TabsTrigger value="default">Default</TabsTrigger>
+              <TabsTrigger value="show-details">Show Details</TabsTrigger>
+              <TabsTrigger value="too-wide">Element too wide</TabsTrigger>
+            </TabsList>
+            <TabsContent value="default" className="mt-4">
+              <img
+                src={minSafeDimension}
+                alt="Minimum safe dimension cross section"
+                className="w-full"
+              />
+            </TabsContent>
+            <TabsContent value="show-details" className="mt-4">
+              <img
+                src={showDetails}
+                alt="Cross section with element details"
+                className="w-full"
+              />
+            </TabsContent>
+            <TabsContent value="too-wide" className="mt-4">
+              <img
+                src={tooWide}
+                alt="Cross section with an element that is too wide"
+                className="w-full"
+              />
+            </TabsContent>
+          </Tabs>
         </div>
 
         <aside className="space-y-4 lg:sticky lg:top-6 lg:self-start">
