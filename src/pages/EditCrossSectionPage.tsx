@@ -1,11 +1,14 @@
 import { useAtom } from 'jotai';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { projectDetailsAtom } from '@/atoms';
 import { SuggestedEditsDialog } from '@/components/SuggestedEditsDialog';
+import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { YesNoField } from '@/components/ui/yes-no-field';
 import minSafeDimension from '@/images/streetmixPlaceholders/minSafeDimension.png';
+import { paths } from '@/paths';
 
 export function EditCrossSectionPage() {
   const [projectDetails] = useAtom(projectDetailsAtom);
@@ -89,6 +92,11 @@ export function EditCrossSectionPage() {
             />
           </Field>
         </aside>
+      </div>
+      <div className="mt-8">
+        <Button asChild>
+          <Link to={paths.output}>Continue</Link>
+        </Button>
       </div>
     </div>
   );

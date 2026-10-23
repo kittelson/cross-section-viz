@@ -1,4 +1,5 @@
 import { atom } from 'jotai';
+import { defaultCapacityScenarios, type CapacityScenario } from '@/capacity';
 import {
   defaultProjectDetails,
   type ProjectDetailsFormValues,
@@ -10,5 +11,9 @@ export const projectDetailsAtom = atom<ProjectDetailsFormValues>({
 });
 
 export const roadwayWidthFtAtom = atom<number | null>(82);
+
+export const capacityScenariosAtom = atom<CapacityScenario[]>(
+  defaultCapacityScenarios.map((scenario) => ({ ...scenario })),
+);
 
 export const furthestStepIndexAtom = atom(0);
