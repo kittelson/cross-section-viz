@@ -1,94 +1,42 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useSetAtom } from 'jotai';
-import { Controller, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { z } from 'zod';
-import { submittedNameAtom } from '@/atoms';
-import { paths } from '@/paths';
-import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-} from '@/components/ui/field';
+import { useAtom } from 'jotai';
+import { Ruler } from 'lucide-react';
+import { roadwayWidthFtAtom } from '@/atoms';
 import { Input } from '@/components/ui/input';
 
-const formSchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(2, 'Name must be at least 2 characters.')
-    .max(50, 'Name must be at most 50 characters.'),
-});
-
-type FormValues = z.infer<typeof formSchema>;
-
 export function ExistingCrossSectionPage() {
-  const setSubmittedName = useSetAtom(submittedNameAtom);
-  const navigate = useNavigate();
-
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: { name: '' },
-  });
-
-  function onSubmit(values: FormValues) {
-    setSubmittedName(values.name);
-    navigate(paths.home);
-  }
+  const [width, setWidth] = useAtom(roadwayWidthFtAtom);
 
   return (
-    <Card className="mx-auto max-w-md">
-      <CardHeader>
-        <CardTitle>Existing Cross Section</CardTitle>
-        <CardDescription>
-          Submitting saves the name to jotai and returns you home.
-        </CardDescription>
-      </CardHeader>
-      <form id="name-form" onSubmit={form.handleSubmit(onSubmit)} noValidate>
-        <CardContent>
-          <Controller
-            name="name"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="name">Name</FieldLabel>
-                <Input
-                  {...field}
-                  id="name"
-                  placeholder="Ada Lovelace"
-                  autoComplete="name"
-                  aria-invalid={fieldState.invalid}
-                />
-                {fieldState.invalid ? (
-                  <FieldError errors={[fieldState.error]} />
-                ) : (
-                  <FieldDescription>
-                    Between 2 and 50 characters.
-                  </FieldDescription>
-                )}
-              </Field>
-            )}
+    <div className="mx-auto max-w-2xl">
+      <h1 className="text-2xl font-semibold tracking-tight">
+        Existing Cross Section
+      </h1>
+      <p className="mt-2 text-muted-foreground">
+        Use the widgets below to build your existing cross section.
+      </p>
+      <div className="mt-6 flex justify-center">
+        <label
+          htmlFor="roadway-width"
+          className="inline-flex items-center gap-2 rounded-lg border bg-background px-3 py-1.5 text-sm shadow-xs"
+        >
+          <Ruler className="size-4 text-muted-foreground" aria-hidden />
+          <Input
+            id="roadway-width"
+            type="number"
+            inputMode="decimal"
+            min={1}
+            step="any"
+            className="h-7 w-16 border-0 bg-transparent px-1 text-center shadow-none focus-visible:ring-0"
+            value={width ?? ''}
+            onChange={(event) => {
+              const value = event.target.value;
+              setWidth(value === '' ? null : Number(value));
+            }}
+            aria-label="Roadway width in feet"
           />
-        </CardContent>
-      </form>
-      <CardFooter className="gap-2">
-        <Button type="submit" form="name-form">
-          Submit
-        </Button>
-        <Button type="button" variant="outline" onClick={() => form.reset()}>
-          Reset
-        </Button>
-      </CardFooter>
-    </Card>
+          <span className="text-muted-foreground">' width</span>
+        </label>
+      </div>
+    </div>
   );
 }
