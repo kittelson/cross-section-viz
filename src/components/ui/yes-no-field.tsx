@@ -7,15 +7,15 @@ export function YesNoField({
   label,
   tooltip,
   value,
-  invalid,
+  invalid = false,
   error,
   onChange,
 }: {
   name: string;
   label: string;
-  tooltip: string;
+  tooltip?: string;
   value: boolean;
-  invalid: boolean;
+  invalid?: boolean;
   error?: { message?: string };
   onChange: (value: boolean) => void;
 }) {
