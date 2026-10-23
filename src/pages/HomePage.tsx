@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { BlueLink } from '@/components/BlueLink';
+import { ImportAnalysisDialog } from '@/components/ImportAnalysisDialog';
 import { Button } from '@/components/ui/button';
 import { paths } from '@/paths';
 
@@ -32,9 +33,12 @@ export function HomePage() {
           .
         </p>
       </div>
-      <Button asChild className="mt-8">
-        <Link to={paths.existingCrossSection}>Start Analysis</Link>
-      </Button>
+      <div className="mt-8 flex flex-wrap gap-3">
+        <Button asChild>
+          <Link to={paths.existingCrossSection}>New Analysis</Link>
+        </Button>
+        <ImportAnalysisDialog />
+      </div>
     </div>
   );
 }

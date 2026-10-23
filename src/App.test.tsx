@@ -38,7 +38,7 @@ describe('App', () => {
     const user = userEvent.setup();
     renderAt(paths.home);
 
-    await user.click(screen.getByRole('link', { name: 'Start Analysis' }));
+    await user.click(screen.getByRole('link', { name: 'New Analysis' }));
 
     expect(await screen.findByRole('link', { name: 'Home' })).toBeTruthy();
     expect(screen.queryByRole('link', { name: 'Project Details' })).toBeNull();
