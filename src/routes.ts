@@ -11,6 +11,8 @@ import { ProjectDetailsPage } from '@/pages/ProjectDetailsPage';
 
 export { paths };
 
+export const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/';
+
 export const routes: RouteObject[] = [
   {
     Component: AppLayout,

@@ -1,4 +1,5 @@
 import { useAtom } from 'jotai';
+import { FileText } from 'lucide-react';
 import { capacityResultsById, type CapacityScenario } from '@/capacity';
 import { capacityScenariosAtom } from '@/atoms';
 import { ExportAnalysisDialog } from '@/components/ExportAnalysisDialog';
@@ -197,8 +198,12 @@ export function CapacityTab() {
           );
         })}
       </div>
-      <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t pt-6">
+      <div className="mt-8 flex flex-wrap items-center gap-3 border-t pt-6">
         <ExportAnalysisDialog triggerClassName="border hover:bg-muted" />
+        <Button type="button" onClick={() => alert('Coming soon')}>
+          <FileText />
+          Generate Report
+        </Button>
       </div>
     </div>
   );
