@@ -1,4 +1,5 @@
-import { Download, Save } from 'lucide-react';
+import { Download } from 'lucide-react';
+import { ExportAnalysisButton } from '@/components/ExportAnalysisButton';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -10,17 +11,15 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-export function ExportAnalysisDialog() {
+export function ExportAnalysisDialog({
+  triggerClassName,
+}: {
+  triggerClassName?: string;
+} = {}) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button
-          type="button"
-          className="flex items-center gap-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors hover:bg-white/15"
-        >
-          <Save className="size-4" />
-          Export Analysis
-        </button>
+        <ExportAnalysisButton className={triggerClassName} />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
