@@ -7,13 +7,7 @@ import { LabelWithTooltip } from '@/components/LabelWithTooltip';
 import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { SelectField } from '@/components/ui/select-field';
 import {
   Table,
   TableBody,
@@ -69,36 +63,21 @@ export function CapacityTab() {
                   }
                 />
               </Field>
-              <Field>
-                <FieldLabel htmlFor={`${scenario.id}-intersection`}>
-                  Controlling Downstream Intersection
-                </FieldLabel>
-                <Select
-                  value={scenario.downstreamIntersectionType || undefined}
-                  onValueChange={(value) =>
-                    setScenarios((current) =>
-                      updateScenario(current, scenario.id, {
-                        downstreamIntersectionType:
-                          value as CapacityScenario['downstreamIntersectionType'],
-                      }),
-                    )
-                  }
-                >
-                  <SelectTrigger
-                    id={`${scenario.id}-intersection`}
-                    className="w-full"
-                  >
-                    <SelectValue placeholder="Select an intersection type" />
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    {intersectionTypeOptions.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </Field>
+              <SelectField
+                name={`${scenario.id}-intersection`}
+                label="Controlling Downstream Intersection"
+                placeholder="Select an intersection type"
+                value={scenario.downstreamIntersectionType}
+                options={intersectionTypeOptions}
+                onValueChange={(value) =>
+                  setScenarios((current) =>
+                    updateScenario(current, scenario.id, {
+                      downstreamIntersectionType:
+                        value as CapacityScenario['downstreamIntersectionType'],
+                    }),
+                  )
+                }
+              />
               <Field>
                 <LabelWithTooltip
                   htmlFor={`${scenario.id}-d-factor`}

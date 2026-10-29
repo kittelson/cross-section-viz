@@ -3,7 +3,6 @@ import { useAtom } from 'jotai';
 import { Controller, useForm, type Resolver } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { projectDetailsAtom } from '@/atoms';
-import { LabelWithTooltip } from '@/components/LabelWithTooltip';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -15,13 +14,7 @@ import {
   FieldSet,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { SelectField } from '@/components/ui/select-field';
 import { YesNoField } from '@/components/ui/yes-no-field';
 import { paths } from '@/paths';
 import {
@@ -219,138 +212,67 @@ export function ProjectDetailsPage() {
                 name="existingLandUseContext"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <LabelWithTooltip
-                      htmlFor={field.name}
-                      label="What is the existing land use context?"
-                      tooltip="Refer to Guidebook Chapter 3 for a discussion of applicable land use contexts. This entry is provided for reference but is not used in tool calculations."
-                    />
-                    <Select
-                      value={field.value || undefined}
-                      onValueChange={field.onChange}
-                    >
-                      <SelectTrigger
-                        id={field.name}
-                        className="w-full"
-                        aria-invalid={fieldState.invalid}
-                      >
-                        <SelectValue placeholder="Select a land use context" />
-                      </SelectTrigger>
-                      <SelectContent position="popper">
-                        {landUseContextOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
+                  <SelectField
+                    name={field.name}
+                    label="What is the existing land use context?"
+                    tooltip="Refer to Guidebook Chapter 3 for a discussion of applicable land use contexts. This entry is provided for reference but is not used in tool calculations."
+                    placeholder="Select a land use context"
+                    value={field.value}
+                    invalid={fieldState.invalid}
+                    error={fieldState.error}
+                    options={landUseContextOptions}
+                    onValueChange={field.onChange}
+                  />
                 )}
               />
               <Controller
                 name="roadwayFunction"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <LabelWithTooltip
-                      htmlFor={field.name}
-                      label="What is the desired function of the road?"
-                      tooltip="Refer to Guidebook Chapter 5 for a discussion on roadway primary function. This selection will not affect minimum safe dimension recommendations but will prompt you to consider appropriate design decisions (e.g., speeds)."
-                    />
-                    <Select
-                      value={field.value || undefined}
-                      onValueChange={field.onChange}
-                    >
-                      <SelectTrigger
-                        id={field.name}
-                        className="w-full"
-                        aria-invalid={fieldState.invalid}
-                      >
-                        <SelectValue placeholder="Select a roadway function" />
-                      </SelectTrigger>
-                      <SelectContent position="popper">
-                        {roadwayFunctionOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
+                  <SelectField
+                    name={field.name}
+                    label="What is the desired function of the road?"
+                    tooltip="Refer to Guidebook Chapter 5 for a discussion on roadway primary function. This selection will not affect minimum safe dimension recommendations but will prompt you to consider appropriate design decisions (e.g., speeds)."
+                    placeholder="Select a roadway function"
+                    value={field.value}
+                    invalid={fieldState.invalid}
+                    error={fieldState.error}
+                    options={roadwayFunctionOptions}
+                    onValueChange={field.onChange}
+                  />
                 )}
               />
               <Controller
                 name="plannedLandUseContext"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <LabelWithTooltip
-                      htmlFor={field.name}
-                      label="What is the planned land use context?"
-                      tooltip="Refer to Guidebook Chapter 3 for a discussion of applicable land use contexts. This entry is used to provide minimum safe recommendations regarding pedestrian facilities."
-                    />
-                    <Select
-                      value={field.value || undefined}
-                      onValueChange={field.onChange}
-                    >
-                      <SelectTrigger
-                        id={field.name}
-                        className="w-full"
-                        aria-invalid={fieldState.invalid}
-                      >
-                        <SelectValue placeholder="Select a land use context" />
-                      </SelectTrigger>
-                      <SelectContent position="popper">
-                        {landUseContextOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
+                  <SelectField
+                    name={field.name}
+                    label="What is the planned land use context?"
+                    tooltip="Refer to Guidebook Chapter 3 for a discussion of applicable land use contexts. This entry is used to provide minimum safe recommendations regarding pedestrian facilities."
+                    placeholder="Select a land use context"
+                    value={field.value}
+                    invalid={fieldState.invalid}
+                    error={fieldState.error}
+                    options={landUseContextOptions}
+                    onValueChange={field.onChange}
+                  />
                 )}
               />
               <Controller
                 name="downstreamIntersectionType"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor={field.name}>
-                      What is the controlling downstream intersection type?
-                    </FieldLabel>
-                    <Select
-                      value={field.value || undefined}
-                      onValueChange={field.onChange}
-                    >
-                      <SelectTrigger
-                        id={field.name}
-                        className="w-full"
-                        aria-invalid={fieldState.invalid}
-                      >
-                        <SelectValue placeholder="Select an intersection type" />
-                      </SelectTrigger>
-                      <SelectContent position="popper">
-                        {intersectionTypeOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
+                  <SelectField
+                    name={field.name}
+                    label="What is the controlling downstream intersection type?"
+                    placeholder="Select an intersection type"
+                    value={field.value}
+                    invalid={fieldState.invalid}
+                    error={fieldState.error}
+                    options={intersectionTypeOptions}
+                    onValueChange={field.onChange}
+                  />
                 )}
               />
             </div>
