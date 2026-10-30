@@ -49,7 +49,10 @@ export const projectDetailsSchema = z.object({
   community: z.string(),
   roadwayName: z.string(),
   projectExtents: z.string(),
-  corridorLengthMiles: z.string(),
+  corridorLengthMiles: z
+    .number({ error: 'Enter the project corridor length.' })
+    .min(0)
+    .optional(),
   alternativeName: z.string(),
   canMoveCurbLines: z.boolean(),
   isFreightCorridor: z.boolean(),
@@ -66,9 +69,20 @@ export const projectDetailsSchema = z.object({
   downstreamIntersectionType: z.enum(intersectionTypeValues, {
     error: 'Select the controlling downstream intersection type.',
   }),
-  postedSpeedLimitMph: z.string(),
-  percentileSpeed85Mph: z.string(),
-  averageDailyTraffic: z.string(),
+  postedSpeedLimitMph: z
+    .number({ error: 'Enter a posted speed limit.' })
+    .int({ error: 'Speed limit must be a whole number.' })
+    .min(5, { error: 'Speed limit must be at least 5 mph.' })
+    .max(90, { error: 'Speed limit must be at most 90 mph.' }),
+  percentileSpeed85Mph: z
+    .number({ error: 'Enter the 85th percentile speed.' })
+    .min(0)
+    .optional(),
+  averageDailyTraffic: z
+    .number({ error: 'Enter an average daily traffic.' })
+    .int({ error: 'Average daily traffic must be a whole number.' })
+    .min(0)
+    .max(1000000),
   goals: z.object({
     safety: z.boolean(),
     economic: z.boolean(),
@@ -97,7 +111,7 @@ export const defaultProjectDetails: ProjectDetailsFormValues = {
   community: '',
   roadwayName: '',
   projectExtents: '',
-  corridorLengthMiles: '',
+  corridorLengthMiles: undefined,
   alternativeName: '',
   canMoveCurbLines: false,
   isFreightCorridor: false,
@@ -106,9 +120,9 @@ export const defaultProjectDetails: ProjectDetailsFormValues = {
   plannedLandUseContext: '',
   roadwayFunction: '',
   downstreamIntersectionType: '',
-  postedSpeedLimitMph: '',
-  percentileSpeed85Mph: '',
-  averageDailyTraffic: '',
+  postedSpeedLimitMph: 25,
+  percentileSpeed85Mph: undefined,
+  averageDailyTraffic: 6000,
   goals: {
     safety: true,
     economic: true,
