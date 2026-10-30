@@ -5,16 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { projectDetailsAtom } from '@/atoms';
 import { Button } from '@/components/ui/button';
 import { CheckboxField } from '@/components/ui/checkbox-field';
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-  FieldLegend,
-  FieldSet,
-} from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
+import { FieldGroup, FieldLegend, FieldSet } from '@/components/ui/field';
+import { NumberField } from '@/components/ui/number-field';
 import { SelectField } from '@/components/ui/select-field';
+import { TextField } from '@/components/ui/text-field';
 import { YesNoField } from '@/components/ui/yes-no-field';
 import { paths } from '@/paths';
 import {
@@ -59,100 +53,77 @@ export function ProjectDetailsPage() {
                 name="community"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor={field.name}>Community</FieldLabel>
-                    <Input
-                      {...field}
-                      id={field.name}
-                      placeholder="Anywhere, USA"
-                      aria-invalid={fieldState.invalid}
-                    />
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
+                  <TextField
+                    name={field.name}
+                    label="Community"
+                    placeholder="Anywhere, USA"
+                    value={field.value}
+                    invalid={fieldState.invalid}
+                    error={fieldState.error}
+                    onChange={field.onChange}
+                  />
                 )}
               />
               <Controller
                 name="roadwayName"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor={field.name}>Roadway Name</FieldLabel>
-                    <Input
-                      {...field}
-                      id={field.name}
-                      placeholder="Main Street"
-                      aria-invalid={fieldState.invalid}
-                    />
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
+                  <TextField
+                    name={field.name}
+                    label="Roadway Name"
+                    placeholder="Main Street"
+                    value={field.value}
+                    invalid={fieldState.invalid}
+                    error={fieldState.error}
+                    onChange={field.onChange}
+                  />
                 )}
               />
               <Controller
                 name="projectExtents"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor={field.name}>
-                      Project Extents
-                    </FieldLabel>
-                    <Input
-                      {...field}
-                      id={field.name}
-                      placeholder="1st Avenue to 6th Avenue"
-                      aria-invalid={fieldState.invalid}
-                    />
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
+                  <TextField
+                    name={field.name}
+                    label="Project Extents"
+                    placeholder="1st Avenue to 6th Avenue"
+                    value={field.value}
+                    invalid={fieldState.invalid}
+                    error={fieldState.error}
+                    onChange={field.onChange}
+                  />
                 )}
               />
               <Controller
                 name="corridorLengthMiles"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor={field.name}>
-                      Project Corridor Length
-                    </FieldLabel>
-                    <Input
-                      {...field}
-                      id={field.name}
-                      type="number"
-                      inputMode="decimal"
-                      min={0}
-                      step="any"
-                      placeholder="0.5"
-                      aria-invalid={fieldState.invalid}
-                    />
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
+                  <NumberField
+                    name={field.name}
+                    label="Project Corridor Length"
+                    placeholder="0.5"
+                    inputMode="decimal"
+                    step="any"
+                    value={field.value}
+                    invalid={fieldState.invalid}
+                    error={fieldState.error}
+                    onChange={field.onChange}
+                  />
                 )}
               />
               <Controller
                 name="alternativeName"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor={field.name}>
-                      Alternative Name
-                    </FieldLabel>
-                    <Input
-                      {...field}
-                      id={field.name}
-                      placeholder="Alternative 1"
-                      aria-invalid={fieldState.invalid}
-                    />
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
+                  <TextField
+                    name={field.name}
+                    label="Alternative Name"
+                    placeholder="Alternative 1"
+                    value={field.value}
+                    invalid={fieldState.invalid}
+                    error={fieldState.error}
+                    onChange={field.onChange}
+                  />
                 )}
               />
             </div>
@@ -286,69 +257,46 @@ export function ProjectDetailsPage() {
                   name="postedSpeedLimitMph"
                   control={form.control}
                   render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name}>
-                        What is the posted speed limit?
-                      </FieldLabel>
-                      <Input
-                        {...field}
-                        id={field.name}
-                        type="number"
-                        inputMode="numeric"
-                        min={0}
-                        placeholder="30"
-                        aria-invalid={fieldState.invalid}
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
+                    <NumberField
+                      name={field.name}
+                      label="What is the posted speed limit?"
+                      placeholder="30"
+                      value={field.value}
+                      invalid={fieldState.invalid}
+                      error={fieldState.error}
+                      onChange={field.onChange}
+                    />
                   )}
                 />
                 <Controller
                   name="percentileSpeed85Mph"
                   control={form.control}
                   render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name}>
-                        What is the 85th percentile speed (if known)?
-                      </FieldLabel>
-                      <Input
-                        {...field}
-                        id={field.name}
-                        type="number"
-                        inputMode="decimal"
-                        min={0}
-                        placeholder="32"
-                        aria-invalid={fieldState.invalid}
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
+                    <NumberField
+                      name={field.name}
+                      label="What is the 85th percentile speed (if known)?"
+                      placeholder="32"
+                      inputMode="decimal"
+                      value={field.value}
+                      invalid={fieldState.invalid}
+                      error={fieldState.error}
+                      onChange={field.onChange}
+                    />
                   )}
                 />
                 <Controller
                   name="averageDailyTraffic"
                   control={form.control}
                   render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name}>
-                        What is the average daily traffic?
-                      </FieldLabel>
-                      <Input
-                        {...field}
-                        id={field.name}
-                        type="number"
-                        inputMode="numeric"
-                        min={0}
-                        placeholder="6000"
-                        aria-invalid={fieldState.invalid}
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
+                    <NumberField
+                      name={field.name}
+                      label="What is the average daily traffic?"
+                      placeholder="6000"
+                      value={field.value}
+                      invalid={fieldState.invalid}
+                      error={fieldState.error}
+                      onChange={field.onChange}
+                    />
                   )}
                 />
               </div>
