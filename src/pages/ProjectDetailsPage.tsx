@@ -4,7 +4,7 @@ import { Controller, useForm, type Resolver } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { projectDetailsAtom } from '@/atoms';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+import { CheckboxField } from '@/components/ui/checkbox-field';
 import {
   Field,
   FieldError,
@@ -358,30 +358,25 @@ export function ProjectDetailsPage() {
               <FieldLegend>Project Goals</FieldLegend>
               <div className="grid gap-3">
                 {projectGoalOptions.map((goal) => (
-                  <Controller
+                  <div
                     key={goal.name}
-                    name={`goals.${goal.name}`}
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field
-                        orientation="horizontal"
-                        className="justify-between"
-                        data-invalid={fieldState.invalid}
-                      >
-                        <FieldLabel htmlFor={`goal-${goal.name}`}>
-                          {goal.label}
-                        </FieldLabel>
-                        <Checkbox
-                          id={`goal-${goal.name}`}
-                          checked={field.value}
-                          onCheckedChange={(checked) =>
-                            field.onChange(checked === true)
-                          }
-                          aria-invalid={fieldState.invalid}
+                    className="cursor-pointer rounded-lg border p-2 hover:bg-muted/50"
+                  >
+                    <Controller
+                      name={`goals.${goal.name}`}
+                      control={form.control}
+                      render={({ field, fieldState }) => (
+                        <CheckboxField
+                          name={field.name}
+                          label={goal.label}
+                          value={field.value}
+                          invalid={fieldState.invalid}
+                          error={fieldState.error}
+                          onChange={field.onChange}
                         />
-                      </Field>
-                    )}
-                  />
+                      )}
+                    />
+                  </div>
                 ))}
               </div>
             </FieldSet>

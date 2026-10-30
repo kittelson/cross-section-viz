@@ -1,4 +1,3 @@
-import { useLayoutEffect, useRef } from 'react';
 import { LabelWithTooltip } from '@/components/LabelWithTooltip';
 import { Field, FieldError } from '@/components/ui/field';
 import {
@@ -35,40 +34,27 @@ export function SelectField({
   options: readonly SelectOption[];
   onValueChange: (value: string) => void;
 }) {
-  const selectRef = useRef<HTMLDivElement>(null);
-  const nativeSelectId = `${name}-native`;
-
-  useLayoutEffect(() => {
-    const nativeSelect = selectRef.current?.querySelector('select');
-    if (nativeSelect) {
-      nativeSelect.id = nativeSelectId;
-    }
-  });
-
   return (
     <Field data-invalid={invalid}>
       {label ? (
         <LabelWithTooltip htmlFor={name} label={label} tooltip={tooltip} />
       ) : null}
-      {label ? (
-        <label htmlFor={nativeSelectId} className="sr-only">
-          {label}
-        </label>
-      ) : null}
-      <div ref={selectRef}>
-        <Select value={value || undefined} onValueChange={onValueChange}>
-          <SelectTrigger id={name} className="w-full" aria-invalid={invalid}>
-            <SelectValue placeholder={placeholder} />
-          </SelectTrigger>
-          <SelectContent position="popper">
-            {options.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+      <Select
+        label={label}
+        value={value || undefined}
+        onValueChange={onValueChange}
+      >
+        <SelectTrigger id={name} className="w-full" aria-invalid={invalid}>
+          <SelectValue placeholder={placeholder} />
+        </SelectTrigger>
+        <SelectContent position="popper">
+          {options.map((option) => (
+            <SelectItem key={option.value} value={option.value}>
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
       {invalid && <FieldError errors={[error]} />}
     </Field>
   );

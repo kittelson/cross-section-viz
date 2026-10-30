@@ -1,6 +1,9 @@
-import { LabelWithTooltip } from '@/components/LabelWithTooltip';
-import { Field, FieldError, FieldLabel } from '@/components/ui/field';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { RadioGroupField } from '@/components/ui/radio-group-field';
+
+const yesNoOptions = [
+  { label: 'Yes', value: 'yes' },
+  { label: 'No', value: 'no' },
+] as const;
 
 export function YesNoField({
   name,
@@ -20,27 +23,15 @@ export function YesNoField({
   onChange: (value: boolean) => void;
 }) {
   return (
-    <Field data-invalid={invalid}>
-      <LabelWithTooltip label={label} tooltip={tooltip} />
-      <RadioGroup
-        value={value ? 'yes' : 'no'}
-        onValueChange={(nextValue) => onChange(nextValue === 'yes')}
-        className="flex w-auto flex-row gap-6"
-      >
-        <div className="flex items-center gap-2">
-          <RadioGroupItem value="yes" id={`${name}-yes`} />
-          <FieldLabel htmlFor={`${name}-yes`} className="font-normal">
-            Yes
-          </FieldLabel>
-        </div>
-        <div className="flex items-center gap-2">
-          <RadioGroupItem value="no" id={`${name}-no`} />
-          <FieldLabel htmlFor={`${name}-no`} className="font-normal">
-            No
-          </FieldLabel>
-        </div>
-      </RadioGroup>
-      {invalid && <FieldError errors={[error]} />}
-    </Field>
+    <RadioGroupField
+      name={name}
+      label={label}
+      tooltip={tooltip}
+      value={value ? 'yes' : 'no'}
+      invalid={invalid}
+      error={error}
+      options={yesNoOptions}
+      onChange={(nextValue) => onChange(nextValue === 'yes')}
+    />
   );
 }
