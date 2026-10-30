@@ -4,9 +4,44 @@ import { Select as SelectPrimitive } from 'radix-ui';
 import { ChevronDownIcon, CheckIcon, ChevronUpIcon } from 'lucide-react';
 
 function Select({
+  label,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Root>) {
-  return <SelectPrimitive.Root data-slot="select" {...props} />;
+}: React.ComponentProps<typeof SelectPrimitive.Root> & {
+  label?: string;
+}) {
+  const nativeSelectId = React.useId();
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
+  React.useLayoutEffect(() => {
+    const container = containerRef.current;
+    if (!container || !label) {
+      return;
+    }
+
+    function syncNativeSelect() {
+      const nativeSelect = container?.querySelector('select');
+      if (!nativeSelect) {
+        return;
+      }
+      nativeSelect.id = nativeSelectId;
+    }
+
+    syncNativeSelect();
+    const observer = new MutationObserver(syncNativeSelect);
+    observer.observe(container, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, [label, nativeSelectId]);
+
+  return (
+    <div ref={containerRef} className="contents">
+      {label ? (
+        <label htmlFor={nativeSelectId} className="sr-only">
+          {label}
+        </label>
+      ) : null}
+      <SelectPrimitive.Root data-slot="select" {...props} />
+    </div>
+  );
 }
 
 function SelectGroup({
