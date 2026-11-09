@@ -8,6 +8,11 @@ export type ProjectInputs = z.infer<typeof projectInputsSchema>
 export type LandUseContext = z.infer<typeof landUseContextSchema>
 export type RoadFunction = z.infer<typeof roadFunctionSchema>
 export type CrossSection = z.infer<typeof crossSectionSchema>
+export type MeasureGoalMatrix = z.infer<typeof measureGoalMatrixSchema>
+export type MeasureGoalCell = z.infer<typeof measureGoalCellSchema>
+export type MeasureValue = z.infer<typeof measureValueSchema>
+export type MeasureEffect = z.infer<typeof measureEffectSchema>
+export type Measure = z.infer<typeof measureSchema>
 
 // ---- Project inputs ----
 
@@ -92,4 +97,49 @@ export const crossSectionSchema = z.object({
   name: z.string().trim().min(1).max(100),
   street: streetmixStreetSchema,
 })
+
+// ---- Measure × goal matrix ----
+
+// Rows of the measure × goal matrix
+export const measureSchema = z.enum([
+  'addBusLanes',
+  'removeBikeLanes',
+  'widenBikeLanes',
+  'removePedestrianInfrastructure',
+  'addPedestrianInfrastructure',
+  'removeTravelLanes',
+  'narrowTravelLanes',
+  'addParking',
+])
+
+// TODO: replace with an enum of glyph meanings; the UI maps each to an icon
+export const glyphSchema = z.string()
+
+export const measureEffectSchema = z.enum([
+  'lowAdverseEffect',
+  'mediumAdverseEffect',
+  'highAdverseEffect',
+  'lowPositiveEffect',
+  'mediumPositiveEffect',
+  'highPositiveEffect',
+  'noSignificantEffect',
+])
+
+export const measureValueSchema = z.object({
+  effect: measureEffectSchema,
+  value: z.string(),
+})
+
+// One cell: the glyphs shown in suggested edits, and the values shown
+// in the impact summary.
+export const measureGoalCellSchema = z.object({
+  values: z.array(measureValueSchema).min(1).max(2),
+  valueGlyphs: z.array(glyphSchema).min(1).max(2),
+})
+
+// Measure × goal matrix for one cross-section, read as matrix[measure]?.[goal]
+export const measureGoalMatrixSchema = z.partialRecord(
+  measureSchema,
+  z.partialRecord(projectGoalSchema, measureGoalCellSchema),
+)
 
