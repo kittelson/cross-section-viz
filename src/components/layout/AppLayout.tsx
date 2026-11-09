@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils'
 const navItems = [
   { to: '/', label: 'Home' },
   { to: '/form', label: 'Form' },
+  { to: '/editor', label: 'Editor' },
 ]
 
 export function AppLayout() {
