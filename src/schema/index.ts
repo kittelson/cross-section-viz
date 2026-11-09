@@ -7,6 +7,7 @@ import { z } from 'zod'
 export type ProjectInputs = z.infer<typeof projectInputsSchema>
 export type LandUseContext = z.infer<typeof landUseContextSchema>
 export type RoadFunction = z.infer<typeof roadFunctionSchema>
+export type CrossSection = z.infer<typeof crossSectionSchema>
 
 // ---- Project inputs ----
 
@@ -68,5 +69,27 @@ export const projectInputsSchema = z.object({
   existingConditions: existingConditionsSchema,
   projectGoals: projectGoalsSchema,
   backgroundPlanning: backgroundPlanningSchema,
+})
+
+// ---- Cross section ----
+
+// Minimal slice of Streetmix's StreetJson (packages/types in streetmix/streetmix).
+// Loose objects keep fields we don't model, so a street round-trips intact.
+export const streetmixSegmentSchema = z.looseObject({
+  type: z.string(),
+  variantString: z.string(),
+  width: z.number(),
+})
+
+export const streetmixStreetSchema = z.looseObject({
+  schemaVersion: z.number().int(),
+  width: z.number(),
+  segments: z.array(streetmixSegmentSchema),
+})
+
+export const crossSectionSchema = z.object({
+  id: z.uuid(),
+  name: z.string().trim().min(1).max(100),
+  street: streetmixStreetSchema,
 })
 
