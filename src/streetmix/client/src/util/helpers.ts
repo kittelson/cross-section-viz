@@ -1,0 +1,100 @@
+// @ts-expect-error TS7016 vendored streetmix, fix during cleanup
+import { tween } from 'shifty'
+import slugify from 'slugify'
+
+/**
+ * Gets the relative position in pixels of a given element,
+ * taking into account its CSS transformed position, relative to
+ * its parent component
+ *
+ * @param {Node} element
+ * @returns {Array} [x, y] where x is number of pixels from the
+ *    left side of the viewport and y is the number of pixels
+ *    from the top of the viewport.
+ */
+export function getElRelativePos(el: HTMLElement): [number, number] {
+  // In addition to the DOM's left and top offset properties, we also
+  // account for CSS transforms, via the `matrix` object
+  const style = window.getComputedStyle(el)
+  const matrix = new DOMMatrixReadOnly(style.transform)
+
+  return [el.offsetLeft + matrix.m41, el.offsetTop + matrix.m42]
+}
+
+/**
+ * Converts a street name to a readable and URL-friendly slug name
+ */
+export function normalizeSlug(slug?: string | null): string | undefined {
+  if (slug === null || typeof slug === 'undefined') return
+
+  // Remove certain replacements mapped by slugify
+  slugify.extend({
+    '|': '',
+    '%': '',
+    $: '',
+  })
+
+  const slugified = slugify(slug, {
+    replacement: '-',
+    remove: /[*+=~.,<>(){}'"!?:;@#$%^&*|\\/[\]]/g,
+    lower: true,
+  })
+
+  // Remove any trailing or leading hyphens, which slugify doesn't clean up
+  return slugified.replace(/^[-]+|[-]+$/g, '')
+}
+
+/**
+ * Tweens the given numeric properties on an element over time.
+ */
+export function animate(
+  el: HTMLElement,
+  props: Record<string, number>,
+  duration: number
+): void {
+  const initialProps: Record<string, number> = Object.keys(props).reduce(
+    (acc: Record<string, number>, prop) => {
+      // @ts-expect-error TS7053 vendored streetmix, fix during cleanup
+      if (typeof el[prop] !== 'undefined') {
+        // @ts-expect-error TS7053 vendored streetmix, fix during cleanup
+        acc[prop] = el[prop]
+      } else {
+        acc[prop] = 0
+      }
+      return acc
+    },
+    {}
+  )
+
+  tween({
+    from: initialProps,
+    to: props,
+    duration,
+    // @ts-expect-error TS7006 vendored streetmix, fix during cleanup
+    render: (state) => Object.assign(el, state),
+  })
+}
+
+// Based on is-url-external
+// @see: https://github.com/mrded/is-url-external
+const getHostFromUrl = (url: string): string => {
+  return new URL(url).hostname.replace('www.', '')
+}
+
+const isAbsoluteUrl = (url: string): boolean => {
+  const formattedUrl = url.toLowerCase()
+  return formattedUrl.startsWith('http') || formattedUrl.startsWith('https')
+}
+
+export const isUrlExternal = (
+  url: string,
+  host: string = window.location.hostname
+): boolean => {
+  if (isAbsoluteUrl(url)) {
+    const providedHost = getHostFromUrl(url)
+
+    return providedHost !== host
+  } else {
+    return false
+  }
+}

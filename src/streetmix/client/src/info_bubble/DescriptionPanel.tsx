@@ -1,0 +1,110 @@
+import { IntlProvider, FormattedMessage } from 'react-intl'
+import ReactMarkdown from 'react-markdown'
+import rehypeExternalLinks from 'rehype-external-links'
+
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { hideDescription } from '@/streetmix/client/src/store/slices/infoBubble.js'
+import { formatMessage } from '@/streetmix/client/src/locales/locale.js'
+import { FloatingPanel } from '@/streetmix/client/src/ui/FloatingPanels'
+import './DescriptionPanel.css'
+
+export function DescriptionPanel() {
+  const show = useSelector((state) => state.infoBubble.descriptionVisible)
+  const description = useSelector((state) => state.infoBubble.descriptionData)
+  const locale = useSelector((state) => state.locale)
+  const dispatch = useDispatch()
+
+  function handleClose(): void {
+    dispatch(hideDescription())
+  }
+
+  if (description === null) return null
+
+  // If the description content doesn't exist or hasn't been translated, bail.
+  const content = formatMessage(
+    `descriptions.${description.key}.content`,
+    undefined,
+    { ns: 'segment-info' }
+  )
+  const altText = formatMessage(
+    `descriptions.${description.key}.imageAltText`,
+    undefined,
+    { ns: 'segment-info' }
+  )
+  const caption = formatMessage(
+    `descriptions.${description.key}.imageCaption`,
+    undefined,
+    { ns: 'segment-info' }
+  )
+
+  const allowedElements = [
+    'p',
+    'em',
+    'strong',
+    'ol',
+    'ul',
+    'li',
+    'blockquote',
+    'h1',
+    'img',
+    'a',
+  ]
+
+  return (
+    <FloatingPanel
+      icon="book"
+      title={
+        <FormattedMessage
+          id="segments.learn-more"
+          defaultMessage="Learn more"
+        />
+      }
+      show={show}
+      className="description-panel"
+      handleClose={handleClose}
+    >
+      <IntlProvider locale={locale.locale} messages={locale.segmentInfo}>
+        <div className="description-content">
+          {description.image && (
+            <>
+              <img
+                src={`/images/descriptions/${description.image}`}
+                alt={altText ?? caption ?? ''}
+                draggable={false}
+              />
+              {description.imageCredit && (
+                <div className="description-image-credit">
+                  {description.imageCredit}
+                </div>
+              )}
+            </>
+          )}
+          <div className="description-text">
+            <ReactMarkdown
+              allowedElements={allowedElements}
+              unwrapDisallowed
+              rehypePlugins={[
+                [
+                  rehypeExternalLinks,
+                  { rel: 'noopener noreferrer', target: '_blank' },
+                ],
+              ]}
+            >
+              {content}
+            </ReactMarkdown>
+            {caption && (
+              <footer>
+                <FormattedMessage
+                  id="segments.description.photo-credit"
+                  defaultMessage="Photo:"
+                />
+                &nbsp;
+                {caption}
+              </footer>
+            )}
+          </div>
+        </div>
+      </IntlProvider>
+    </FloatingPanel>
+  )
+}

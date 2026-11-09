@@ -1,5 +1,6 @@
 import type { RouteObject } from 'react-router-dom'
 import { AppLayout } from '@/components/layout/AppLayout'
+import { EditorPage } from '@/pages/EditorPage'
 import { FormPage } from '@/pages/FormPage'
 import { HomePage } from '@/pages/HomePage'
 
@@ -9,6 +10,7 @@ export const routes: RouteObject[] = [
     children: [
       { path: '/', element: <HomePage /> },
       { path: '/form', element: <FormPage /> },
+      { path: '/editor', element: <EditorPage /> },
     ],
   },
 ]

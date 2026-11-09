@@ -1,0 +1,30 @@
+import { FormattedMessage } from 'react-intl'
+
+import streetmixPlusIcon from '../ui/icons/streetmix-plus.svg?url'
+import { Button } from '../ui/Button.js'
+import './UpgradeButton.css'
+
+export function UpgradeButton() {
+  function handleClickUpgrade(): void {
+    // dispatch(showDialog('UPGRADE'))
+    window.open(
+      'https://docs.streetmix.net/user-guide/streetmix-plus',
+      '_blank'
+    )
+  }
+
+  return (
+    <Button tertiary className="menu-upgrade" onClick={handleClickUpgrade}>
+      <img
+        className="menu-avatar-subscriber"
+        src={streetmixPlusIcon}
+        // eslint-disable-next-line formatjs/no-literal-string-in-jsx
+        alt="Streetmix+"
+      />
+      <FormattedMessage
+        id="menu.item.streetmix-plus"
+        defaultMessage="Get Streetmix+&lrm;"
+      />
+    </Button>
+  )
+}

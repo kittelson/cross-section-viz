@@ -1,0 +1,631 @@
+import { drawEarth } from '@/streetmix/packages/export-image/src/earth'
+import { drawSeaLevelRise } from '@/streetmix/packages/export-image/src/sealevel'
+import {
+  drawLabelBackground,
+  drawLabels,
+} from '@/streetmix/packages/export-image/src/labels'
+import { drawNameplate } from '@/streetmix/packages/export-image/src/nameplate'
+import { drawSilhouette } from '@/streetmix/packages/export-image/src/silhouette'
+import {
+  getBoundaryItem,
+  getSegmentInfo,
+  getSegmentVariantInfo,
+} from '@/streetmix/packages/parts/src'
+
+import { images } from '../app/load_resources.js'
+import { getSkyboxDef, makeCanvasGradientStopArray } from '../sky'
+import { drawBoundary } from '../boundary/draw.js'
+import { TILE_SIZE } from '../segments/constants.js'
+import { getLocaleSliceName } from '../segments/labels.js'
+import {
+  getVariantInfoDimensions,
+  drawSegmentContents,
+} from '../segments/view.js'
+import { formatMessage } from '../locales/locale.js'
+import { SAVE_AS_IMAGE_LABEL_PADDING } from './image.js'
+
+import type {
+  CSSGradientDeclaration,
+  FloodDetails,
+  SkyboxDefWithStyles,
+  SkyboxObject,
+  StreetJson,
+  StreetState,
+} from '@/streetmix/packages/types/src'
+
+const WATERMARK_FONT = 'Rubik Variable'
+const WATERMARK_FONT_SIZE = 24
+const WATERMARK_FONT_WEIGHT = '600'
+const WATERMARK_RIGHT_MARGIN = 15
+const WATERMARK_BOTTOM_MARGIN = 15
+const WATERMARK_DARK_COLOR = '#333333'
+const WATERMARK_LIGHT_COLOR = '#cccccc'
+
+const WORDMARK_MARGIN = 4
+
+const SKY_GAP = 120 // pixels
+
+/**
+ * Draws sky.
+ */
+function drawSky(
+  ctx: CanvasRenderingContext2D, // the canvas context to draw on
+  street: StreetJson, // street data
+  width: number, // width of area to draw
+  height: number, // height of area to draw
+  dpi: number, // pixel density of canvas
+  multiplier: number, // scale factor of image
+  horizonLine: number, // lower edge of sky area (vertical height of horizon)
+  groundLevel: number // ground elevation line (vertical height of ground)
+) {
+  const sky = getSkyboxDef(street.skybox)
+
+  // Solid color fill
+  if (sky.backgroundColor !== undefined) {
+    drawBackgroundColor(
+      ctx,
+      width * dpi,
+      horizonLine * dpi,
+      sky.backgroundColor
+    )
+  }
+
+  // Background image fill
+  if (sky.backgroundImage) {
+    drawBackgroundImage(
+      ctx,
+      width,
+      height,
+      dpi,
+      multiplier,
+      sky.backgroundImage
+    )
+  }
+
+  // Gradient fill
+  if (sky.backgroundGradient) {
+    drawBackgroundGradient(ctx, width, horizonLine, dpi, sky.backgroundGradient)
+  }
+
+  // Background objects
+  if (sky.backgroundObjects) {
+    drawBackgroundObjects(
+      ctx,
+      width,
+      height,
+      dpi,
+      multiplier,
+      sky.backgroundObjects
+    )
+  }
+
+  // Clouds
+  drawClouds(ctx, width, groundLevel, dpi, sky)
+}
+
+/**
+ * Draws a layer of background color
+ */
+function drawBackgroundColor(
+  ctx: CanvasRenderingContext2D, // the canvas context to draw on
+  width: number, // width of area to draw (scaled)
+  height: number, // height of area to draw (scaled)
+  color: string // color to render
+): void {
+  ctx.save()
+  ctx.fillStyle = color
+  ctx.fillRect(0, 0, width, height)
+  ctx.restore()
+}
+
+/**
+ * Draws background image as a repeating pattern.
+ */
+function drawBackgroundImage(
+  ctx: CanvasRenderingContext2D, // the canvas context to draw on
+  width: number, // width of area to draw
+  height: number, // height of area to draw
+  dpi: number, // pixel density of canvas
+  multiplier: number, // scale factor of image
+  imageId: unknown // image ID to render
+): void {
+  const img = images.get(imageId)
+
+  for (let i = 0; i < Math.floor((height / img.height) * multiplier) + 1; i++) {
+    for (let j = 0; j < Math.floor((width / img.width) * multiplier) + 1; j++) {
+      ctx.drawImage(
+        img.img,
+        0,
+        0,
+        img.width,
+        img.height,
+        j * img.width * dpi * multiplier,
+        i * img.height * dpi * multiplier,
+        img.width * dpi * multiplier,
+        img.height * dpi * multiplier
+      )
+    }
+  }
+}
+
+/**
+ * Draws background linear gradient.
+ */
+function drawBackgroundGradient(
+  ctx: CanvasRenderingContext2D, // the canvas context to draw on
+  width: number, // width of area to draw
+  height: number, // height of area to draw
+  dpi: number, // pixel density of canvas
+  backgroundGradient: CSSGradientDeclaration // skybox definition of gradient
+): void {
+  const gradient = ctx.createLinearGradient(0, 0, 0, height * dpi)
+
+  // Make color stops
+  const stops = makeCanvasGradientStopArray(backgroundGradient)
+  for (let i = 0; i < stops.length; i++) {
+    const [color, stop] = stops[i]
+    gradient.addColorStop(stop, color)
+  }
+
+  ctx.save()
+  ctx.fillStyle = gradient
+  ctx.fillRect(0, 0, width * dpi, height * dpi)
+  ctx.restore()
+}
+
+/**
+ * Draws background linear gradient.
+ */
+function drawBackgroundObjects(
+  ctx: CanvasRenderingContext2D, // the canvas context to draw on
+  width: number, // width of area to draw
+  height: number, // height of area to draw
+  dpi: number, // pixel density of canvas
+  multiplier: number, // scale factor of image
+  objects: SkyboxObject[] // skybox definition of background objects
+): void {
+  objects.forEach((object) => {
+    const {
+      image: imageId,
+      width: imageWidth,
+      height: imageHeight,
+      top,
+      left,
+    } = object
+    const image = images.get(imageId).img
+    ctx.drawImage(
+      image,
+      // Left and top values are "percentage" values
+      // and sets where the center of the image is
+      (left * width - imageWidth / 2) * dpi * multiplier,
+      (top * height - imageHeight / 2) * dpi * multiplier,
+      imageWidth * dpi * multiplier,
+      imageHeight * dpi * multiplier
+    )
+  })
+}
+
+/**
+ * Draws clouds.
+ */
+function drawClouds(
+  ctx: CanvasRenderingContext2D, // the canvas context to draw on
+  width: number, // width of area to draw
+  height: number, // height of area to draw
+  dpi: number, // pixel density of canvas
+  sky: SkyboxDefWithStyles // skybox settings
+): void {
+  // Handle cloud opacity
+  ctx.save()
+  ctx.globalAlpha = sky.cloudOpacity ?? 1
+
+  // Grab images
+  const skyFrontImg = images.get('/images/sky-front.svg')
+  const skyRearImg = images.get('/images/sky-rear.svg')
+
+  // dy1 = top edge of sky-front image
+  const dy1 = height - skyFrontImg.height
+
+  for (let i = 0; i < Math.floor(width / skyFrontImg.width) + 1; i++) {
+    ctx.drawImage(
+      skyFrontImg.img,
+      0,
+      0,
+      skyFrontImg.width,
+      skyFrontImg.height,
+      i * skyFrontImg.width * dpi,
+      dy1 * dpi,
+      skyFrontImg.width * dpi,
+      skyFrontImg.height * dpi
+    )
+  }
+
+  // dy2 = top edge of sky-rear is 120 pixels above the top edge of sky-front
+  const dy2 = height - SKY_GAP - skyFrontImg.height
+
+  for (let i = 0; i < Math.floor(width / skyRearImg.width) + 1; i++) {
+    ctx.drawImage(
+      skyRearImg.img,
+      0,
+      0,
+      skyRearImg.width,
+      skyRearImg.height,
+      i * skyRearImg.width * dpi,
+      dy2 * dpi,
+      skyRearImg.width * dpi,
+      skyRearImg.height * dpi
+    )
+  }
+
+  // Restore global opacity
+  ctx.restore()
+}
+
+/**
+ * Draws buildings.
+ */
+function drawBoundaries(
+  ctx: CanvasRenderingContext2D, // the canvas context to draw on
+  street: StreetJson, // street data
+  width: number, // width of area to draw
+  dpi: number, // pixel density of canvas
+  multiplier: number, // scale factor of image
+  groundLevel: number, // vertical height of ground
+  buildingOffsetLeft: number
+): void {
+  const buildingWidth = buildingOffsetLeft / multiplier
+
+  // Left building
+  const x1 = width / 2 - (street.width * TILE_SIZE * multiplier) / 2
+  // Keep deprecated properties here because gallery streets are transmitted
+  // without updating schemas
+  const leftVariant =
+    street.boundary?.left.variant ?? street.leftBuildingVariant
+  const leftElevation = street.boundary?.left.elevation ?? 1
+  const leftFloors = street.boundary?.left.floors ?? street.leftBuildingHeight
+  const leftBuilding = getBoundaryItem(leftVariant)
+  const leftOverhang =
+    typeof leftBuilding.overhangWidth === 'number'
+      ? leftBuilding.overhangWidth
+      : 0
+  drawBoundary(
+    ctx,
+    'left',
+    leftVariant,
+    leftElevation,
+    leftFloors,
+    buildingWidth,
+    groundLevel,
+    x1 - (buildingWidth - leftOverhang) * multiplier,
+    multiplier,
+    dpi
+  )
+
+  // Right building
+  const x2 = width / 2 + (street.width * TILE_SIZE * multiplier) / 2
+  // Keep deprecated properties here because gallery streets are transmitted
+  // without updating schemas
+  const rightVariant =
+    street.boundary?.right.variant ?? street.rightBuildingVariant
+  const rightElevation = street.boundary?.right.elevation ?? 1
+  const rightFloors =
+    street.boundary?.right.floors ?? street.rightBuildingHeight
+  const rightBuilding = getBoundaryItem(rightVariant)
+  const rightOverhang =
+    typeof rightBuilding.overhangWidth === 'number'
+      ? rightBuilding.overhangWidth
+      : 0
+  drawBoundary(
+    ctx,
+    'right',
+    rightVariant,
+    rightElevation,
+    rightFloors,
+    buildingWidth,
+    groundLevel,
+    x2 - rightOverhang * multiplier,
+    multiplier,
+    dpi
+  )
+}
+
+/**
+ * Draws slices.
+ */
+function drawSlices(
+  ctx: CanvasRenderingContext2D, // the canvas context to draw on
+  street: StreetJson, // street data
+  dpi: number, // pixel density of canvas
+  multiplier: number, // scale factor of image
+  groundLevel: number, // vertical height of ground
+  offsetLeft: number // left position to start from
+): void {
+  // Collect z-indexes
+  const zIndexes = []
+  for (const slice of street.segments) {
+    const sliceInfo = getSegmentInfo(slice.type)
+
+    if (zIndexes.indexOf(sliceInfo.zIndex) === -1) {
+      zIndexes.push(sliceInfo.zIndex)
+    }
+  }
+
+  // Render objects at each z-index level
+  for (const zIndex of zIndexes) {
+    let currentOffsetLeft = offsetLeft
+
+    for (let i = 0; i < street.segments.length; i++) {
+      const slice = street.segments[i]
+      const sliceInfo = getSegmentInfo(slice.type)
+
+      if (sliceInfo.zIndex === zIndex) {
+        const variantInfo = getSegmentVariantInfo(
+          slice.type,
+          slice.variantString
+        )
+        const dimensions = getVariantInfoDimensions(variantInfo, slice.width)
+        const randSeed = slice.id
+
+        drawSegmentContents(
+          ctx,
+          slice.type,
+          slice.variantString,
+          slice.width,
+          currentOffsetLeft + dimensions.left * TILE_SIZE * multiplier,
+          groundLevel,
+          slice.elevation,
+          slice.slope,
+          randSeed,
+          multiplier,
+          dpi
+        )
+      }
+
+      currentOffsetLeft += slice.width * TILE_SIZE * multiplier
+    }
+  }
+}
+
+/**
+ * Draws a "made with Streetmix" watermark on the lower right of the image.
+ */
+function drawWatermark(
+  ctx: CanvasRenderingContext2D, // the canvas context to draw on
+  dpi: number, // pixel density of canvas
+  invert = false, // if `true`, render light text for dark background
+  isCoastmix = false
+): void {
+  const text = formatMessage(
+    'export.watermark',
+    'Made with {streetmixWordmark}',
+    {
+      // Replace the {placeholder} with itself. Later, this is used to
+      // render the logo image in place of the text.
+      streetmixWordmark: '{streetmixWordmark}',
+    }
+  )
+  let wordmarkImage = invert
+    ? images.get('/images/wordmark_white.svg')
+    : images.get('/images/wordmark_black.svg')
+
+  if (isCoastmix) {
+    wordmarkImage = invert
+      ? images.get('/images/wordmark_coastmix_white.svg')
+      : images.get('/images/wordmark_coastmix_black.svg')
+  }
+
+  // Separate string so that we can render a wordmark with an image
+  const strings = text.replace(/{/g, '||{').replace(/}/g, '}||').split('||')
+
+  // Set text render options
+  ctx.textAlign = 'right'
+  ctx.textBaseline = 'alphabetic'
+  ctx.font = `normal ${WATERMARK_FONT_WEIGHT} ${
+    WATERMARK_FONT_SIZE * dpi
+  }px ${WATERMARK_FONT},sans-serif`
+  ctx.fillStyle = invert ? WATERMARK_LIGHT_COLOR : WATERMARK_DARK_COLOR
+
+  // Set starting X/Y positions so that watermark is aligned right and bottom of image
+  const startRightX = ctx.canvas.width - WATERMARK_RIGHT_MARGIN * dpi
+  const startBottomY = ctx.canvas.height - WATERMARK_BOTTOM_MARGIN * dpi
+
+  // Set wordmark width and height based on image scale (dpi)
+  const logoWidth = wordmarkImage.width * dpi
+  const logoHeight = wordmarkImage.height * dpi
+
+  // Keep track of where we are on the X-position.
+  let currentRightX = startRightX
+
+  // Render each part of the string.
+  for (let i = strings.length - 1; i >= 0; i--) {
+    const string = strings[i]
+
+    // If we see the wordmark placeholder, render the image.
+    if (string === '{streetmixWordmark}') {
+      const margin = WORDMARK_MARGIN * dpi
+      const logoLeftX = currentRightX - logoWidth - margin
+      const logoTopY = startBottomY - logoHeight + dpi // Additional adjustment for visual alignment
+
+      ctx.drawImage(
+        wordmarkImage.img,
+        logoLeftX,
+        logoTopY,
+        logoWidth,
+        logoHeight
+      )
+
+      // Update X position.
+      currentRightX = logoLeftX - margin
+    } else {
+      ctx.fillText(string, currentRightX, startBottomY)
+
+      // Update X position.
+      currentRightX = currentRightX - ctx.measureText(string).width
+    }
+  }
+}
+
+interface ThumbnailOptions {
+  width: number
+  height: number
+  dpi: number
+  multiplier: number
+  silhouette: boolean
+  transparentSky: boolean
+  labels: boolean
+  streetName: boolean
+  seaLevelRise: boolean
+  floodDetails?: [FloodDetails | null, FloodDetails | null]
+  stormSurge?: boolean
+  watermark: boolean | 'coastmix'
+  locale: string | null
+}
+
+/**
+ * Draws street image to 2D canvas element.
+ */
+export async function drawStreetThumbnail(
+  ctx: CanvasRenderingContext2D, // 2D canvas context to draw on
+  street: StreetState, // Street data
+  {
+    width, // Width of resulting image
+    height, // Height of resulting image
+    dpi, // Pixel density of canvas
+    multiplier, // Scale factor of image
+    silhouette,
+    transparentSky, // If `true`, image is a silhouette
+    labels, // If `true`, include labels (names and widths)
+    streetName, // If `true`, include street nameplate
+    seaLevelRise, // If `true`, include flood effect
+    floodDetails = [null, null], // Flood details when `seaLevelRise` is true
+    stormSurge = false,
+    watermark = true, // If `true`, include Streetmix watermark
+    locale = 'en',
+  }: ThumbnailOptions
+): Promise<void> {
+  // Calculations
+
+  // Determine how wide the street is
+  let occupiedWidth = 0
+  for (const segment of street.segments) {
+    occupiedWidth += segment.width
+  }
+
+  // Align things to bottom edge of image
+  let offsetTop = height - 180 * multiplier
+  if (labels) {
+    offsetTop -= SAVE_AS_IMAGE_LABEL_PADDING * multiplier
+  }
+
+  const offsetLeft = (width - occupiedWidth * TILE_SIZE * multiplier) / 2
+  const buildingOffsetLeft = (width - street.width * TILE_SIZE * multiplier) / 2
+
+  const groundLevel = offsetTop + 135 * multiplier
+  const horizonLine = groundLevel + 20 * multiplier
+
+  // Sky
+  if (!transparentSky) {
+    drawSky(
+      ctx,
+      street,
+      width,
+      height,
+      dpi,
+      multiplier,
+      horizonLine,
+      groundLevel
+    )
+  }
+
+  // Earth
+  // TODO: consider moving ground below boundaries to drawBoundaries
+  // since it needs to read from those data now
+  // Make intermediary values to use drawEarth from export-image library
+  drawEarth(
+    ctx,
+    street,
+    width / multiplier,
+    horizonLine / multiplier,
+    groundLevel / multiplier,
+    dpi * multiplier
+  )
+
+  // Buildings
+  drawBoundaries(
+    ctx,
+    street,
+    width,
+    dpi,
+    multiplier,
+    groundLevel,
+    buildingOffsetLeft
+  )
+
+  // Slices
+  drawSlices(ctx, street, dpi, multiplier, groundLevel, offsetLeft)
+
+  // Labels (background)
+  if (labels || silhouette) {
+    drawLabelBackground(
+      ctx,
+      width / multiplier,
+      height / multiplier,
+      groundLevel / multiplier,
+      dpi * multiplier
+    )
+  }
+
+  // Labels (slice names and widths)
+  // Skip if we don't need locale, either.
+  if (labels && locale) {
+    await drawLabels(
+      ctx,
+      street,
+      groundLevel / multiplier,
+      offsetLeft / multiplier,
+      dpi * multiplier,
+      locale,
+      // On the client side we pass in the client-specific locale lookup fn
+      // This is pretty hacky, but I'm leaving it in while we transition the
+      // thumbnail drawing to back end.
+      (type, variantString) => getLocaleSliceName(type, variantString)
+    )
+  }
+
+  // Silhouette
+  if (silhouette) {
+    drawSilhouette(
+      ctx,
+      width / multiplier,
+      height / multiplier,
+      dpi * multiplier
+    )
+  }
+
+  // Flooding
+  if (seaLevelRise) {
+    await drawSeaLevelRise(
+      ctx,
+      street,
+      floodDetails,
+      stormSurge,
+      width / multiplier,
+      groundLevel / multiplier,
+      dpi * multiplier
+    )
+  }
+
+  // Street nameplate
+  if (streetName) {
+    const streetName =
+      street.name ?? formatMessage('street.default-name', 'Unnamed St')
+    drawNameplate(ctx, streetName, width / multiplier, dpi * multiplier)
+  }
+
+  // Watermark
+  // `watermark` is typically a boolean but a special case value of 'coastmix'
+  // draws the Coastmix branded watermark instead.
+  if (watermark) {
+    drawWatermark(ctx, dpi, !labels, watermark === 'coastmix')
+  }
+}

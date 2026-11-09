@@ -1,0 +1,147 @@
+import { formatMessage } from '../locales/locale.js'
+import { getSignInData, isSignedIn } from '../users/authentication.js'
+import { newBlockingAjaxRequest } from '../util/fetch_blocking.js'
+import store from '../store'
+import {
+  saveStreetName,
+  updateEditCount,
+  saveOriginalStreetId,
+} from '../store/slices/street.js'
+import { addToast } from '../store/slices/toasts.js'
+import { setStreetCreatorId } from './data_model.js'
+import { saveStreetToServer, packServerStreetData, setStreetId } from './xhr.js'
+
+const STREET_NAME_REMIX_SUFFIX = '(remix)'
+let remixOnFirstEdit = false
+
+export function getRemixOnFirstEdit(): boolean {
+  return remixOnFirstEdit
+}
+
+export function setRemixOnFirstEdit(value: boolean): void {
+  remixOnFirstEdit = value
+}
+
+// Auto “promote” (remix) the street if you just signed in and the street
+// was anonymous
+let promoteStreet = false
+
+export function getPromoteStreet(): boolean {
+  return promoteStreet
+}
+
+export function setPromoteStreet(value: boolean): void {
+  promoteStreet = value
+}
+
+function didLatestDeltaChangeStreetName(): boolean {
+  const { stack, position } = store.getState().history
+  if (position === null) {
+    return false
+  }
+
+  const entry = stack[position]
+  if (!entry) {
+    return false
+  }
+
+  return Object.prototype.hasOwnProperty.call(entry, 'name')
+}
+
+export function remixStreet() {
+  let dontAddSuffix
+
+  const { readOnly } = store.getState().app
+  if (readOnly) {
+    return
+  }
+
+  remixOnFirstEdit = false
+
+  if (isSignedIn()) {
+    // If we're signed in, there should always be a userId, but the type checker
+    // wants us to account for the value still being `null`.
+    // Note: in Coastmix mode, we assume "signed in" with a `null` user.
+    setStreetCreatorId(getSignInData()?.userId ?? null)
+  } else {
+    setStreetCreatorId(null)
+  }
+
+  const street = store.getState().street
+  store.dispatch(saveOriginalStreetId(street.id))
+  store.dispatch(updateEditCount(0))
+
+  if (didLatestDeltaChangeStreetName()) {
+    // The street was remixed as a result of editing its name. Don’t be
+    // a douche and add (remixed) to it then.
+    dontAddSuffix = true
+  } else {
+    dontAddSuffix = false
+  }
+
+  if (!promoteStreet && !dontAddSuffix) {
+    addRemixSuffixToName()
+  }
+
+  const transmission = packServerStreetData()
+
+  // @ts-expect-error TS2554 vendored streetmix, fix during cleanup
+  newBlockingAjaxRequest(
+    'remix',
+    {
+      // TODO const
+      url: '/api/v1/streets',
+      method: 'POST',
+      body: transmission,
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+    receiveRemixedStreet
+  )
+}
+
+// @ts-expect-error TS7006 vendored streetmix, fix during cleanup
+function receiveRemixedStreet(data) {
+  if (!promoteStreet) {
+    if (isSignedIn()) {
+      store.dispatch(
+        addToast({
+          message: formatMessage(
+            'toast.remixing',
+            'Now editing a freshly-made duplicate of the original street. The duplicate has been put in your gallery.'
+          ),
+        })
+      )
+    } else {
+      store.dispatch(
+        addToast({
+          message: formatMessage(
+            'toast.remixing-sign-in',
+            'Now editing a freshly-made duplicate of the original street. Sign in to start your own gallery of streets.'
+          ),
+          component: 'TOAST_SIGN_IN',
+          duration: 12000,
+        })
+      )
+    }
+  }
+
+  setStreetId(data.id, data.namespacedId)
+
+  saveStreetToServer(false)
+}
+
+export function addRemixSuffixToName() {
+  const street = store.getState().street
+
+  // Bail if street is unnamed
+  if (!street.name) return
+
+  // Only add `(remix)` suffix if it's not already there
+  if (!street.name.endsWith(STREET_NAME_REMIX_SUFFIX)) {
+    const newStreetName = `${street.name} ${STREET_NAME_REMIX_SUFFIX}`
+    store.dispatch(saveStreetName(newStreetName, false))
+  }
+}

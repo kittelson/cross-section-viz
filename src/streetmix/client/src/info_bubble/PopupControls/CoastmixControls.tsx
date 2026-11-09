@@ -1,0 +1,97 @@
+import { useIntl } from 'react-intl'
+import { getBoundaryItem, getSegmentVariantInfo } from '@/streetmix/packages/parts/src'
+
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
+import { Tooltip } from '@/streetmix/client/src/ui/Tooltip.js'
+import { ElevationControlNew } from './ElevationControlNew.js'
+import { SlopeToggle } from './SlopeToggle.js'
+import { SlopeControl } from './SlopeControl.js'
+
+import type { BoundaryPosition } from '@/streetmix/packages/types/src'
+
+interface CoastmixControlProps {
+  position: number | BoundaryPosition
+}
+
+export function CoastmixControls({ position }: CoastmixControlProps) {
+  const units = useSelector((state) => state.street.units)
+  const elevation = useSelector((state) => {
+    if (typeof position === 'number') {
+      return state.street.segments[position].elevation
+    } else {
+      return state.street.boundary[position].elevation
+    }
+  })
+  const slice = useSelector((state) => {
+    if (typeof position === 'number') {
+      return state.street.segments[position]
+    } else {
+      return null
+    }
+  })
+  const isWaterBoundary = useSelector((state) => {
+    if (typeof position !== 'number') {
+      const variant = state.street.boundary[position].variant
+      const definition = getBoundaryItem(variant)
+      return definition.waterfront ?? false
+    } else {
+      return false
+    }
+  })
+
+  const intl = useIntl()
+  const label = isWaterBoundary
+    ? intl.formatMessage({
+        id: 'segments.controls.sea-level',
+        defaultMessage: 'Sea level',
+      })
+    : intl.formatMessage({
+        id: 'segments.controls.ground-height',
+        defaultMessage: 'Ground height',
+      })
+
+  // Allow sloping when slope rule is `path` or `berm`. Defaults to false.
+  let isSloped = false
+  let allowSlope = false
+  if (slice) {
+    const info = getSegmentVariantInfo(slice.type, slice.variantString)
+    if (!('unknown' in info)) {
+      allowSlope = info.slope === 'path' || info.slope === 'berm'
+      isSloped = allowSlope && slice.slope.on
+    }
+  }
+
+  return (
+    <>
+      {/* No slope control for boundaries */}
+      {typeof position === 'number' && (
+        <SlopeToggle
+          position={position}
+          checked={isSloped}
+          disabled={!allowSlope}
+        />
+      )}
+      {isSloped ? (
+        // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
+        <SlopeControl position={position} />
+      ) : (
+        <div className="popup-control-row">
+          <div className="popup-control-label">
+            <Tooltip label={label} placement="left">
+              <span className="popup-control-icon">
+                <Icon name="elevation" size="30" stroke="1.5" />
+              </span>
+            </Tooltip>
+          </div>
+          <ElevationControlNew
+            position={position}
+            elevation={elevation}
+            units={units}
+            seaLevel={isWaterBoundary}
+          />
+        </div>
+      )}
+    </>
+  )
+}

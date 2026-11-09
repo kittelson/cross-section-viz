@@ -1,0 +1,329 @@
+import { useState, useRef, useEffect, useCallback } from 'react'
+import { CSSTransition } from 'react-transition-group'
+import { useDrag, useDrop } from 'react-dnd'
+import { getSegmentInfo } from '@/streetmix/packages/parts/src'
+
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { PopupContainer } from '@/streetmix/client/src/info_bubble/PopupContainer.js'
+import { EmptyDragPreview } from '@/streetmix/client/src/ui/dnd/EmptyDragPreview.js'
+import { usePrevious } from '@/streetmix/client/src/util/usePrevious.js'
+import { setActiveSegment } from '../store/slices/ui.js'
+import {
+  incrementSegmentWidth,
+  removeSegmentAction,
+  clearSegmentsAction,
+} from '../store/actions/street.js'
+import { getSegmentCapacity } from './capacity.js'
+import { getLocaleSliceName } from './labels.js'
+import { ResizeHandles } from './ResizeHandles.js'
+import { SegmentCanvas } from './SegmentCanvas.js'
+import { SegmentLabelContainer } from './SegmentLabelContainer.js'
+import { TILE_SIZE } from './constants.js'
+import {
+  createSliceDragSpec,
+  createSliceDropTargetSpec,
+} from './drag_and_drop.js'
+import { RESIZE_TYPE_INCREMENT } from './resizing.js'
+import { TestSlope } from './TestSlope.js'
+import './Segment.css'
+
+import type { SliceItem, UnitsSetting } from '@/streetmix/packages/types/src'
+
+interface SliceProps {
+  sliceIndex: number
+  segment: SliceItem
+  units: UnitsSetting
+  segmentLeft: number
+}
+
+export function Segment(props: SliceProps) {
+  const { sliceIndex, segment, units, segmentLeft } = props
+  const [switchSegments, setSwitchSegments] = useState(false)
+  const [oldVariant, setOldVariant] = useState<string>(segment.variantString)
+
+  const street = useSelector((state) => state.street)
+  const warnings = useSelector(
+    (state) => state.warnings.slices[segment.id] ?? {}
+  )
+  const enableAnalytics = useSelector(
+    (state) => state.flags.ANALYTICS.value && state.street.showAnalytics
+  )
+  const locale = useSelector((state) => state.locale.locale)
+  const activeSegment = useSelector((state) => state.ui.activeSegment)
+  const readOnly = useSelector((state) => state.app.readOnly)
+  const infoBubbleHovered = useSelector((state) => state.infoBubble.mouseInside)
+  const dispatch = useDispatch()
+
+  const elementRef = useRef<HTMLDivElement>(null)
+  const dndRef = useRef<HTMLDivElement>(null)
+
+  // These refs are a workaround for CSSTransition's dependence on
+  // findDOMNode, which is deprecated.
+  const oldRef = useRef<HTMLDivElement>(null)
+  const newRef = useRef<HTMLDivElement>(null)
+
+  // Set up drag and drop targets
+  // Specs are created on each render with changed props
+  const dropSpec = createSliceDropTargetSpec(sliceIndex, segment, elementRef)
+  const [, drop] = useDrop(dropSpec)
+  const dragSpec = createSliceDragSpec(sliceIndex, segment)
+  const [collected, drag, dragPreview] = useDrag(dragSpec)
+  const { isDragging }: { isDragging: boolean } = collected
+  drag(drop(dndRef))
+
+  // Keep previous state for comparisons (ported from legacy behavior)
+  const prevProps = usePrevious({
+    segment,
+    isDragging,
+  })
+
+  useEffect(() => {
+    if (
+      prevProps !== null &&
+      prevProps.segment.variantString !== segment.variantString
+    ) {
+      handleSwitchSegments(prevProps.segment.variantString)
+    }
+  }, [segment.variantString])
+
+  const decrementWidth = useCallback(
+    (position: number, finetune: boolean): void => {
+      dispatch(
+        incrementSegmentWidth(
+          position, // slice index
+          false, // subtract
+          finetune, // true if shift key is pressed
+          RESIZE_TYPE_INCREMENT
+        )
+      )
+    },
+    [dispatch]
+  )
+
+  const incrementWidth = useCallback(
+    (position: number, finetune: boolean): void => {
+      dispatch(
+        incrementSegmentWidth(
+          position, // slice index
+          true, // add
+          finetune, // true if shift key is pressed
+          RESIZE_TYPE_INCREMENT
+        )
+      )
+    },
+    [dispatch]
+  )
+
+  // `event` type is not a React event because listener is attached through DOM
+  // We need to define a callback so React can properly clean up event handlers
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent): void => {
+      // Bail if hovered over infobubble popup
+      // or in read-only mode
+      if (readOnly || infoBubbleHovered) return
+
+      switch (event.key) {
+        case '-':
+        case '_':
+          if (event.metaKey || event.ctrlKey || event.altKey) return
+
+          event.preventDefault()
+          decrementWidth(sliceIndex, event.shiftKey)
+          break
+        // Plus (+) may only triggered with shift key, so also check if
+        // the same physical key (Equal) is pressed
+        case '+':
+        case '=':
+          if (event.metaKey || event.ctrlKey || event.altKey) return
+
+          event.preventDefault()
+          incrementWidth(sliceIndex, event.shiftKey)
+          break
+        case 'Backspace':
+        case 'Delete':
+          // If the shift key is pressed, we remove all segments
+          if (event.shiftKey) {
+            dispatch(clearSegmentsAction())
+          } else {
+            dispatch(removeSegmentAction(sliceIndex))
+          }
+          break
+        default:
+          break
+      }
+    },
+    [
+      decrementWidth,
+      incrementWidth,
+      sliceIndex,
+      infoBubbleHovered,
+      dispatch,
+      readOnly,
+    ]
+  )
+
+  // Cleanup effect
+  useEffect(() => {
+    // Event handler is only added on mouseover, but definitely remove if
+    // component is unmounted.
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [handleKeyDown])
+
+  // When called by CSSTransition `onExited`, `oldVariant` is not passed to the
+  // function (is undefined). `switchSegments` should be `true` when this happens.
+  function handleSwitchSegments(oldVariant?: string) {
+    setSwitchSegments(!switchSegments)
+    if (switchSegments) {
+      setOldVariant(segment.variantString)
+    } else {
+      if (oldVariant === undefined) {
+        throw new Error('oldVariant should be defined')
+      }
+      setOldVariant(oldVariant)
+    }
+  }
+
+  function handleSegmentMouseEnter() {
+    if (readOnly) return
+    dispatch(setActiveSegment(sliceIndex))
+    document.addEventListener('keydown', handleKeyDown)
+  }
+
+  function handleSegmentMouseLeave() {
+    if (readOnly) return
+
+    dispatch(setActiveSegment(null))
+    document.removeEventListener('keydown', handleKeyDown)
+  }
+
+  function renderSegmentCanvas(
+    variantType: string,
+    nodeRef: React.RefObject<HTMLDivElement | null>
+  ) {
+    const isOldVariant = variantType === 'old'
+
+    return (
+      <div ref={nodeRef} style={{ width: '100%', height: '100%' }}>
+        <SegmentCanvas
+          actualWidth={segment.width}
+          type={segment.type}
+          variantString={isOldVariant ? oldVariant : segment.variantString}
+          // The segment ID is a string that uniquely identifies the segment
+          // and can be used as a consistent and reliable seed for a PRNG
+          randSeed={segment.id}
+          elevation={segment.elevation}
+          slope={segment.slope}
+        />
+      </div>
+    )
+  }
+
+  const segmentInfo = getSegmentInfo(segment.type)
+
+  // Get localized names from store, fall back to segment default names if
+  // translated text is not found. TODO: port to react-intl/formatMessage later.
+  const displayName =
+    segment.label ?? getLocaleSliceName(segment.type, segment.variantString)
+
+  const average = getSegmentCapacity(
+    segment,
+    street.capacitySource,
+    warnings
+  )?.average
+  const elementWidth = segment.width * TILE_SIZE
+
+  const segmentStyle = {
+    width: elementWidth + 'px',
+    zIndex: segmentInfo.zIndex,
+    transform: `translateX(${segmentLeft}px)`,
+  }
+
+  const classNames = ['segment']
+
+  if (isDragging) {
+    classNames.push('dragged-out')
+  } else if (activeSegment === sliceIndex) {
+    classNames.push('active')
+  }
+
+  // Warnings
+  if (
+    warnings.outOfBounds ||
+    warnings.tooNarrow ||
+    warnings.tooWide ||
+    warnings.slopeBermExceeded ||
+    warnings.slopePathExceeded
+  ) {
+    classNames.push('warning')
+  }
+  if (warnings.outOfBounds) {
+    classNames.push('outside')
+  }
+
+  return (
+    <div
+      style={segmentStyle}
+      className={classNames.join(' ')}
+      data-testid="segment"
+      ref={elementRef}
+      onMouseEnter={handleSegmentMouseEnter}
+      onMouseLeave={handleSegmentMouseLeave}
+    >
+      <PopupContainer
+        type="slice"
+        position={sliceIndex}
+        isDragging={isDragging}
+        disabled={readOnly}
+      >
+        <button
+          className="slice-button"
+          data-slice-index={sliceIndex} /* Only used for tour */
+          data-slice-left={segmentLeft}
+          data-slice-label={displayName}
+        >
+          <SegmentLabelContainer
+            label={displayName}
+            width={segment.width}
+            units={units}
+            locale={locale}
+            capacity={average}
+            showCapacity={enableAnalytics}
+          />
+          <div ref={dndRef} className="segment-canvas-container">
+            <CSSTransition
+              key="old-variant"
+              in={!switchSegments}
+              classNames="switching-away"
+              timeout={250}
+              onExited={handleSwitchSegments}
+              unmountOnExit
+              nodeRef={oldRef}
+            >
+              {renderSegmentCanvas('old', oldRef)}
+            </CSSTransition>
+            <CSSTransition
+              key="new-variant"
+              in={switchSegments}
+              classNames="switching-in"
+              timeout={250}
+              unmountOnExit
+              nodeRef={newRef}
+            >
+              {renderSegmentCanvas('new', newRef)}
+            </CSSTransition>
+          </div>
+          <TestSlope slice={segment} />
+          <div className="active-bg" />
+          <EmptyDragPreview dragPreview={dragPreview} />
+        </button>
+      </PopupContainer>
+      <ResizeHandles
+        width={elementWidth}
+        sliceIndex={sliceIndex}
+        show={activeSegment === sliceIndex}
+      />
+    </div>
+  )
+}

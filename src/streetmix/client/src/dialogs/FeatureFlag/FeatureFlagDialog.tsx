@@ -1,0 +1,58 @@
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { setFeatureFlag } from '@/streetmix/client/src/store/slices/flags.js'
+import { Checkbox } from '@/streetmix/client/src/ui/Checkbox.js'
+import { Dialog } from '../Dialog.js'
+import './FeatureFlagDialog.css'
+
+/* Debug-only feature */
+/* eslint-disable formatjs/no-literal-string-in-jsx */
+
+export function FeatureFlagDialog() {
+  const flags = useSelector((state) => state.flags)
+  const dispatch = useDispatch()
+
+  function renderFlagList(): React.ReactElement[] {
+    return Object.entries(flags).map(([key, flag]) => {
+      // If the setting has changed, display it differently
+      const isNotDefault = flag.defaultValue !== flag.value
+      const labelClassName = isNotDefault ? 'feature-flag-label-modified' : ''
+
+      return (
+        <li key={key}>
+          <Checkbox
+            onChange={(event) => {
+              dispatch(
+                setFeatureFlag({
+                  flag: key,
+                  value: event.target.checked,
+                })
+              )
+            }}
+            checked={flags[key].value}
+            disabled={flag.enabled === false}
+          >
+            <span className={labelClassName}>{flag.label}</span>
+          </Checkbox>
+        </li>
+      )
+    })
+  }
+
+  return (
+    <Dialog>
+      {(closeDialog) => (
+        <div className="feature-flag-dialog" dir="ltr">
+          <header>
+            <h1>Feature flags</h1>
+          </header>
+          <div className="dialog-content">
+            <ul>{renderFlagList()}</ul>
+          </div>
+          <button className="dialog-primary-action" onClick={closeDialog}>
+            Close
+          </button>
+        </div>
+      )}
+    </Dialog>
+  )
+}

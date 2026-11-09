@@ -1,0 +1,50 @@
+import store, { type RootState } from '../store'
+import { getRemixOnFirstEdit } from './remix.js'
+
+/**
+ * A helper function that tells us whether the current street is
+ * "owned" by the current user. There are two kinds of ownership:
+ *
+ * (1) the street has a known creator ID, and the user is
+ *     currently signed in with the same creator ID.
+ * (2) the street has no creator ID (it is anonymous), and the
+ *     user is not currently signed in, but is editing the street
+ *     within the same session.
+ *
+ * The second one is the hard one because anonymous streets are
+ * regarded as orphaned the moment user leaves the session. We
+ * currently have no way of tracking anonymous streets across
+ * multiple sessions (or even a single tab reload).
+ *
+ * TODO: Remove dependency on `getRemixOnFirstEdit()`, which is
+ * a variable that's set when a page is loaded to track whether the
+ * current anonymous street belongs to the current session.
+ *
+ * Allows passing in state as a parameter so it can be used as a
+ * selector. If not provided, read from singleton state.
+ */
+export function isOwnedByCurrentUser(state?: RootState) {
+  if (!state) {
+    state = store.getState()
+  }
+
+  if (!state) return false
+
+  // Force undo/redo availability in Coastmix mode
+  const isCoastmixMode = store.getState().flags.COASTMIX_MODE.value ?? false
+  if (isCoastmixMode) {
+    return true
+  }
+
+  const signedIn = state.user?.signedIn || false
+  const creatorId = state.street?.creatorId || null
+  const userId = state.user?.signInData?.userId || null
+
+  if (signedIn && creatorId && creatorId === userId) {
+    return true
+  } else if (!creatorId && !signedIn && !getRemixOnFirstEdit()) {
+    return true
+  }
+
+  return false
+}

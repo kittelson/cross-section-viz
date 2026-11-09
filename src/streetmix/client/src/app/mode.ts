@@ -1,0 +1,90 @@
+import { ERRORS, showError } from './errors.js'
+import { setServerContacted } from './initialization.js'
+
+export const MODES = {
+  CONTINUE: 1,
+  NEW_STREET: 2,
+  NEW_STREET_COPY_LAST: 3,
+  JUST_SIGNED_IN: 4,
+  EXISTING_STREET: 5,
+  NOT_FOUND: 6, // Deprecated. Do not use.
+  SIGN_OUT: 7,
+  FORCE_RELOAD_SIGN_IN: 8,
+  FORCE_RELOAD_SIGN_OUT: 9,
+  USER_GALLERY: 10,
+  GLOBAL_GALLERY: 11,
+  ERROR: 13,
+  UNSUPPORTED_BROWSER: 14, // Deprecated. Do not use.
+  // STREET_404: 15, // Deprecated. Do not use.
+  // STREET_404_BUT_LINK_TO_USER: 16, // Deprecated. Do not use.
+  // STREET_410_BUT_LINK_TO_USER: 17, // Deprecated. Do not use.
+  ABOUT: 18,
+  AUTH_EXPIRED: 19,
+  SURVEY_FINISHED: 20,
+} as const
+
+type ModeValue = (typeof MODES)[keyof typeof MODES]
+
+let mode: ModeValue
+let modeData = {}
+
+export function getMode() {
+  return mode
+}
+
+export function getModeData() {
+  return modeData
+}
+
+export function setMode(value: ModeValue, data = {}) {
+  mode = value
+  modeData = data
+}
+
+export function processMode() {
+  setServerContacted(true)
+
+  switch (mode) {
+    // Deprecated (formerly errors that are now handled by back-end)
+    case MODES.ERROR:
+      showError(ERRORS.GENERIC_ERROR, true)
+      break
+    // Deprecated
+    case MODES.UNSUPPORTED_BROWSER:
+      showError(ERRORS.UNSUPPORTED_BROWSER, true)
+      break
+    case MODES.AUTH_EXPIRED:
+      showError(ERRORS.AUTH_EXPIRED, true)
+      break
+    case MODES.NOT_FOUND:
+      showError(ERRORS.NOT_FOUND, true)
+      break
+    case MODES.SIGN_OUT:
+      showError(ERRORS.SIGN_OUT, true)
+      break
+    case MODES.FORCE_RELOAD_SIGN_OUT:
+      showError(ERRORS.FORCE_RELOAD_SIGN_OUT, true)
+      break
+    case MODES.FORCE_RELOAD_SIGN_IN:
+      showError(ERRORS.FORCE_RELOAD_SIGN_IN, true)
+      break
+    case MODES.NEW_STREET:
+    case MODES.NEW_STREET_COPY_LAST:
+      setServerContacted(false)
+      break
+    case MODES.CONTINUE:
+    case MODES.USER_GALLERY:
+    case MODES.GLOBAL_GALLERY:
+      setServerContacted(false)
+      break
+    case MODES.JUST_SIGNED_IN:
+      setServerContacted(false)
+      break
+    case MODES.SURVEY_FINISHED:
+      setServerContacted(false)
+      break
+    case MODES.EXISTING_STREET:
+      setServerContacted(false)
+      break
+  }
+}
