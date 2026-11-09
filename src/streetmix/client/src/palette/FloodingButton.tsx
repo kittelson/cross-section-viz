@@ -24,7 +24,6 @@ export function FloodingButton() {
       <Button
         onClick={handleClickTools}
         aria-label={label}
-        data-tour-id="flooding-controls-button"
       >
         <Icon name="boat" size="24" />
       </Button>

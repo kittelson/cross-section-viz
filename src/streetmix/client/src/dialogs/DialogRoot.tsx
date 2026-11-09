@@ -14,7 +14,6 @@ import { NewsletterDialog } from './Newsletter'
 import { UpgradeDialog } from './Upgrade'
 import { SentimentSurveyDialog } from './SentimentSurvey'
 import { ErrorDialog } from './ErrorDialog.js'
-import { CoastmixTutorialComplete } from './CoastmixTutorial.js'
 
 const DIALOG_COMPONENTS = {
   ABOUT: AboutDialog,
@@ -28,7 +27,6 @@ const DIALOG_COMPONENTS = {
   NEWSLETTER: NewsletterDialog,
   UPGRADE: UpgradeDialog,
   SENTIMENT_SURVEY: SentimentSurveyDialog,
-  COASTMIX_TUTORIAL_COMPLETE: CoastmixTutorialComplete,
 }
 
 export function DialogRoot() {

@@ -31,7 +31,7 @@ export function SlopeControl({ position }: SlopeControlProps) {
   })
 
   return (
-    <div className="non-variant" data-tour-id="slope-control-group">
+    <div className="non-variant">
       <div className="popup-control-row">
         <Tooltip label={leftLabel} placement="left" role="label">
           <span className="popup-control-icon">

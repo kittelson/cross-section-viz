@@ -31,7 +31,6 @@ export function EditableLabel({
       <h3
         className="popup-label popup-label-editable"
         onClick={handleClickEdit}
-        data-tour-id="editable-label"
       >
         {label}
         <Icon name="edit" size="18" className="popup-label-editable-icon" />
@@ -48,7 +47,6 @@ export function EditableLabel({
     >
       <h3
         className="popup-label popup-label-editable"
-        data-tour-id="editable-label"
       >
         {label}
         <Icon name="lock" className="popup-label-editable-icon" />

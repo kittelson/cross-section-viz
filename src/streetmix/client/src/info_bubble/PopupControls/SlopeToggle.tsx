@@ -38,7 +38,7 @@ export function SlopeToggle({ position, checked, disabled }: SlopeToggleProps) {
   })
 
   return (
-    <div className="popup-control-row" data-tour-id="slope-control">
+    <div className="popup-control-row">
       <div className="popup-control-label">
         <Tooltip label={label} placement="left" role="label">
           <span className="popup-control-icon">

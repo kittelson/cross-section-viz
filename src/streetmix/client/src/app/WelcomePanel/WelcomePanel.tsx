@@ -13,34 +13,19 @@ import { getIsReturningUser, setIsReturningUser } from './localstorage.js'
 import { FirstTimeExistingStreet } from './FirstTimeExistingStreet.js'
 import { FirstTimeNewStreet } from './FirstTimeNewStreet.js'
 import { WelcomeNewStreet } from './WelcomeNewStreet.js'
-import { WelcomeCoastmix } from './WelcomeCoastmix.js'
-import { WelcomeCoastmixNew } from './WelcomeCoastmixNew.js'
 import './WelcomePanel.css'
 
 const WELCOME_NONE = 0
 const WELCOME_NEW_STREET = 1
 const WELCOME_FIRST_TIME_NEW_STREET = 2
 const WELCOME_FIRST_TIME_EXISTING_STREET = 3
-const WELCOME_NEW_STREET_COASTMIX = 4
-const WELCOME_FIRST_TIME_COASTMIX = 5
 
-function determineWelcomeType(coastmixMode: boolean): number {
+function determineWelcomeType(): number {
   let type = WELCOME_NONE
   const mode = getMode()
   const isReturningUser = getIsReturningUser()
 
-  // Custom welcome type for Coastmix mode.
-  // TODO: any messaging changes for new streets?
-  if (coastmixMode) {
-    if (!isReturningUser) {
-      type = WELCOME_FIRST_TIME_COASTMIX
-    } else if (
-      mode === MODES.NEW_STREET ||
-      mode === MODES.NEW_STREET_COPY_LAST
-    ) {
-      type = WELCOME_NEW_STREET_COASTMIX
-    }
-  } else if (mode === MODES.NEW_STREET || mode === MODES.NEW_STREET_COPY_LAST) {
+  if (mode === MODES.NEW_STREET || mode === MODES.NEW_STREET_COPY_LAST) {
     if (isSignedIn() || isReturningUser) {
       type = WELCOME_NEW_STREET
     } else {
@@ -65,7 +50,7 @@ export function WelcomePanel() {
   const dispatch = useDispatch()
 
   // Determine what type of welcome panel to show
-  const type = determineWelcomeType(coastmixMode)
+  const type = determineWelcomeType()
 
   // Handler function is a callback to prevent re-running effects
   const handleDismissed = useCallback(() => {
@@ -84,12 +69,6 @@ export function WelcomePanel() {
       break
     case WELCOME_NEW_STREET:
       content = <WelcomeNewStreet handleDismiss={handleDismissed} />
-      break
-    case WELCOME_NEW_STREET_COASTMIX:
-      content = <WelcomeCoastmixNew handleDismiss={handleDismissed} />
-      break
-    case WELCOME_FIRST_TIME_COASTMIX:
-      content = <WelcomeCoastmix handleDismiss={handleDismissed} />
       break
     case WELCOME_NONE:
     default:

@@ -46,7 +46,7 @@ export function NewStreetMenu(props: MenuProps) {
             />
             <Icon name="external-link" />
           </MenuItem>
-          <MenuItem onClick={handleExamples} data-tour-id="new-street-examples">
+          <MenuItem onClick={handleExamples}>
             <FormattedMessage
               id="coastmix.new-from-examples"
               defaultMessage="From examples..."

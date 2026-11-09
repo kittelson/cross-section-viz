@@ -35,5 +35,5 @@
 
 #floating-tooltip-container {
   position: absolute;
-  z-index: 9998; /* Place below shepherd elements */
+  z-index: 9998;
 }

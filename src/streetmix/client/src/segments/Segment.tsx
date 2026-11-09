@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { useDrag, useDrop } from 'react-dnd'
-import { useShepherd } from 'react-shepherd'
 import { getSegmentInfo } from '@/streetmix/packages/parts/src'
 
 import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
@@ -77,9 +76,6 @@ export function Segment(props: SliceProps) {
     segment,
     isDragging,
   })
-
-  // Hack, need to read Shepherd tour state
-  const Shepherd = useShepherd()
 
   useEffect(() => {
     if (
@@ -197,12 +193,6 @@ export function Segment(props: SliceProps) {
 
   function handleSegmentMouseLeave() {
     if (readOnly) return
-
-    // Hack -- prevent this segment from being marked as inactive
-    // when there is an active tour on, because those elements steal
-    // focus. TODO: bug where this value is still active until this
-    // component re-renders.
-    if (Shepherd.activeTour) return
 
     dispatch(setActiveSegment(null))
     document.removeEventListener('keydown', handleKeyDown)

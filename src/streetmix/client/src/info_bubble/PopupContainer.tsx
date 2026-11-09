@@ -19,7 +19,6 @@ import {
   FloatingArrow,
   FloatingNode,
 } from '@floating-ui/react'
-import { useShepherd } from 'react-shepherd'
 
 import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 import { PopupContent } from './PopupContent.js'
@@ -58,7 +57,6 @@ export function PopupContainer({
   children,
   ...props
 }: PopupContainerProps) {
-  const activeSegment = useSelector((state) => state.ui.activeSegment)
   const element = useSelector((state) => {
     if (props.type === 'boundary') {
       return state.street.boundary[props.position]
@@ -70,7 +68,6 @@ export function PopupContainer({
   const [isArrowHighlighted, setArrowHighlighted] = useState(false)
   const arrowRef = useRef(null)
   const nodeId = useFloatingNodeId()
-  const Shepherd = useShepherd()
 
   // Handle programatically dismissing this popup when needed
   useEffect(() => {
@@ -87,13 +84,6 @@ export function PopupContainer({
     nodeId,
     open: isOpen && !isDragging && !disabled,
     onOpenChange(isOpen, _event, _reason) {
-      // If the popup will close because focus is being shifted to a
-      // Shepherd.js tour element, do not allow it to close.
-      if (Shepherd.activeTour && activeSegment === props.position) {
-        setIsOpen(true)
-        return
-      }
-
       setIsOpen(isOpen)
 
       // Use this to debug why the popup will open or close

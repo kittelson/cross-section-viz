@@ -136,7 +136,7 @@ export function CoastalFloodingPanel() {
       handleClose={handleClose}
     >
       <div className="popup-controls flood-controls-content">
-        <div className="popup-control-group" data-tour-id="sea-level-control">
+        <div className="popup-control-group">
           <div className="popup-control-label">
             <FormattedMessage
               id="tools.sea-level.label"
@@ -158,7 +158,6 @@ export function CoastalFloodingPanel() {
             {/* eslint-disable formatjs/no-literal-string-in-jsx */}
             <Button
               className={`sea-level-button${targetYear === 2030 ? ' sea-level-selected' : ''}`}
-              data-tour-id="2030-sea-level-rise"
               onClick={() => {
                 changeTargetYear(2030)
               }}
@@ -184,7 +183,7 @@ export function CoastalFloodingPanel() {
             {/* eslint-enable formatjs/no-literal-string-in-jsx */}
           </div>
         </div>
-        <div className="popup-control-group" data-tour-id="storm-surge-control">
+        <div className="popup-control-group">
           <div className="popup-control-label">
             <FormattedMessage
               id="tools.storm-surge.label"
@@ -195,7 +194,6 @@ export function CoastalFloodingPanel() {
         </div>
         <div
           className={messageClassNames.join(' ')}
-          data-tour-id="flooding-message"
         >
           {message}
           {additionalMessages.length > 0 && (

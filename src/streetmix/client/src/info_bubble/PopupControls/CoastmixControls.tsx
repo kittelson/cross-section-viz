@@ -76,7 +76,7 @@ export function CoastmixControls({ position }: CoastmixControlProps) {
         // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
         <SlopeControl position={position} />
       ) : (
-        <div className="popup-control-row" data-tour-id="elevation-control">
+        <div className="popup-control-row">
           <div className="popup-control-label">
             <Tooltip label={label} placement="left">
               <span className="popup-control-icon">
