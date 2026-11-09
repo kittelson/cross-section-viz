@@ -4,6 +4,14 @@ import { z } from 'zod'
 // Types are listed here as an outline; the schemas they come from are
 // defined below, bottom-up, since a schema must exist before it is used.
 
+export type Analysis = z.infer<typeof analysisSchema>
+
+// Project outputs are a view of the analysis, not a separate copy.
+export type ProjectOutputs = Pick<
+  Analysis,
+  'existing' | 'alternatives' | 'measureGoalMatrix' | 'capacityAnalysis'
+>
+
 export type ProjectInputs = z.infer<typeof projectInputsSchema>
 export type LandUseContext = z.infer<typeof landUseContextSchema>
 export type RoadFunction = z.infer<typeof roadFunctionSchema>
@@ -166,3 +174,22 @@ export const capacityAnalysisSchema = z.object({
   ttlHoursBelowCapacity: z.number().min(0).max(24),
 })
 
+// ---- Analysis ----
+
+// Units: lengths in feet, speeds in mph. Convert only at the Streetmix boundary.
+// A step is null until the user completes it.
+export const analysisSchema = z.object({
+  id: z.uuid(),
+  createdAt: z.iso.datetime(),
+  updatedAt: z.iso.datetime(),
+  projectInputs: projectInputsSchema.nullable(),
+  existing: crossSectionSchema.nullable(),
+  // Existing right of way minus a value TBD
+  minimumSafeDimensionFt: z.number().nonnegative().nullable(),
+  alternatives: z.array(crossSectionSchema),
+  // Suggested edits (glyphs) and impact summary (values).
+  // Keyed by cross-section id (existing or an alternative)
+  measureGoalMatrix: z.record(z.uuid(), measureGoalMatrixSchema),
+  // Keyed by cross-section id (existing or an alternative)
+  capacityAnalysis: z.record(z.uuid(), capacityAnalysisSchema),
+})
