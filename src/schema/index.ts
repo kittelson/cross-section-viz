@@ -13,6 +13,7 @@ export type MeasureGoalCell = z.infer<typeof measureGoalCellSchema>
 export type MeasureValue = z.infer<typeof measureValueSchema>
 export type MeasureEffect = z.infer<typeof measureEffectSchema>
 export type Measure = z.infer<typeof measureSchema>
+export type CapacityAnalysis = z.infer<typeof capacityAnalysisSchema>
 
 // ---- Project inputs ----
 
@@ -142,4 +143,26 @@ export const measureGoalMatrixSchema = z.partialRecord(
   measureSchema,
   z.partialRecord(projectGoalSchema, measureGoalCellSchema),
 )
+
+// ---- Capacity analysis ----
+
+export const downstreamIntersectionSchema = z.enum([
+  'signalTwoLane',
+  'signalFourLane',
+  'signalSixLane',
+  'signalEightLane',
+])
+
+// Capacity results for one cross-section. Percents are stored as fractions
+// (0.25 = 25%), as in Excel.
+export const capacityAnalysisSchema = z.object({
+  aadt: z.number().int().min(0),
+  controllingDownstreamIntersection: downstreamIntersectionSchema,
+  dFactor: z.number().nonnegative(),
+  gcRatio: z.number().nonnegative().min(0).max(1),
+  maxDCRatio: z.number().nonnegative().min(0).max(1),
+  efficiency16hr: z.number().min(0).max(1), // percent
+  excessCapacity16hr: z.number(),
+  ttlHoursBelowCapacity: z.number().min(0).max(24),
+})
 
