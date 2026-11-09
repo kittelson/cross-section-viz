@@ -3,7 +3,6 @@ import { onStorageChange } from '../users/authentication.js'
 import { onGlobalKeyDown } from './keyboard_commands.js'
 import {
   onWindowBeforeUnload,
-  onNoConnection,
   onVisibilityChange,
   onWindowFocus,
 } from './event_handlers'
@@ -19,9 +18,6 @@ export function addEventListeners(): void {
   window.addEventListener('keydown', onGlobalKeyDown)
 
   window.addEventListener('beforeunload', onWindowBeforeUnload)
-
-  window.addEventListener('offline', onNoConnection)
-  window.addEventListener('stmx:api_max_connection', onNoConnection)
 
   // Add event listeners to handle when a window is switched away from view,
   // then returns to view again. If the Page Visibility API exists, we use this.

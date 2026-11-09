@@ -11,7 +11,6 @@ import './DescriptionPanel.css'
 export function DescriptionPanel() {
   const show = useSelector((state) => state.infoBubble.descriptionVisible)
   const description = useSelector((state) => state.infoBubble.descriptionData)
-  const offline = useSelector((state) => state.system.offline)
   const locale = useSelector((state) => state.locale)
   const dispatch = useDispatch()
 
@@ -48,10 +47,8 @@ export function DescriptionPanel() {
     'blockquote',
     'h1',
     'img',
+    'a',
   ]
-  if (!offline) {
-    allowedElements.push('a')
-  }
 
   return (
     <FloatingPanel

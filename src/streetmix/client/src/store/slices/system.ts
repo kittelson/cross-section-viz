@@ -4,7 +4,6 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 export interface SystemState {
   safari: boolean
   windows: boolean
-  offline: boolean
   devicePixelRatio: number
 }
 
@@ -14,7 +13,6 @@ const initialState: SystemState = {
       !navigator.userAgent.includes('Chrome')) ||
     false,
   windows: navigator.userAgent.includes('Windows') || false,
-  offline: false,
   devicePixelRatio: window.devicePixelRatio || 1.0,
 }
 

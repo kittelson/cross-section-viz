@@ -124,7 +124,6 @@ export function GeotagDialog() {
   const addressInformation = useSelector(
     (state) => state.map.addressInformation
   )
-  const offline = useSelector((state) => state.system.offline)
 
   // this kinda goofy initial state object is a result of refactoring
   // some legacy code. definetly worth refactoring further in the future
@@ -144,7 +143,7 @@ export function GeotagDialog() {
   const dispatch = useDispatch()
   const intl = useIntl()
 
-  const geocodeAvailable = !!PELIAS_API_KEY && !!PELIAS_HOST_NAME && !offline
+  const geocodeAvailable = !!PELIAS_API_KEY && !!PELIAS_HOST_NAME
 
   // `dpi` is a bad name for what is supposed to be referring to the devicePixelRatio
   // value. A devicePixelRatio higher than 1 (e.g. Retina or 4k monitors) will load

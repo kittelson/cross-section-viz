@@ -179,9 +179,6 @@ export function updatePageUrl(
   if (debug.forceReadOnly) {
     params.set('debug-force-read-only', '1')
   }
-  if (debug.forceOfflineMode) {
-    params.set('debug-force-offline', '1')
-  }
 
   // If we have params, append to the URL
   if (params.size > 0) {

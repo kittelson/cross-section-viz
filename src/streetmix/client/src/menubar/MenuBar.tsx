@@ -7,14 +7,9 @@ import bostonLogo from '@/streetmix/client/src/plugins/coastmix/images/boston-lo
 import { useSelector } from '../store/hooks.js'
 import AccessibleIcon from '../ui/AccessibleIcon.js'
 import { Icon } from '../ui/Icon.js'
-import { doSignIn } from '../users/authentication.js'
 import { InstanceBadge } from './InstanceBadge.js'
 import { MenuBarItem } from './MenuBarItem.js'
-import { SignInButton } from './SignInButton.js'
-import { UpgradeButton } from './UpgradeButton.js'
-import { AvatarMenu } from './AvatarMenu.js'
 
-import type { UserProfile } from '../types'
 import './MenuBar.css'
 
 export interface MenuCoords {
@@ -27,11 +22,6 @@ interface MenuBarProps {
 }
 
 export function MenuBar({ onMenuDropdownClick }: MenuBarProps) {
-  const user = useSelector((state) => state.user.signInData?.details)
-  const isSubscriber = useSelector(
-    (state) => state.user.signedIn && state.user.isSubscriber
-  )
-  const offline = useSelector((state) => state.system.offline)
   const enableLocaleSettings = useSelector(
     (state) =>
       state.flags.LOCALES_LEVEL_1.value ||
@@ -98,22 +88,6 @@ export function MenuBar({ onMenuDropdownClick }: MenuBarProps) {
     )
   }
 
-  function renderUserAvatar(user?: UserProfile) {
-    return user ? (
-      <li>
-        <AvatarMenu
-          user={user}
-          isSubscriber={isSubscriber}
-          onClick={handleClick('identity')}
-        />
-      </li>
-    ) : (
-      <li>
-        <SignInButton onClick={doSignIn} />
-      </li>
-    )
-  }
-
   const logoSrc = coastmixMode ? logoCoastmix : logo
 
   return (
@@ -148,21 +122,6 @@ export function MenuBar({ onMenuDropdownClick }: MenuBarProps) {
         <MenuBarItem id="menubar-help" onClick={handleClick('help')}>
           <FormattedMessage id="menu.item.help" defaultMessage="Help" />
         </MenuBarItem>
-        {!offline && !coastmixMode && (
-          <>
-            <MenuBarItem id="menubar-contact" onClick={handleClick('contact')}>
-              <FormattedMessage
-                id="menu.item.contact"
-                defaultMessage="Contact"
-              />
-            </MenuBarItem>
-            {!isSubscriber && (
-              <li>
-                <UpgradeButton />
-              </li>
-            )}
-          </>
-        )}
       </ul>
       <ul className="menu-bar-right" ref={menuBarRightEl}>
         {coastmixMode ? (
@@ -194,8 +153,6 @@ export function MenuBar({ onMenuDropdownClick }: MenuBarProps) {
             </AccessibleIcon>
           </MenuBarItem>
         )}
-        {/* @ts-expect-error TS2345 vendored streetmix, fix during cleanup */}
-        {!offline && !coastmixMode && renderUserAvatar(user)}
       </ul>
       <InstanceBadge />
     </nav>

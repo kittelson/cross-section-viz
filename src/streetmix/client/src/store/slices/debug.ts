@@ -4,14 +4,12 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 interface DebugState {
   forceLeftHandTraffic: boolean
   forceNonRetina: boolean
-  forceOfflineMode: boolean
   forceReadOnly: boolean
 }
 
 const initialState: DebugState = {
   forceLeftHandTraffic: false,
   forceNonRetina: false,
-  forceOfflineMode: false,
   forceReadOnly: false
 }
 

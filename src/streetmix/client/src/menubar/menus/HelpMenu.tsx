@@ -3,10 +3,7 @@ import { FormattedMessage } from 'react-intl'
 
 import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
 import { showDialog } from '@/streetmix/client/src/store/slices/dialogs.js'
-import { clearMenus } from '@/streetmix/client/src/store/slices/menus.js'
 import { Icon } from '@/streetmix/client/src/ui/Icon.js'
-import { CoastmixOnboardingTour } from '@/streetmix/client/src/ui/Tours/CoastmixOnboarding.js'
-import { CoastmixPracticeTour } from '@/streetmix/client/src/ui/Tours/CoastmixPractice.js'
 import { registerKeypress, deregisterKeypress } from '@/streetmix/client/src/app/keypress.js'
 import Menu, { type MenuProps } from './Menu.js'
 import { MenuItem } from './MenuItem.js'
@@ -14,7 +11,6 @@ import { MenuSeparator } from './MenuSeparator.js'
 import { KeyboardShortcuts } from './KeyboardShortcuts.js'
 
 export function HelpMenu(props: MenuProps) {
-  const offline = useSelector((state) => state.system.offline)
   const coastmixMode = useSelector(
     (state) => state.flags.COASTMIX_MODE?.value ?? false
   )
@@ -53,42 +49,6 @@ export function HelpMenu(props: MenuProps) {
             defaultMessage="What’s new?&lrm;"
           />
         </MenuItem>
-      )}
-      {!offline && (
-        <>
-          <MenuItem href="https://docs.streetmix.net/user-guide/intro">
-            <Icon name="trail-sign" className="menu-item-icon" />
-            <FormattedMessage
-              id="menu.help.guidebook-link"
-              defaultMessage="Guidebook"
-            />
-          </MenuItem>
-          {coastmixMode && (
-            <>
-              <CoastmixOnboardingTour>
-                {/* eslint-disable-next-line formatjs/no-literal-string-in-jsx */}
-                <MenuItem onClick={() => dispatch(clearMenus())}>
-                  Coastmix tutorial
-                </MenuItem>
-              </CoastmixOnboardingTour>
-              <CoastmixPracticeTour>
-                {/* eslint-disable-next-line formatjs/no-literal-string-in-jsx */}
-                <MenuItem onClick={() => dispatch(clearMenus())}>
-                  Coastmix practice scenario
-                </MenuItem>
-              </CoastmixPracticeTour>
-            </>
-          )}
-          {!coastmixMode && (
-            <>
-              <MenuSeparator />
-              <MenuItem href="https://cottonbureau.com/people/streetmix">
-                <Icon name="cart" className="menu-item-icon" />
-                <FormattedMessage id="menu.item.store" defaultMessage="Store" />
-              </MenuItem>
-            </>
-          )}
-        </>
       )}
       <MenuSeparator />
       <KeyboardShortcuts />

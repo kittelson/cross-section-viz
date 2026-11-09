@@ -1,4 +1,3 @@
-import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 import { Icon } from '@/streetmix/client/src/ui/Icon.js'
 
 interface ExternalLinkProps extends Partial<
@@ -16,12 +15,6 @@ export function ExternalLink({
   icon = false,
   ...restProps
 }: ExternalLinkProps) {
-  const offline = useSelector((state) => state.system.offline)
-
-  if (offline) {
-    return <>{children}</>
-  }
-
   return (
     <a href={href} target="_blank" rel="noopener noreferrer" {...restProps}>
       {children}

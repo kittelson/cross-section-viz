@@ -17,7 +17,6 @@ import './AboutDialog.css'
 /* eslint-disable formatjs/no-literal-string-in-jsx */
 
 export function AboutDialog() {
-  const offline = useSelector((state) => state.system.offline)
   const coastmixMode = useSelector(
     (state) => state.flags.COASTMIX_MODE?.value ?? false
   )
@@ -111,31 +110,6 @@ export function AboutDialog() {
                     </ExternalLink>
                   </li>
                 </ul>
-                {!offline && (
-                  <p>
-                    <a
-                      href="https://streetmix.net/terms-of-service/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <FormattedMessage
-                        id="dialogs.about.tos-link"
-                        defaultMessage="Terms of service"
-                      />
-                    </a>
-                    <br />
-                    <a
-                      href="https://streetmix.net/privacy-policy/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <FormattedMessage
-                        id="dialogs.about.privacy-link"
-                        defaultMessage="Privacy policy"
-                      />
-                    </a>
-                  </p>
-                )}
               </div>
               <div className="about-dialog-right">
                 <Credits />

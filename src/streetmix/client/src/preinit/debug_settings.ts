@@ -15,7 +15,6 @@ import { setDebugFlags } from '../store/slices/debug.js'
 export const debug = {
   forceLeftHandTraffic: false,
   forceNonRetina: false,
-  forceOfflineMode: false,
   forceReadOnly: false,
 }
 
@@ -32,10 +31,6 @@ if (params.has('debug-force-left-hand-traffic')) {
 
 if (params.has('debug-force-non-retina')) {
   debug.forceNonRetina = true
-}
-
-if (params.has('debug-force-offline')) {
-  debug.forceOfflineMode = true
 }
 
 if (params.has('debug-force-read-only')) {
