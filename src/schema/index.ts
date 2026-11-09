@@ -61,7 +61,13 @@ export const projectDetailsSchema = z.object({
 
 export const existingConditionsSchema = z.object({
   postedSpeedMph: z.number().int().min(5).max(85).multipleOf(5),
-  eightyFifthPercentileSpeedMph: z.number().int().min(5).max(85).multipleOf(5).nullable(),
+  eightyFifthPercentileSpeedMph: z
+    .number()
+    .int()
+    .min(5)
+    .max(85)
+    .multipleOf(5)
+    .nullable(),
   aadt: z.number().int().min(0),
 })
 
