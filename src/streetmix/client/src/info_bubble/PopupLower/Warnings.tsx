@@ -2,8 +2,8 @@ import { getSegmentInfo, SliceTypes } from '@/streetmix/packages/parts/src'
 import { FormattedMessage } from 'react-intl'
 
 // TODO: use <Icon />
-import alertIcon from '~/images/warning_alert.svg?url'
-import errorIcon from '~/images/warning_error.svg?url'
+import alertIcon from '@/streetmix/client/images/warning_alert.svg?url'
+import errorIcon from '@/streetmix/client/images/warning_error.svg?url'
 import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 import './Warnings.css'
 

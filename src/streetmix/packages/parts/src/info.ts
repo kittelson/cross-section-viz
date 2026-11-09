@@ -1,5 +1,5 @@
-import SEGMENT_LOOKUP_SOURCE from './data/segment-lookup.json' with { type: 'json' }
-import SPRITE_DEFS from './data/sprite_defs.json' with { type: 'json' }
+import SEGMENT_LOOKUP_SOURCE from '../data/segment-lookup.yaml'
+import SPRITE_DEFS from '../data/sprite_defs.yaml'
 import {
   // getSegmentLookup,
   applySegmentInfoOverridesAndRules,

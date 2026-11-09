@@ -1,7 +1,7 @@
 import { uniq } from 'es-toolkit/array'
 
-import SEGMENT_COMPONENTS from './data/components.json' with { type: 'json' }
-import SEGMENT_LOOKUP from './data/segment-lookup.json' with { type: 'json' }
+import SEGMENT_COMPONENTS from '../data/components.yaml'
+import SEGMENT_LOOKUP from '../data/segment-lookup.yaml'
 import { SEGMENT_UNKNOWN, SEGMENT_UNKNOWN_VARIANT } from './info.js'
 
 export const COMPONENT_GROUPS = {

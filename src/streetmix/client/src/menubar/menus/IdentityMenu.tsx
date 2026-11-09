@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { FormattedMessage } from 'react-intl'
 
-import streetmixPlusIcon from '~/src/ui/icons/streetmix-plus.svg?url'
+import streetmixPlusIcon from '@/streetmix/client/src/ui/icons/streetmix-plus.svg?url'
 import { signOut } from '@/streetmix/client/src/users/authentication.js'
 import { Avatar } from '@/streetmix/client/src/users/Avatar.js'
 import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'

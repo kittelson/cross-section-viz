@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { saveAs } from 'file-saver'
 
-import alertIcon from '~/images/warning_alert.svg?url'
+import alertIcon from '@/streetmix/client/images/warning_alert.svg?url'
 import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
 import { updateSettings } from '@/streetmix/client/src/store/slices/settings.js'
 import { Button } from '@/streetmix/client/src/ui/Button.js'

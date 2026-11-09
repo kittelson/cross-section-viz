@@ -1,4 +1,4 @@
-import BOUNDARY_DEFS from './data/boundary_defs.json' with { type: 'json' }
+import BOUNDARY_DEFS from '../data/boundary_defs.yaml'
 
 import type { BoundaryDefinition } from '@/streetmix/packages/types/src'
 
