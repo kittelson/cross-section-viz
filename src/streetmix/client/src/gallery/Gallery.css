@@ -1,0 +1,123 @@
+body.gallery-visible {
+  .main-screen {
+    transform: translateY(calc(var(--gallery-height) - 90px));
+  }
+
+  .street-nameplate-container {
+    transform: translateY(60px);
+  }
+}
+
+body:not(.safari).gallery-visible .street-section-sky {
+  transform: translateY(-20px);
+}
+
+.gallery-container {
+  /* Required for positioning when a notification banner is present */
+  position: relative;
+}
+
+.gallery-panel {
+  --gallery-border-radius: var(--border-radius);
+  --gallery-box-shadow: var(--medium-box-shadow);
+  --gallery-thumbnail-width: 180px;
+  --gallery-thumbnail-height: 110px;
+
+  position: absolute;
+  left: var(--left-right-inset);
+  right: var(--left-right-inset);
+  top: 0;
+  height: var(--gallery-height);
+  display: flex;
+  flex-direction: column;
+  padding: 8px 16px 16px;
+  gap: 4px;
+  z-index: var(--z-09-gallery);
+  border-bottom-left-radius: var(--gallery-border-radius);
+  border-bottom-right-radius: var(--gallery-border-radius);
+  background: white;
+  box-shadow: var(--gallery-box-shadow);
+  overflow: hidden;
+  pointer-events: none;
+  transform: translateY(calc(-1 * var(--gallery-height))) rotateX(25deg);
+  transform-origin: 50% 0;
+}
+
+.gallery-header {
+  display: flex;
+  flex-direction: row;
+  flex: 0 0 40px;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.gallery-label {
+  display: flex;
+  flex: 1 0 25%;
+  align-items: center;
+  font-size: 1.5em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    margin-inline: 0 0.25em;
+  }
+}
+
+.gallery-search {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.gallery-street-count {
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 25%;
+  gap: 0.25em;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 1.25em;
+  color: rgb(128 128 128);
+  white-space: nowrap;
+}
+
+.gallery-streets-container {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
+
+.gallery-loading,
+.gallery-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  z-index: var(--z-03-gallery-message);
+
+  a {
+    color: inherit;
+  }
+}
+
+.gallery-error p:first-child {
+  margin-top: 0;
+}
+
+body:not(.gallery-no-move-transition) .main-screen,
+body:not(.gallery-no-move-transition) .gallery-panel,
+body:not(.gallery-no-move-transition) .street-nameplate-container,
+body:not(.gallery-no-move-transition) .street-section-sky {
+  transition: transform 800ms;
+}
+
+body.gallery-visible .gallery-panel {
+  transform: translateY(0);
+  pointer-events: auto;
+}

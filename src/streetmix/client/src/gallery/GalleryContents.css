@@ -1,0 +1,29 @@
+/* Applied by the wrapping element created by <Scrollable /> */
+.streets-scrollable-container {
+  position: relative;
+  height: var(--gallery-height);
+  min-width: 0; /* Allows content to overflow flex element */
+  flex-grow: 1;
+
+  button.scrollable {
+    margin-top: 45px;
+    width: 30px;
+
+    &.scroll-left {
+      left: -10px !important;
+    }
+
+    &.scroll-right {
+      right: -10px !important;
+    }
+  }
+
+  .streets {
+    display: flex;
+    gap: 10px;
+    padding: 8px 2px 0;
+    height: calc(var(--gallery-height) + 20px); /* To cover the scroll bar */
+    white-space: nowrap;
+    overflow-x: scroll;
+  }
+}

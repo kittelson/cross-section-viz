@@ -1,0 +1,11 @@
+.dialog-coastmix-tutorial-complete {
+  max-width: 550px;
+
+  button.btn {
+    margin: auto;
+  }
+
+  .dialog-content {
+    font-size: 15px;
+  }
+}

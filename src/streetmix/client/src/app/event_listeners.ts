@@ -1,0 +1,35 @@
+import { onBodyMouseMove, onBodyMouseUp } from '../segments/drag_and_drop.js'
+import { onStorageChange } from '../users/authentication.js'
+import { onGlobalKeyDown } from './keyboard_commands.js'
+import {
+  onWindowBeforeUnload,
+  onNoConnection,
+  onVisibilityChange,
+  onWindowFocus,
+} from './event_handlers'
+
+export function addEventListeners(): void {
+  window.addEventListener('storage', onStorageChange)
+
+  // TODO: these global event listeners only handle resize dragging.
+  // We should encapsulate this functionality into the resize component and
+  // remove the global listeners.
+  window.addEventListener('pointermove', onBodyMouseMove)
+  window.addEventListener('pointerup', onBodyMouseUp)
+  window.addEventListener('keydown', onGlobalKeyDown)
+
+  window.addEventListener('beforeunload', onWindowBeforeUnload)
+
+  window.addEventListener('offline', onNoConnection)
+  window.addEventListener('stmx:api_max_connection', onNoConnection)
+
+  // Add event listeners to handle when a window is switched away from view,
+  // then returns to view again. If the Page Visibility API exists, we use this.
+  // If the Page Visibility API does not exist (or is vendor-prefixed in much
+  // older browsers), use the much-less-precise `focus` event.
+  if (typeof document.hidden !== 'undefined') {
+    document.addEventListener('visibilitychange', onVisibilityChange, false)
+  } else {
+    window.addEventListener('focus', onWindowFocus)
+  }
+}

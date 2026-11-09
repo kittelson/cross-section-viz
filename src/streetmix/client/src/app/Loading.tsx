@@ -1,0 +1,63 @@
+import { useLayoutEffect, useRef } from 'react'
+
+import { STREETMIX_INSTANCE } from './config.js'
+import './Loading.css'
+
+interface LoadingProps {
+  isLoading: boolean
+}
+
+/* TODO: exists outside of i18n tree; cannot translate right now. */
+/* eslint-disable formatjs/no-literal-string-in-jsx */
+
+export function Loading({ isLoading = true }: LoadingProps) {
+  const loadingStuckNotice = useRef<HTMLDivElement>(null)
+
+  // Use instance environment variable because flags are not available here.
+  const coastmixMode = STREETMIX_INSTANCE === 'coastmix'
+
+  useLayoutEffect(() => {
+    // A "not loading" troubleshooting popup to provide a "way out" of totally
+    // frozen UIs. Displays after 10 seconds if this component is still visible.
+    const timer = window.setTimeout(function () {
+      const el = loadingStuckNotice.current
+      if (!el) return
+      el.style.opacity = '1'
+      el.style.transform = 'translateY(0)'
+      el.setAttribute('aria-hidden', 'false')
+    }, 10000)
+
+    return () => {
+      window.clearTimeout(timer)
+    }
+  })
+
+  const classNames = []
+  if (!isLoading) {
+    classNames.push('hidden')
+  }
+  if (coastmixMode) {
+    classNames.push('coastmix-loader')
+  }
+
+  return (
+    <div id="loading" className={classNames.join(' ')} hidden={!isLoading}>
+      <div className="streetmix-logo" />
+      <div className="loading-spinner" />
+      <div
+        ref={loadingStuckNotice}
+        className="loading-stuck"
+        aria-hidden="true"
+      >
+        <strong>Not loading?</strong>{' '}
+        <a
+          href="https://docs.streetmix.net/user-guide/support/troubleshooting"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Troubleshooting tips
+        </a>
+      </div>
+    </div>
+  )
+}

@@ -1,0 +1,71 @@
+header.about-coastmix-header {
+  display: flex;
+  gap: 0.5em;
+  z-index: 1;
+
+  /* This is ordered differently in production so it needs higher priority */
+  padding: 2rem 2rem 1rem !important;
+
+  > div {
+    align-content: center;
+  }
+
+  > div:nth-child(2) {
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  img {
+    max-height: 57px;
+  }
+
+  img.about-coastmix-logo {
+    height: 47px;
+  }
+}
+
+.about-coastmix-section {
+  border-bottom: 1px solid var(--color-turquoise-300);
+}
+
+.about-coastmix-content {
+  > p {
+    font-size: 15px;
+  }
+
+  ul i {
+    color: gray;
+    font-style: normal;
+  }
+
+  .credits-team {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1em;
+  }
+}
+
+@media only screen and (width < 800px) {
+  header.about-coastmix-header {
+    img {
+      width: 100%;
+    }
+  }
+}
+
+@media only screen and (width < 640px) {
+  .about-coastmix-content {
+    .credits-team {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+}
+
+/* Improve focus borders */
+header.about-coastmix-header,
+.social-links,
+.about-dialog-sponsors {
+  a {
+    display: inline-block;
+    line-height: 0;
+  }
+}
