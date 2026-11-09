@@ -19,8 +19,6 @@ const IMAGES_TO_BE_LOADED = [
   '/images/sky-rear.svg',
 ]
 
-const SVGStagingEl = document.getElementById('svg')
-
 export async function loadImages(): Promise<string[]> {
   const loading: Promise<string | undefined>[] = []
 
@@ -41,6 +39,7 @@ export async function loadImages(): Promise<string[]> {
 }
 
 async function loadImage(url: string) {
+  const SVGStagingEl = document.getElementById('svg')
   if (!SVGStagingEl) throw new Error('element not found')
 
   const response = await window.fetch(url)
