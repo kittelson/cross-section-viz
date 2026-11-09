@@ -41,7 +41,9 @@ export function applyWarningsToSlices(
     // Apply a warning if slice width is less than the minimum width
     // defined for this slice type.
     if (
+      // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
       variantInfo.minWidth !== undefined &&
+      // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
       slice.width < getWidthInMetric(variantInfo.minWidth, street.units)
     ) {
       warnings[id].tooNarrow = true
@@ -50,7 +52,9 @@ export function applyWarningsToSlices(
     // Apply a warning if slice width is greater than the maximum width
     // defined for this slice type.
     if (
+      // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
       variantInfo.maxWidth &&
+      // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
       slice.width > getWidthInMetric(variantInfo.maxWidth, street.units)
     ) {
       warnings[id].tooWide = true
@@ -58,20 +62,24 @@ export function applyWarningsToSlices(
 
     // Apply a warning if the slice type and variant is the mixed-use
     // drive lane with bicycle, which is a dangerous existing condition
+    // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
     if (variantInfo.dangerous === true) {
       warnings[id].dangerousExisting = true
     }
 
     // Apply a warning for slope
     if (slice.slope.on) {
+      // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
       const { ratio } = getRiseRunValues(slice.slope.values, slice.width)
       const slopeWarnings = getSlopeWarnings(ratio)
+      // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
       if (variantInfo.slope === 'berm' && slopeWarnings.slopeExceededBerm) {
         warnings[id].slopeBermExceeded = true
         // The idea is that if you've exceeded the slope for berm you've also
         // exceeded the slope for path
         warnings[id].slopePathExceeded = true
       } else if (
+        // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
         variantInfo.slope === 'path' &&
         slopeWarnings.slopeExceededPath
       ) {

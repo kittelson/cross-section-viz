@@ -78,11 +78,13 @@ export function ToastContainer() {
         height: 0,
       },
     ],
+    // @ts-expect-error TS6133 vendored streetmix, fix during cleanup
     onRest: (result, ctrl, item) => {
       if (item) {
         dispatch(destroyToast(item.timestamp))
       }
     },
+    // @ts-expect-error TS6133 vendored streetmix, fix during cleanup
     config: (item, index, phase) => (key) =>
       phase === 'enter' && key === 'life'
         ? { duration: item.duration ?? TOAST_DISPLAY_TIMEOUT }
@@ -167,10 +169,12 @@ export function ToastContainer() {
         }
 
         return (
+          // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
           <animated.div style={style}>
             {childComponent}
             {/* Toast countdown debugger */}
             {showLifeBar && (
+              // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
               <animated.div className="toast-lifebar" style={{ right: life }} />
             )}
           </animated.div>

@@ -1,6 +1,7 @@
 import { getBoundaryItem } from '@/streetmix/packages/parts/src'
 import { BOUNDARY_WIDTH, TILE_SIZE } from './constants.js'
 
+// @ts-expect-error TS2307 vendored streetmix, fix during cleanup
 import type * as Canvas from '@napi-rs/canvas'
 import type { StreetJson } from '@/streetmix/packages/types/src'
 

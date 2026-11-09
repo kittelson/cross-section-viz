@@ -38,6 +38,7 @@ const toastsSlice = createSlice({
       reducer (state, action: PayloadAction<ToastItem>) {
         state.push(action.payload)
       },
+      // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
       prepare (toast: Omit<ToastItem, 'timestamp'>) {
         return {
           payload: {

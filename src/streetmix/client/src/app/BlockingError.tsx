@@ -31,6 +31,7 @@ export function BlockingError() {
     </Button>
   )
   const tryAgainButton = (
+    // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
     <Button primary onClick={goNewStreet}>
       <FormattedMessage
         id="error.button.try-again"

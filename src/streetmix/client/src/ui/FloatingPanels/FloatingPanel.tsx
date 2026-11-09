@@ -69,6 +69,7 @@ export function FloatingPanel({
     draggableProps.position ?? { x: 0, y: 0 }
   )
 
+  // @ts-expect-error TS6133 vendored streetmix, fix during cleanup
   const handleDrag: DraggableEventHandler = (e, data) => {
     setPosition({ x: data.x, y: data.y })
   }
@@ -121,6 +122,7 @@ export function FloatingPanel({
             {/* Inner container contains transition styles from Transition */}
             <animated.div
               className="floating-panel-container-inner"
+              // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
               style={style}
             >
               <header>

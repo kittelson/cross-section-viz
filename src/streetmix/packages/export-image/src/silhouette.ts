@@ -1,3 +1,4 @@
+// @ts-expect-error TS2307 vendored streetmix, fix during cleanup
 import type * as Canvas from '@napi-rs/canvas'
 
 const SILHOUETTE_FILL_COLOUR = 'rgb(240, 240, 240)'

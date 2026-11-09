@@ -202,6 +202,7 @@ const streetSlice = createSlice({
           segment.elevationChanged !== true
         ) {
           segment.elevation = getElevationValue(
+            // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
             variantInfo.elevation,
             state.units
           )

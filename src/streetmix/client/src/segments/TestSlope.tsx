@@ -17,6 +17,7 @@ export function TestSlope({ slice }: Props) {
   // Bail early if debug flag is not on
   if (!debug) return null
 
+  // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
   const { slope, ratio } = getRiseRunValues(slice.slope.values, slice.width)
   const warnings = getSlopeWarnings(ratio)
 

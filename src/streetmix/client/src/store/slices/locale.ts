@@ -39,6 +39,7 @@ function flattenObject(obj: TranslationRecord): LocaleMessages {
         toReturn[i + '.' + x] = flatObject[x]
       })
     } else {
+      // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
       toReturn[i] = obj[i]
     }
   })

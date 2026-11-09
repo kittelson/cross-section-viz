@@ -53,7 +53,9 @@ export function getLocaleSliceName(
   const variantInfo = variantString
     ? getSegmentVariantInfo(type, variantString)
     : {}
+  // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   const defaultName = variantInfo.name ?? sliceInfo.name
+  // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   const nameKey = variantInfo.nameKey ?? sliceInfo.nameKey
   const key = `segments.${nameKey}`
 

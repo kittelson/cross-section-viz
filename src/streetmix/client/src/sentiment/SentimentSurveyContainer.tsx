@@ -56,6 +56,7 @@ export function SentimentSurveyContainer() {
         streetId: street.id,
       })
       if (response.status === 200) {
+        // @ts-expect-error TS18046 vendored streetmix, fix during cleanup
         setStreetId(response.data.ballot.id as string)
       }
     } catch (error) {

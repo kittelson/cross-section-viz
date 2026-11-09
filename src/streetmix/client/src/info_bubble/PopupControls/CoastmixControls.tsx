@@ -73,6 +73,7 @@ export function CoastmixControls({ position }: CoastmixControlProps) {
         />
       )}
       {isSloped ? (
+        // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
         <SlopeControl position={position} />
       ) : (
         <div className="popup-control-row" data-tour-id="elevation-control">

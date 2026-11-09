@@ -36,6 +36,7 @@ export function PopupControls(props: SectionElementTypeAndPosition) {
     <div className="popup-controls">
       <div className="popup-control-group">
         <IntlProvider locale={locale} messages={segmentInfo}>
+          {/* @ts-expect-error TS2322 vendored streetmix, fix during cleanup */}
           <VariantSet type={type} position={position} />
         </IntlProvider>
         <div className="non-variant">

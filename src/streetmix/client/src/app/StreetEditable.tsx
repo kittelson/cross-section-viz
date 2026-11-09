@@ -176,6 +176,7 @@ export function StreetEditable(props: StreetEditableProps) {
 
   function onExitAnimations(child: React.ReactElement): React.ReactElement {
     return cloneElement(child, {
+      // @ts-expect-error TS2769 vendored streetmix, fix during cleanup
       exit: !immediateRemoval,
     })
   }
@@ -189,6 +190,7 @@ export function StreetEditable(props: StreetEditableProps) {
       const key = `${streetId}.${segment.id}`
       // Refs are created with createRef and then stored in parent `refs`
       const ref = createRef<HTMLDivElement>()
+      // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
       childRefs.current[key] = ref
 
       const segmentEl = (
@@ -228,6 +230,7 @@ export function StreetEditable(props: StreetEditableProps) {
 
   return (
     <div id="street-section-editable" key={street.id} style={style} ref={ref}>
+      {/* @ts-expect-error TS2322 vendored streetmix, fix during cleanup */}
       <div style={{ width: '100%', height: '100%' }} ref={drop}>
         <TransitionGroup
           key={street.id}

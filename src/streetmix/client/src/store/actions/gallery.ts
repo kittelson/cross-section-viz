@@ -32,6 +32,7 @@ export const openGallery = createAsyncThunk(
     } catch (error: unknown) {
       // If the server error is 404, special rejection value
       // to display a "not-found" screen without the gallery
+      // @ts-expect-error TS18046 vendored streetmix, fix during cleanup
       if (error.response?.status === 404) {
         return rejectWithValue({
           killGallery: true,
@@ -55,6 +56,7 @@ export const fetchGalleryPage = createAsyncThunk<
   try {
     return await fetchGalleryPageData(userId ?? '', page)
   } catch (error: unknown) {
+    // @ts-expect-error TS18046 vendored streetmix, fix during cleanup
     if (error.response?.status === 404) {
       return rejectWithValue({
         userId,
@@ -85,6 +87,7 @@ export const closeGallery = createAsyncThunk<
     return { instant }
   },
   {
+    // @ts-expect-error TS6133 vendored streetmix, fix during cleanup
     condition: (arg, { getState }) => {
       const { visible } = getState().gallery
 

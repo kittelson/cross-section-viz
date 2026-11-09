@@ -24,6 +24,7 @@ export function loadSettings() {
   let localSettings: Partial<UserSettings> = {}
   try {
     const parsed = JSON.parse(
+      // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
       window.localStorage.getItem(LOCAL_STORAGE_SETTINGS_ID)
     )
     localSettings = parsed ?? {}
@@ -116,5 +117,6 @@ export function initSettingsStoreObserver() {
   const select = (state: RootState) => state.settings
   const onChange = debounce(persistSettingsToBackends, SAVE_SETTINGS_DELAY)
 
+  // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
   return observeStore<SettingsState>(select, onChange)
 }

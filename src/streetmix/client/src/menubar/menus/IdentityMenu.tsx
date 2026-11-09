@@ -24,6 +24,7 @@ export function IdentityMenu(props: MenuProps) {
     (_event: React.MouseEvent) => {
       const myStreetsLink = user?.id !== undefined ? `/${user.id}` : ''
       window.history.pushState({}, '', myStreetsLink)
+      // @ts-expect-error TS18049 vendored streetmix, fix during cleanup
       dispatch(openGallery({ userId: user.id }))
     },
     [user?.id, dispatch]

@@ -18,6 +18,7 @@ export const streetmixApi = createApi({
   }),
   endpoints: (builder) => ({
     getUser: builder.query<UserProfile, string | null>({
+      // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
       queryFn: (userId, _api, _extraOptions, baseQuery) => {
         if (userId === null) {
           return { data: null }

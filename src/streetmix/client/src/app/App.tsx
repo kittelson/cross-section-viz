@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { IntlProvider } from 'react-intl'
+// @ts-expect-error TS2724 vendored streetmix, fix during cleanup
 import { DirectionProvider, type Direction } from '@radix-ui/react-direction'
 import { DndProvider } from 'react-dnd-multi-backend'
 import { HTML5toTouch } from 'rdndmb-html5-to-touch'

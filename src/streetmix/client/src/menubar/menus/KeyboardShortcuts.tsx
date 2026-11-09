@@ -51,9 +51,11 @@ export function KeyboardShortcuts() {
                 the child is a React component.
               */}
               <FormattedMessage id="key.minus" defaultMessage="Minus">
+                {/* @ts-expect-error TS2322 vendored streetmix, fix during cleanup */}
                 {(label) => <KeyboardKey icon="minus">{label}</KeyboardKey>}
               </FormattedMessage>
               <FormattedMessage id="key.plus" defaultMessage="Plus">
+                {/* @ts-expect-error TS2322 vendored streetmix, fix during cleanup */}
                 {(label) => <KeyboardKey icon="plus">{label}</KeyboardKey>}
               </FormattedMessage>
             </td>
@@ -79,6 +81,7 @@ export function KeyboardShortcuts() {
                   defaultMessage="Left arrow"
                 >
                   {(label) => (
+                    // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
                     <KeyboardKey icon="arrow-left">{label}</KeyboardKey>
                   )}
                 </FormattedMessage>
@@ -87,6 +90,7 @@ export function KeyboardShortcuts() {
                   defaultMessage="Right arrow"
                 >
                   {(label) => (
+                    // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
                     <KeyboardKey icon="arrow-right">{label}</KeyboardKey>
                   )}
                 </FormattedMessage>

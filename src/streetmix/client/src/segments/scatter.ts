@@ -60,6 +60,7 @@ type EntityPool = ScatterableEntity[]
  * This number is used during rendering to adjust sprites for center alignment
  */
 function getSpriteMaxWidth(pool: EntityPool): number {
+  // @ts-expect-error TS2532 vendored streetmix, fix during cleanup
   return maxBy(pool, (s) => s.width).width
 }
 

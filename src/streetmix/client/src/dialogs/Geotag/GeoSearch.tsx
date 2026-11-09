@@ -1,6 +1,8 @@
 import { useRef } from 'react'
 import { useIntl } from 'react-intl'
+// @ts-expect-error TS7016 vendored streetmix, fix during cleanup
 import DownshiftPelias from 'downshift-pelias' // TODO: type definitions
+// @ts-expect-error TS7016 vendored streetmix, fix during cleanup
 import Pelias from 'pelias-js' // TODO: type definitions
 
 import { PELIAS_HOST_NAME, PELIAS_API_KEY } from '../../app/config.js'
@@ -76,6 +78,7 @@ export function GeoSearch({ map, handleResults }: GeoSearchProps) {
     })
 
     return (
+      // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
       <li key={key} {...props}>
         {highlighted}
       </li>

@@ -21,12 +21,14 @@ export const handleUndo = createAsyncThunk<
   void,
   void,
   { state: RootState; dispatch: Dispatch }
+// @ts-expect-error TS6133 vendored streetmix, fix during cleanup
 >('history/handleUndo', async (arg, { dispatch, getState }) => {
   const state = getState()
   const { position } = state.history
 
   if (isUndoAvailable(state)) {
     dispatch(undo())
+    // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
     await finishUndoOrRedo('undo', position)
   } else {
     dispatch(
@@ -42,12 +44,14 @@ export const handleRedo = createAsyncThunk<
   void,
   void,
   { state: RootState; dispatch: Dispatch }
+// @ts-expect-error TS6133 vendored streetmix, fix during cleanup
 >('history/handleRedo', async (arg, { dispatch, getState }) => {
   const state = getState()
   const { position } = state.history
 
   if (isRedoAvailable(state)) {
     dispatch(redo())
+    // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
     await finishUndoOrRedo('redo', position)
   } else {
     dispatch(

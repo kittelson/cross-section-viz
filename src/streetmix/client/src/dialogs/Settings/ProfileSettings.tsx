@@ -58,6 +58,7 @@ export function ProfileSettings() {
 
     try {
       // Update display name
+      // @ts-expect-error TS18047 vendored streetmix, fix during cleanup
       await patchUser(user.id, { displayName: displayNameValue })
 
       // Update local data for it

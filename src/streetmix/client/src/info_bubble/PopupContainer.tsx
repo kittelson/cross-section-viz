@@ -109,6 +109,7 @@ export function PopupContainer({
         crossAxis: true,
         // Set boundary area for where the popup can appear.
         // CSS controls the top position of this boundary.
+        // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
         boundary: document.querySelector('#street-section-popup-boundary'),
         padding: {
           right: 20,
@@ -195,6 +196,7 @@ export function PopupContainer({
     children,
     getReferenceProps({
       // Refs are merged between useFloating and an existing child ref, if any.
+      // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
       ref: useMergeRefs([refs.setReference, children.ref]),
       ...children.props,
     })

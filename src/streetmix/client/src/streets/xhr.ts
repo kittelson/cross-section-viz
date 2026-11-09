@@ -74,6 +74,7 @@ export async function createNewStreetOnServer(type = STREET_TEMPLATES.DEFAULT) {
     await prepareStreet(type)
   } catch (err) {
     console.log(err)
+    // @ts-expect-error TS2554 vendored streetmix, fix during cleanup
     errorReceiveNewStreet()
     return
   }
@@ -88,6 +89,7 @@ function receiveNewStreet({ data }: { data: StreetAPIResponse }) {
   saveStreetToServer(true)
 }
 
+// @ts-expect-error TS7031 vendored streetmix, fix during cleanup
 function errorReceiveNewStreet({ response }) {
   if (response.status === 401) {
     showError(ERRORS.AUTH_EXPIRED, true)
@@ -111,6 +113,7 @@ export async function fetchStreetFromServer() {
   }
 }
 
+// @ts-expect-error TS7006 vendored streetmix, fix during cleanup
 function errorReceiveStreet(error) {
   const data = error.response.data
   const mode = getMode()
@@ -195,10 +198,12 @@ export async function fetchStreetForVerification() {
     receiveStreetForVerification(response.data)
   } catch (error) {
     // Silently throw away stale responses
+    // @ts-expect-error TS18046 vendored streetmix, fix during cleanup
     if (error.message === '1') return
 
     // Otherwise, handle the error
     console.log(error)
+    // @ts-expect-error TS18046 vendored streetmix, fix during cleanup
     errorReceiveStreetForVerification(error.response)
   }
 }
@@ -212,6 +217,7 @@ export async function fetchStreetForVerification() {
  * @param {Object} transmission - server data
  */
 function receiveStreetForVerification(transmission: StreetAPIResponse) {
+  // @ts-expect-error TS2769 vendored streetmix, fix during cleanup
   const localUpdatedAt = new Date(store.getState().street.clientUpdatedAt)
   const serverUpdatedAt = new Date(transmission.clientUpdatedAt)
 
@@ -234,6 +240,7 @@ function receiveStreetForVerification(transmission: StreetAPIResponse) {
   }
 }
 
+// @ts-expect-error TS7006 vendored streetmix, fix during cleanup
 function errorReceiveStreetForVerification(data) {
   // 404 should never happen here, since 410 designates streets that have
   // been deleted (but remain hidden on the server)
@@ -258,15 +265,21 @@ function unpackStreetDataFromServerTransmission(
   // Catch a data error where a user's street might be retrieved
   // without any data in it (so-called error 9B)
   if (!transmission.data) {
+    // @ts-expect-error TS2554 vendored streetmix, fix during cleanup
     showError(ERRORS.STREET_DATA_FAILURE)
     return
   }
 
   const street = clone(transmission.data.street)
+  // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   street.creatorId = transmission.creatorId
+  // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   street.originalStreetId = transmission.originalStreetId
+  // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   street.updatedAt = transmission.updatedAt
+  // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   street.clientUpdatedAt = transmission.clientUpdatedAt
+  // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   street.name = transmission.name
   street.location = transmission.data.street.location
   street.editCount = transmission.data.street.editCount
@@ -287,8 +300,10 @@ export function unpackServerStreetData(
   checkIfNeedsToBeRemixed: boolean
 ) {
   const street = unpackStreetDataFromServerTransmission(transmission)
+  // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
   addAltVariantObject(street)
 
+  // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
   store.dispatch(updateStreetData(street))
   store.dispatch(resetUndoStack())
 
@@ -301,12 +316,14 @@ export function unpackServerStreetData(
   }
 
   if (id) {
+    // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
     setStreetId(id, namespacedId)
   } else {
     setStreetId(transmission.id, transmission.namespacedId)
   }
 
   if (checkIfNeedsToBeRemixed) {
+    // @ts-expect-error TS18048, TS2339 vendored streetmix, fix during cleanup
     if (!isSignedIn() || street.creatorId !== getSignInData()?.userId) {
       setRemixOnFirstEdit(true)
     } else {
@@ -321,17 +338,23 @@ export function unpackServerStreetData(
 
 export function packServerStreetDataRaw(): StreetAPIPayload {
   const data: StreetData = {
+    // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
     street: trimStreetData(store.getState().street),
     plugins: {},
   }
 
   // Those go above data in the structure, so they need to be cleared here
+  // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   delete data.street.name
+  // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   delete data.street.originalStreetId
+  // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   delete data.street.updatedAt
+  // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   delete data.street.clientUpdatedAt
 
   // This will be implied through authorization header
+  // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   delete data.street.creatorId
 
   if (store.getState().flags.SAVE_UNDO.value === true) {
@@ -352,6 +375,7 @@ export function packServerStreetDataRaw(): StreetAPIPayload {
     clientUpdatedAt: street.clientUpdatedAt,
   }
 
+  // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
   return transmission
 }
 

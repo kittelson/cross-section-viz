@@ -170,6 +170,7 @@ export const gallerySlice = createSlice({
           type: 'gallery/closeGallery/rejected'
           error: { stack?: string }
         } => action.type === 'gallery/closeGallery/rejected',
+        // @ts-expect-error TS6133 vendored streetmix, fix during cleanup
         (state, action) => {
           // Log this error because otherwise it's swallowed
           console.error('gallery/closeGallery/rejected', action.error.stack)

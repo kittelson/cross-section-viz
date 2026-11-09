@@ -14,9 +14,11 @@ export function ToastNoConnection(props: ToastProps) {
   // automatically when the connection is restored or re-attempted.
   // This event listener handles that.
   useEffect(() => {
+    // @ts-expect-error TS2769 vendored streetmix, fix during cleanup
     window.addEventListener('online', handleClose)
 
     return () => {
+      // @ts-expect-error TS2769 vendored streetmix, fix during cleanup
       window.removeEventListener('online', handleClose)
     }
   })

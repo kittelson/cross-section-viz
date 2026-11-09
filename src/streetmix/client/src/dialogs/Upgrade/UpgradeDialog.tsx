@@ -18,6 +18,7 @@ export function UpgradeDialog() {
   const hasTier1 = roles.includes('SUBSCRIBER_1')
 
   // eslint-disable-next-line
+  // @ts-expect-error TS6133 vendored streetmix, fix during cleanup
   async function onToken(token: string): Promise<void> {
     const requestBody = { userId, token }
 
@@ -54,7 +55,7 @@ export function UpgradeDialog() {
           id="upgrade.error"
           defaultMessage="We encountered an error:"
         />
-        {error}
+        {String(error)}
       </p>
     )
   } else if (data !== undefined) {

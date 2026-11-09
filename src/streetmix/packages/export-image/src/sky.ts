@@ -1,3 +1,4 @@
+// @ts-expect-error TS2307 vendored streetmix, fix during cleanup
 import * as Canvas from '@napi-rs/canvas'
 
 import type { SkyboxDefWithStyles, StreetJson } from '@/streetmix/packages/types/src'
@@ -8,6 +9,7 @@ export async function drawSky(
   ctx: Canvas.SKRSContext2D,
   street: StreetJson,
   width: number, // image width (scaled)
+  // @ts-expect-error TS6133 vendored streetmix, fix during cleanup
   height: number, // image height (scaled) - might not need for here
   horizonLine: number, // lower edge of sky area
   groundLevel: number, // ground elevation line

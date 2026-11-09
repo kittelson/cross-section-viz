@@ -1,10 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import SLICE_LOOKUP from '@/streetmix/packages/parts/data/segment-lookup.yaml'
 import { prettifyWidth } from '@/streetmix/packages/utils/src'
 import { GROUND_BASELINE_HEIGHT, TILE_SIZE } from './constants.js'
 import { getTranslations } from './locale.js'
 
+// @ts-expect-error TS2307 vendored streetmix, fix during cleanup
 import type * as Canvas from '@napi-rs/canvas'
 import type { StreetJson } from '@/streetmix/packages/types/src'
 
@@ -206,7 +205,9 @@ async function getSliceName(
 ): Promise<string> {
   const sliceInfo = getSliceInfo(type)
   const variantInfo = getSliceVariantInfo(type, variant)
+  // @ts-expect-error TS18046 vendored streetmix, fix during cleanup
   const defaultName = variantInfo.name ?? sliceInfo.name
+  // @ts-expect-error TS18046 vendored streetmix, fix during cleanup
   const nameKey = variantInfo.nameKey ?? sliceInfo.nameKey
 
   const translations = await getTranslations(locale, 'segment-info')
@@ -221,6 +222,7 @@ function getSliceVariant(type: string, variant: string): unknown {
   return SLICE_LOOKUP[type]?.details?.[variant]
 }
 
+// @ts-expect-error TS7006 vendored streetmix, fix during cleanup
 function applySliceInfoOverridesAndRules(details, sliceRules): unknown {
   const { rules, ...overrides } = details
   return Object.assign({}, sliceRules, rules, overrides)
@@ -228,12 +230,15 @@ function applySliceInfoOverridesAndRules(details, sliceRules): unknown {
 
 function getSliceVariantInfo(type: string, variant: string): unknown {
   const sliceVariant = getSliceVariant(type, variant)
+  // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   const { rules } = getSliceInfo(type)
 
+  // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   if (sliceVariant?.components === undefined) {
     return SLICE_UNKNOWN_VARIANT
   }
 
+  // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   const { components, ...details } = sliceVariant
   const variantInfo = applySliceInfoOverridesAndRules(details, rules)
 

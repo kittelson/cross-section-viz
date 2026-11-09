@@ -4,6 +4,7 @@ import {
   TILE_SIZE,
 } from './constants.js'
 
+// @ts-expect-error TS2307 vendored streetmix, fix during cleanup
 import type * as Canvas from '@napi-rs/canvas'
 import type { FloodDetails, StreetState } from '@/streetmix/packages/types/src'
 
@@ -22,6 +23,7 @@ export async function drawSeaLevelRise(
   ctx: Canvas.SKRSContext2D | CanvasRenderingContext2D,
   street: StreetState,
   floodDetails: [FloodDetails | null, FloodDetails | null],
+  // @ts-expect-error TS6133 vendored streetmix, fix during cleanup
   stormSurge: boolean,
   width: number,
   groundLevel: number,
@@ -129,7 +131,6 @@ async function drawSeaLevelWaves(
   image.height = image.naturalHeight * scale
 
   // Define the wave image as a repeating pattern.
-  // @ts-expect-error will address @napi-rs/canvas type mismatch later
   const pattern = ctx.createPattern(image, 'repeat-x')
   if (pattern === null) throw new Error('pattern did not load')
 

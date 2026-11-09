@@ -49,6 +49,7 @@ export function GalleryStreetItem(props: GalleryStreetItemProps) {
     if (ctx === null) return
 
     try {
+      // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
       drawStreetThumbnail(ctx, street.data.street, {
         // TODO: document magic number 2
         width: THUMBNAIL_WIDTH * 2,

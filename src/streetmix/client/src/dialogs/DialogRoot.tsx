@@ -43,6 +43,7 @@ export function DialogRoot() {
   // Wrap Dialog with an ErrorBoundary wrapper to catch errors
   return (
     <ErrorBoundary fallbackComponent={<ErrorDialog />}>
+      {/* @ts-expect-error TS2741 vendored streetmix, fix during cleanup */}
       <Dialog />
     </ErrorBoundary>
   )

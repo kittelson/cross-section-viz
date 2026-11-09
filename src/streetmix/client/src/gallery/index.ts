@@ -90,6 +90,7 @@ export async function fetchGalleryData(userId: string, page: number) {
     return data
   } catch (error) {
     // If the error is a 404, throw up a not-found page
+    // @ts-expect-error TS18046 vendored streetmix, fix during cleanup
     if (error.response?.status === 404) {
       setMode(MODES.NOT_FOUND)
       processMode()

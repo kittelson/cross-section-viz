@@ -91,6 +91,7 @@ function calculateRemainingWidth (
 export function recalculateWidth (street: StreetJson): CalculatedWidths {
   // Determine occupied and remaining width
   const streetWidth = new Decimal(street.width)
+  // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
   const occupiedWidth = calculateOccupiedWidth(street.segments)
   const remainingWidth = calculateRemainingWidth(streetWidth, occupiedWidth)
 

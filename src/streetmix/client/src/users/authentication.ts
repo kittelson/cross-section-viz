@@ -146,6 +146,7 @@ export async function loadSignIn() {
     return true
   }
 
+  // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
   const storage = JSON.parse(window.localStorage.getItem('flags'))
   const sessionOverrides = generateFlagOverrides(storage, 'session')
 
@@ -156,6 +157,7 @@ export async function loadSignIn() {
 
     // Check if token has expired
     const currentDate = new Date()
+    // @ts-expect-error TS18048 vendored streetmix, fix during cleanup
     const expDate = new Date(decoded.exp * 1000)
 
     // Set the expiration date to one day early so that tokens
@@ -212,6 +214,7 @@ async function refreshLoginToken(refreshToken: string) {
   }
 }
 
+// @ts-expect-error TS7006 vendored streetmix, fix during cleanup
 function errorRefreshLoginToken(data) {
   if (data.status === 401) {
     signOut(true)
@@ -241,6 +244,7 @@ async function fetchSignInDetails(userId: string) {
 
     const flagOverrides = [
       // user flag overrides
+      // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
       generateFlagOverrides(flags, 'user'),
     ]
 
@@ -259,6 +263,7 @@ function receiveSignInDetails(details: UserProfile) {
   saveSignInDataLocally()
 }
 
+// @ts-expect-error TS7006 vendored streetmix, fix during cleanup
 function errorReceiveSignInDetails(data) {
   if (data.status === 401) {
     signOut(true)
@@ -334,6 +339,7 @@ function _signInLoaded() {
   if (surveyStreetId) {
     Cookies.remove('last_survey_url')
     if (mode === MODES.JUST_SIGNED_IN) {
+      // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
       window.location = surveyStreetId
     }
   }
@@ -401,6 +407,7 @@ function _signInLoaded() {
       break
     case MODES.NEW_STREET: {
       const modeData = getModeData()
+      // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
       createNewStreetOnServer(modeData.type)
       break
     }

@@ -176,15 +176,19 @@ function handleSegmentResizeMove(event: MouseEvent | TouchEvent): void {
     return
   }
 
+  // @ts-expect-error TS18047 vendored streetmix, fix during cleanup
   const deltaX = x - draggingResize.mouseX
 
+  // @ts-expect-error TS18047 vendored streetmix, fix during cleanup
   let deltaFromOriginal = draggingResize.elX - draggingResize.originalX
   if (!draggingResize.right) {
     deltaFromOriginal = -deltaFromOriginal
   }
 
   draggingResize.width =
+    // @ts-expect-error TS18047 vendored streetmix, fix during cleanup
     draggingResize.originalWidth + (deltaFromOriginal / TILE_SIZE) * 2
+  // @ts-expect-error TS18047 vendored streetmix, fix during cleanup
   draggingResize.elX += deltaX
 
   const precise = event.shiftKey
@@ -196,6 +200,7 @@ function handleSegmentResizeMove(event: MouseEvent | TouchEvent): void {
   }
 
   draggingResize.width = resizeSegment(
+    // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
     draggingResize.sliceIndex,
     resizeType,
     draggingResize.width
@@ -300,7 +305,9 @@ function doDropHeuristics(
   const right =
     segmentBeforeEl !== null ? (street.segments[segmentBeforeEl] ?? null) : null
 
+  // @ts-expect-error TS2538 vendored streetmix, fix during cleanup
   const leftOwner = left && SliceTypes[getSegmentInfo(left.type).owner]
+  // @ts-expect-error TS2538 vendored streetmix, fix during cleanup
   const rightOwner = right && SliceTypes[getSegmentInfo(right.type).owner]
 
   const leftOwnerAsphalt =
@@ -522,6 +529,7 @@ function updateIfDraggingStateChanged(
       isDragging: true,
       segmentBeforeEl,
       segmentAfterEl,
+      // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
       draggedSegment: draggedItem.sliceIndex,
     }
 
@@ -559,16 +567,21 @@ function handleSegmentCanvasDrop(draggedItem: DraggedItem, type: DragType) {
     slope: draggedItem.slope,
   }
 
+  // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   newSegment.variant =
+    // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
     draggedItem.variant ??
     getVariantInfo(newSegment.type, newSegment.variantString)
 
   let newIndex = segmentAfterEl !== null ? segmentAfterEl + 1 : segmentBeforeEl
 
   if (type === DragTypes.SLICE) {
+    // @ts-expect-error TS18047 vendored streetmix, fix during cleanup
     newIndex = newIndex <= draggedSegment ? newIndex : newIndex - 1
+    // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
     store.dispatch(moveSegment(draggedSegment, newIndex, newSegment))
   } else {
+    // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
     store.dispatch(addSegment(newIndex, newSegment))
   }
 

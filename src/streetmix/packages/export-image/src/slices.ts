@@ -2,6 +2,7 @@
 import { getSegmentInfo } from '@/streetmix/packages/parts/src'
 import { TILE_SIZE } from './constants.js'
 
+// @ts-expect-error TS2307 vendored streetmix, fix during cleanup
 import type * as Canvas from '@napi-rs/canvas'
 import type { StreetJson } from '@/streetmix/packages/types/src'
 
@@ -9,8 +10,10 @@ import type { StreetJson } from '@/streetmix/packages/types/src'
  * Draws slices.
  */
 export function drawSlices(
+  // @ts-expect-error TS6133 vendored streetmix, fix during cleanup
   ctx: Canvas.SKRSContext2D,
   street: StreetJson, // street data
+  // @ts-expect-error TS6133 vendored streetmix, fix during cleanup
   groundLevel: number, // vertical height of ground
   offsetLeft: number, // left position to start from
   scale: number // scale factor of image
@@ -26,11 +29,13 @@ export function drawSlices(
   }
 
   // Render objects at each z-index level
+  // @ts-expect-error TS6133 vendored streetmix, fix during cleanup
   for (const zIndex of zIndexes) {
     let currentOffsetLeft = offsetLeft
 
     for (let i = 0; i < street.segments.length; i++) {
       const slice = street.segments[i]
+      // @ts-expect-error TS6133 vendored streetmix, fix during cleanup
       const sliceInfo = getSegmentInfo(slice.type)
 
       // if (sliceInfo.zIndex === zIndex) {

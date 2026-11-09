@@ -317,6 +317,7 @@ export function GeotagDialog() {
             zoomControl={false}
             attributionControl={false}
             zoom={initialState.zoom}
+            // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
             ref={setMap}
           >
             <TileLayer attribution={MAP_ATTRIBUTION} url={tileUrl} />

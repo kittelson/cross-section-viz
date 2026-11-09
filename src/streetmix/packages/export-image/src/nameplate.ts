@@ -1,3 +1,4 @@
+// @ts-expect-error TS2307 vendored streetmix, fix during cleanup
 import type * as Canvas from '@napi-rs/canvas'
 
 const STREET_NAME_FONT_SERVER = 'Overpass'

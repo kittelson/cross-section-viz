@@ -168,7 +168,9 @@ export function getVariantInfoDimensions(
       // If svg is missing, let it not affect this calculation
       if (svg) {
         // TODO: This doesn't take into account % offsets
+        // @ts-expect-error TS2363 vendored streetmix, fix during cleanup
         newLeft = center - svg.width / 2 - (sprite.offsetX ?? 0)
+        // @ts-expect-error TS2365 vendored streetmix, fix during cleanup
         newRight = center + svg.width / 2 + (sprite.offsetX ?? 0)
 
         if (newLeft < left) {
@@ -194,7 +196,9 @@ export function getVariantInfoDimensions(
         newLeft = sprite.offsetX ?? 0
         newRight = svg.width + (sprite.offsetX ?? 0)
 
+        // @ts-expect-error TS2365 vendored streetmix, fix during cleanup
         if (newLeft < left) {
+          // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
           left = newLeft
         }
         if (newRight > right) {
@@ -214,7 +218,9 @@ export function getVariantInfoDimensions(
       const svg = images.get(sprite.id)
 
       if (svg) {
+        // @ts-expect-error TS2363 vendored streetmix, fix during cleanup
         newLeft = displayWidth - (sprite.offsetX ?? 0) - svg.width
+        // @ts-expect-error TS2363 vendored streetmix, fix during cleanup
         newRight = displayWidth - (sprite.offsetX ?? 0)
 
         if (newLeft < left) {
@@ -415,6 +421,7 @@ export function drawSegmentContents(
   const left = dimensions.left
   const minWidthQuirk = graphics.quirks?.minWidth
 
+  // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   const groundLevelOffsetY = variantInfo.offsetY ?? 0
   const elevationValue = getElevation(elevation)
   const groundLevel =
@@ -436,6 +443,7 @@ export function drawSegmentContents(
       }
 
   // If the slice element/variant doesn't allow sloping, turn it off
+  // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   if (variantInfo.slope === 'off' || variantInfo.slope === undefined) {
     slope.on = false
     slope.values = []
@@ -485,6 +493,7 @@ export function drawSegmentContents(
       if (!svg) continue
 
       let width = (svg.width / TILE_SIZE_ACTUAL) * TILE_SIZE
+      // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
       const padding = sprites[l].padding ?? 0
 
       let drawWidth
@@ -522,6 +531,7 @@ export function drawSegmentContents(
       let distanceFromGround =
         multiplier *
         TILE_SIZE *
+        // @ts-expect-error TS2365 vendored streetmix, fix during cleanup
         ((svg.height - (sprite.originY ?? 0) + (sprite.offsetY ?? 0)) /
           TILE_SIZE_ACTUAL)
 
@@ -634,6 +644,7 @@ export function drawSegmentContents(
         // This is the normal render logic.
         x =
           0 +
+          // @ts-expect-error TS2362 vendored streetmix, fix during cleanup
           (-left + (sprite.offsetX ?? 0) / TILE_SIZE_ACTUAL) *
             TILE_SIZE *
             multiplier
@@ -642,6 +653,7 @@ export function drawSegmentContents(
       let distanceFromGround =
         multiplier *
         TILE_SIZE *
+        // @ts-expect-error TS2365 vendored streetmix, fix during cleanup
         ((svg.height - (sprite.originY ?? 0) + (sprite.offsetY ?? 0)) /
           TILE_SIZE_ACTUAL)
 
@@ -706,6 +718,7 @@ export function drawSegmentContents(
           (-left +
             actualWidth -
             svg.width / TILE_SIZE_ACTUAL -
+            // @ts-expect-error TS2362 vendored streetmix, fix during cleanup
             (sprite.offsetX ?? 0) / TILE_SIZE_ACTUAL) *
           TILE_SIZE *
           multiplier
@@ -714,6 +727,7 @@ export function drawSegmentContents(
       let distanceFromGround =
         multiplier *
         TILE_SIZE *
+        // @ts-expect-error TS2365 vendored streetmix, fix during cleanup
         ((svg.height - (sprite.originY ?? 0) + (sprite.offsetY ?? 0)) /
           TILE_SIZE_ACTUAL)
 
@@ -771,13 +785,16 @@ export function drawSegmentContents(
         (center -
           svg.width / TILE_SIZE_ACTUAL / 2 -
           left -
+          // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
           (offsetByPercentage ? percentToNumber(sprite.offsetX) * center : 0) -
+          // @ts-expect-error TS2362 vendored streetmix, fix during cleanup
           offsetX / TILE_SIZE_ACTUAL) *
         TILE_SIZE *
         multiplier
       let distanceFromGround =
         multiplier *
         TILE_SIZE *
+        // @ts-expect-error TS2365 vendored streetmix, fix during cleanup
         ((svg.height - (sprite.originY ?? 0) + (sprite.offsetY ?? 0)) /
           TILE_SIZE_ACTUAL)
 
@@ -820,7 +837,9 @@ export function drawSegmentContents(
   if (graphics.scatter) {
     if (graphics.scatter.pool === 'people') {
       const offsetTop =
+        // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
         (graphics.scatter.originY ??
+          // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
           graphics.scatter.originY + PERSON_SPRITE_OFFSET_Y) ||
         PERSON_SPRITE_OFFSET_Y
 
@@ -829,6 +848,7 @@ export function drawSegmentContents(
         // outside of Coastmix mode
         // TODO: figure out how to specify tags for inclusion/exclusion
         // possibly append the beach list when needed.
+        // @ts-expect-error TS7006 vendored streetmix, fix during cleanup
         .filter((person) => {
           if (coastmixMode) {
             return true
@@ -858,6 +878,7 @@ export function drawSegmentContents(
 
     if (graphics.scatter.sprites) {
       drawScatteredSprites(
+        // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
         graphics.scatter.sprites,
         ctx,
         actualWidth,
@@ -957,12 +978,15 @@ export function getLocaleSegmentName(
   type: string,
   variantString: string
 ): string {
+  // @ts-expect-error TS2552 vendored streetmix, fix during cleanup
   const segmentInfo = getSegmentInfo(type)
   const variantInfo = getSegmentVariantInfo(type, variantString)
   const defaultName = variantInfo.name ?? segmentInfo.name
+  // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   const nameKey = variantInfo.nameKey ?? segmentInfo.nameKey
   const key = `segments.${nameKey}`
 
+  // @ts-expect-error TS2304 vendored streetmix, fix during cleanup
   return formatMessage(key, defaultName, { ns: 'segment-info' })
 }
 

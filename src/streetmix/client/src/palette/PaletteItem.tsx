@@ -79,6 +79,7 @@ export function PaletteItem({ item }: PaletteItemProps) {
     images.get('thumbnails--missing')?.src
 
   return (
+    // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
     <li className={classNames.join(' ')} ref={isLocked ? null : drag}>
       <Tooltip label={label} sublabel={sublabel}>
         <button>

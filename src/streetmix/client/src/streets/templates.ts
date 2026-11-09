@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid'
 import clone from 'just-clone'
+// @ts-expect-error TS7016 vendored streetmix, fix during cleanup
 import { load, JSON_SCHEMA } from 'js-yaml'
 import * as z from 'zod'
 import { getSegmentVariantInfo } from '@/streetmix/packages/parts/src'
@@ -156,6 +157,7 @@ function processTemplateSlices(
     }
 
     slice.elevation = getElevationValue(
+      // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
       sliceTemplate.elevation ?? variantInfo.elevation,
       units
     )

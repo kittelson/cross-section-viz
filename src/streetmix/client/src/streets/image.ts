@@ -122,6 +122,7 @@ export function initStreetThumbnailSubscriber() {
 
   const onChange = () => {
     const timestamp = Date.now()
+    // @ts-expect-error TS18048 vendored streetmix, fix during cleanup
     const timeElapsed = timestamp - _lastSavedTimestamp
     // _savedThumbnail = false
 

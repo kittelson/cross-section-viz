@@ -85,6 +85,7 @@ export function remixStreet() {
 
   const transmission = packServerStreetData()
 
+  // @ts-expect-error TS2554 vendored streetmix, fix during cleanup
   newBlockingAjaxRequest(
     'remix',
     {
@@ -101,6 +102,7 @@ export function remixStreet() {
   )
 }
 
+// @ts-expect-error TS7006 vendored streetmix, fix during cleanup
 function receiveRemixedStreet(data) {
   if (!promoteStreet) {
     if (isSignedIn()) {

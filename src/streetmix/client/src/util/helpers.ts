@@ -1,3 +1,4 @@
+// @ts-expect-error TS7016 vendored streetmix, fix during cleanup
 import { tween } from 'shifty'
 import slugify from 'slugify'
 
@@ -53,7 +54,9 @@ export function animate(
 ): void {
   const initialProps: Record<string, number> = Object.keys(props).reduce(
     (acc: Record<string, number>, prop) => {
+      // @ts-expect-error TS7053 vendored streetmix, fix during cleanup
       if (typeof el[prop] !== 'undefined') {
+        // @ts-expect-error TS7053 vendored streetmix, fix during cleanup
         acc[prop] = el[prop]
       } else {
         acc[prop] = 0
@@ -67,6 +70,7 @@ export function animate(
     from: initialProps,
     to: props,
     duration,
+    // @ts-expect-error TS7006 vendored streetmix, fix during cleanup
     render: (state) => Object.assign(el, state),
   })
 }

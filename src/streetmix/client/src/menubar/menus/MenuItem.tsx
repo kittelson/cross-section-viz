@@ -20,6 +20,7 @@ export function MenuItem<T extends 'button' | 'a'>({
 
   if (href !== undefined) {
     return (
+      // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
       <ExternalLink
         href={href}
         icon
@@ -33,6 +34,7 @@ export function MenuItem<T extends 'button' | 'a'>({
   }
 
   return (
+    // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
     <button className={classNames.join(' ')} role="menuitem" {...props}>
       {children}
     </button>

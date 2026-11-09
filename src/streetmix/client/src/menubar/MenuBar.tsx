@@ -194,6 +194,7 @@ export function MenuBar({ onMenuDropdownClick }: MenuBarProps) {
             </AccessibleIcon>
           </MenuBarItem>
         )}
+        {/* @ts-expect-error TS2345 vendored streetmix, fix during cleanup */}
         {!offline && !coastmixMode && renderUserAvatar(user)}
       </ul>
       <InstanceBadge />

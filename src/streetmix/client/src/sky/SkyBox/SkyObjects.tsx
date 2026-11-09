@@ -24,6 +24,7 @@ export function SkyObjects({ objects = [] }: SkyObjectsProps) {
         const img = images.get(key)
         // Refs are created with createRef and then stored in parent `refs`
         const ref = createRef<HTMLDivElement>()
+        // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
         refs.current[key] = ref
 
         const style: React.CSSProperties = {

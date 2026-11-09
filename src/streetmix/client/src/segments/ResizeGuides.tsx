@@ -15,6 +15,7 @@ export function ResizeGuides() {
   const isVisible = useSelector(({ ui }) => ui.resizeGuidesVisible)
   const segmentId = useSelector(({ ui }) => ui.activeSegment)
   const segment: Segment | null = useSelector(({ street }) =>
+    // @ts-expect-error TS7015 vendored streetmix, fix during cleanup
     segmentId !== null ? street.segments[segmentId] : null
   )
   const units: UnitsSetting = useSelector(({ street }) => street.units)
@@ -25,6 +26,7 @@ export function ResizeGuides() {
   // resize drag action. Its appearance should remain the same throughout the
   // entire drag action.
   const display = useMemo(
+    // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
     () => calculateStyles(isVisible, segmentId, segment, remainingWidth, units),
     // The `segment` and `remainingWidth` values may change during the resize
     // action, but they should NOT update this calculation.
@@ -86,11 +88,15 @@ function calculateStyles(
 
   // If the variant has a minimum width defined, we show minimum-width guides
   const minWidth =
+    // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
     variantInfo.minWidth !== undefined
+      // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
       ? getWidthInMetric(variantInfo.minWidth, units)
       : undefined
   const maxWidth =
+    // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
     variantInfo.maxWidth !== undefined
+      // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
       ? getWidthInMetric(variantInfo.maxWidth, units)
       : undefined
 

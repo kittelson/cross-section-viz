@@ -96,6 +96,7 @@ export function trimStreetData(street: StreetState): Partial<StreetState> {
     skybox: street.skybox,
     weather: street.weather,
     boundary: street.boundary,
+    // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
     segments: street.segments.map((s) => {
       // TODO: don't manually copy, just delete the properties that don't exist?
       const slice: SliceItemForServerTransmission = {

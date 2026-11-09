@@ -56,6 +56,7 @@ export function resizeSegment(
 
 export function handleSegmentResizeCancel(): void {
   resizeSegment(
+    // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
     draggingResize.sliceIndex,
     RESIZE_TYPE_INITIAL,
     draggingResize.originalWidth

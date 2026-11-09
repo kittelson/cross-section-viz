@@ -26,6 +26,7 @@ function whatAreTheFlagsWeNeedToSave(
       .filter(([, flag]) => flag.source === 'session')
       // convert back to obj but simplify it to just the value
       .reduce((obj, [key, flag]) => {
+        // @ts-expect-error TS7053 vendored streetmix, fix during cleanup
         obj[key] = flag.value
         return obj
       }, {})
