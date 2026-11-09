@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useTransition, animated } from '@react-spring/web'
 
-import { type ToastItem } from '~/src/types'
+import { type ToastItem } from '@/streetmix/client/src/types'
 import { useSelector, useDispatch } from '../../store/hooks.js'
 import { destroyToast } from '../../store/slices/toasts.js'
 import { Toast } from './Toast.js'

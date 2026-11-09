@@ -1,5 +1,5 @@
-import { addToast } from '~/src/store/slices/toasts.js'
-import store from '~/src/store'
+import { addToast } from '@/streetmix/client/src/store/slices/toasts.js'
+import store from '@/streetmix/client/src/store'
 
 export function onNoConnection(): void {
   const state = store.getState()

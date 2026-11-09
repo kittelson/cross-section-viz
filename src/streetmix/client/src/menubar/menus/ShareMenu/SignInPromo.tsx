@@ -1,6 +1,6 @@
 import { FormattedMessage } from 'react-intl'
 
-import { doSignIn } from '~/src/users/authentication.js'
+import { doSignIn } from '@/streetmix/client/src/users/authentication.js'
 import './SignInPromo.css'
 
 interface SignInPromoProps {

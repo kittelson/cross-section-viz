@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { StreetAPIResponse, GalleryAPIResponse } from '@streetmix/types'
+import type { StreetAPIResponse, GalleryAPIResponse } from '@/streetmix/packages/types/src'
 
 interface GalleryState extends GalleryAPIResponse {
   visible: boolean

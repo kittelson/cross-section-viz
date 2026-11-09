@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { getSegmentVariantInfo } from '@streetmix/parts'
-import { getWidthInMetric } from '@streetmix/utils'
+import { getSegmentVariantInfo } from '@/streetmix/packages/parts/src'
+import { getWidthInMetric } from '@/streetmix/packages/utils/src'
 
 import { useSelector } from '../store/hooks.js'
 import { getElRelativePos } from '../util/helpers.js'
@@ -9,7 +9,7 @@ import { TILE_SIZE, MIN_SEGMENT_WIDTH } from './constants.js'
 import { getSegmentEl } from './view.js'
 import './ResizeGuides.css'
 
-import type { Segment, UnitsSetting } from '@streetmix/types'
+import type { Segment, UnitsSetting } from '@/streetmix/packages/types/src'
 
 export function ResizeGuides() {
   const isVisible = useSelector(({ ui }) => ui.resizeGuidesVisible)

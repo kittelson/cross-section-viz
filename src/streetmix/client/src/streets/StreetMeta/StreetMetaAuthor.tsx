@@ -1,10 +1,10 @@
 import { FormattedMessage } from 'react-intl'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { openGallery } from '~/src/store/actions/gallery.js'
-import { useGetUserQuery } from '~/src/store/services/api.js'
-import { Icon } from '~/src/ui/Icon.js'
-import { Avatar } from '~/src/users/Avatar.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { openGallery } from '@/streetmix/client/src/store/actions/gallery.js'
+import { useGetUserQuery } from '@/streetmix/client/src/store/services/api.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
+import { Avatar } from '@/streetmix/client/src/users/Avatar.js'
 import { isOwnedByCurrentUser } from '../owner.js'
 import { StreetMetaItem } from './StreetMetaItem.js'
 

@@ -1,24 +1,24 @@
 import { useIntl } from 'react-intl'
-import { getBoundaryItem } from '@streetmix/parts'
-import { prettifyWidth } from '@streetmix/utils'
+import { getBoundaryItem } from '@/streetmix/packages/parts/src'
+import { prettifyWidth } from '@/streetmix/packages/utils/src'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
 import {
   addBuildingFloor,
   removeBuildingFloor,
   setBuildingFloorValue,
-} from '~/src/store/slices/street.js'
-import { Icon } from '~/src/ui/Icon.js'
-import { Tooltip } from '~/src/ui/Tooltip.js'
-import { prettifyHeight } from '~/src/boundary'
+} from '@/streetmix/client/src/store/slices/street.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
+import { Tooltip } from '@/streetmix/client/src/ui/Tooltip.js'
+import { prettifyHeight } from '@/streetmix/client/src/boundary'
 import {
   MAX_BUILDING_HEIGHT,
   BUILDING_LEFT_POSITION,
-} from '~/src/segments/constants.js'
+} from '@/streetmix/client/src/segments/constants.js'
 import { UpDownInput } from './UpDownInput.js'
 import './BuildingHeightControl.css'
 
-import type { BoundaryPosition } from '@streetmix/types'
+import type { BoundaryPosition } from '@/streetmix/packages/types/src'
 
 interface BuildingHeightControlProps {
   position: BoundaryPosition

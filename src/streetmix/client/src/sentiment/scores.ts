@@ -1,8 +1,8 @@
-import IMG_SENTIMENT_1 from 'url:../../images/openmoji/color/1F620.svg'
-import IMG_SENTIMENT_2 from 'url:../../images/openmoji/color/1F641.svg'
-import IMG_SENTIMENT_3 from 'url:../../images/openmoji/color/1F610.svg'
-import IMG_SENTIMENT_4 from 'url:../../images/openmoji/color/1F60A.svg'
-import IMG_SENTIMENT_5 from 'url:../../images/openmoji/color/1F60D.svg'
+import IMG_SENTIMENT_1 from '../../images/openmoji/color/1F620.svg?url'
+import IMG_SENTIMENT_2 from '../../images/openmoji/color/1F641.svg?url'
+import IMG_SENTIMENT_3 from '../../images/openmoji/color/1F610.svg?url'
+import IMG_SENTIMENT_4 from '../../images/openmoji/color/1F60A.svg?url'
+import IMG_SENTIMENT_5 from '../../images/openmoji/color/1F60D.svg?url'
 
 interface ScoreData {
   score: number

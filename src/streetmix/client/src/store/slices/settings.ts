@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { COLOR_MODE_LIGHT, type ColorModes } from '~/src/app/constants.js'
+import { COLOR_MODE_LIGHT, type ColorModes } from '@/streetmix/client/src/app/constants.js'
 import {
   SETTINGS_UNITS_IMPERIAL,
   SETTINGS_UNITS_METRIC,
-} from '~/src/users/constants.js'
+} from '@/streetmix/client/src/users/constants.js'
 import { STREETMIX_INSTANCE } from '../../app/config.js'
 import { changeLocale } from './locale.js'
 
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { UnitsSetting } from '@streetmix/types'
+import type { UnitsSetting } from '@/streetmix/packages/types/src'
 
 export interface SettingsState {
   lastStreetId: string | null

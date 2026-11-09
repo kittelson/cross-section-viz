@@ -1,10 +1,10 @@
-import type { ColorModes } from '~/src/app/constants'
+import type { ColorModes } from '@/streetmix/client/src/app/constants'
 import type { SerializedError } from '@reduxjs/toolkit'
 import type {
   StreetState,
   GeolocationData,
   UnitsSetting,
-} from '@streetmix/types'
+} from '@/streetmix/packages/types/src'
 
 // TODO: Only use this for client-side types
 // Shared types should move to @streetmix/types

@@ -1,6 +1,6 @@
 import { CURB_HEIGHT } from './constants.js'
 
-import type { StreetJson } from '@streetmix/types'
+import type { StreetJson } from '@/streetmix/packages/types/src'
 
 export function getSlopeValues(
   street: StreetJson,

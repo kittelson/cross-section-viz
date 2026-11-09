@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { ContentDirection } from '~/src/types'
+import type { ContentDirection } from '@/streetmix/client/src/types'
 
 import { changeLocale } from './locale.js'
 

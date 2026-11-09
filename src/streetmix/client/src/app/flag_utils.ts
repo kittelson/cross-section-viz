@@ -1,4 +1,4 @@
-import type { FeatureFlagSettings } from '~/src/types'
+import type { FeatureFlagSettings } from '@/streetmix/client/src/types'
 import store, { observeStore, type RootState } from '../store'
 import {
   setFlagOverrides,

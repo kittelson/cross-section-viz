@@ -1,10 +1,10 @@
 import { FormattedMessage, useIntl } from 'react-intl'
-import { formatNumber } from '@streetmix/utils'
+import { formatNumber } from '@/streetmix/packages/utils/src'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { showDialog } from '~/src/store/slices/dialogs.js'
-import { getStreetCapacity } from '~/src/segments/capacity.js'
-import { Icon } from '~/src/ui/Icon.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { showDialog } from '@/streetmix/client/src/store/slices/dialogs.js'
+import { getStreetCapacity } from '@/streetmix/client/src/segments/capacity.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
 import { StreetMetaItem } from './StreetMetaItem.js'
 
 export function StreetMetaAnalytics() {

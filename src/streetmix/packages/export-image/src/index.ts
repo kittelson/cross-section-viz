@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { makeStreetImage } from './image.js'
 
-import type { StreetAPIResponse } from '@streetmix/types'
+import type { StreetAPIResponse } from '@/streetmix/packages/types/src'
 
 const DEFAULT_IMAGE_SCALE = 1.0 // previous default is 2.0
 const MIN_IMAGE_SCALE = 0.5

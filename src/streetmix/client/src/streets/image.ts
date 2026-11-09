@@ -5,7 +5,7 @@ import store, { observeStore, type RootState } from '../store'
 import { drawStreetThumbnail } from './thumbnail.js'
 import { trimStreetData } from './data_model.js'
 
-import type { FloodDetails, StreetState } from '@streetmix/types'
+import type { FloodDetails, StreetState } from '@/streetmix/packages/types/src'
 
 // This can be adjusted to create much more hi-definition images
 const SAVE_AS_IMAGE_DPI = 2.0

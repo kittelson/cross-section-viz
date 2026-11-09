@@ -1,12 +1,12 @@
-import { useDispatch } from '~/src/store/hooks.js'
-import { loseAnyFocus } from '~/src/util/focus.js'
-import { TooltipGroup } from '~/src/ui/Tooltip.js'
+import { useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { loseAnyFocus } from '@/streetmix/client/src/util/focus.js'
+import { TooltipGroup } from '@/streetmix/client/src/ui/Tooltip.js'
 import { setInfoBubbleMouseInside } from '../store/slices/infoBubble.js'
 import { PopupControls } from './PopupControls'
 import { PopupHeader } from './PopupHeader'
 import { PopupLower } from './PopupLower'
 
-import type { SectionElementTypeAndPosition, Prettify } from '@streetmix/types'
+import type { SectionElementTypeAndPosition, Prettify } from '@/streetmix/packages/types/src'
 
 type PopupContentProps = Prettify<
   SectionElementTypeAndPosition & {

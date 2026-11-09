@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 
-import { useSelector } from '~/src/store/hooks.js'
-import { GROUND_BASELINE_HEIGHT, TILE_SIZE } from '~/src/segments/constants.js'
-import { usePrevious } from '~/src/util/usePrevious.js'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
+import { GROUND_BASELINE_HEIGHT, TILE_SIZE } from '@/streetmix/client/src/segments/constants.js'
+import { usePrevious } from '@/streetmix/client/src/util/usePrevious.js'
 import { calculateSeaLevelRise } from './sea_level.js'
 import './SeaLevel.css'
 

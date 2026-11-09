@@ -2,7 +2,7 @@ import { getSignInData, isSignedIn } from '../users/authentication.js'
 import { formatMessage } from '../locales/locale.js'
 import { STREETMIX_INSTANCE } from './config.js'
 
-import type { StreetState } from '@streetmix/types'
+import type { StreetState } from '@/streetmix/packages/types/src'
 
 const APP_TITLE = STREETMIX_INSTANCE !== 'coastmix' ? 'Streetmix' : 'Coastmix'
 

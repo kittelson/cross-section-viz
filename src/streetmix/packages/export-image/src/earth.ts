@@ -1,8 +1,8 @@
-import { getBoundaryItem } from '@streetmix/parts'
+import { getBoundaryItem } from '@/streetmix/packages/parts/src'
 import { BOUNDARY_WIDTH, TILE_SIZE } from './constants.js'
 
 import type * as Canvas from '@napi-rs/canvas'
-import type { StreetJson } from '@streetmix/types'
+import type { StreetJson } from '@/streetmix/packages/types/src'
 
 const BACKGROUND_EARTH_COLOUR = 'rgb(53, 45, 39)'
 

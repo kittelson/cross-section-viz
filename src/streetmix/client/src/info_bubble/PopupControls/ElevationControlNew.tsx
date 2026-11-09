@@ -4,7 +4,7 @@ import {
   convertMetricMeasurementToImperial,
   prettifyWidth,
   stringifyMeasurementValue,
-} from '@streetmix/utils'
+} from '@/streetmix/packages/utils/src'
 
 import {
   ELEVATION_INCREMENT,
@@ -14,19 +14,19 @@ import {
   MIN_ELEVATION,
   SEGMENT_WIDTH_RESOLUTION_IMPERIAL,
   SEGMENT_WIDTH_RESOLUTION_METRIC,
-} from '~/src/segments/constants.js'
-import { useDispatch, useSelector } from '~/src/store/hooks.js'
-import { segmentsChanged } from '~/src/store/actions/street.js'
+} from '@/streetmix/client/src/segments/constants.js'
+import { useDispatch, useSelector } from '@/streetmix/client/src/store/hooks.js'
+import { segmentsChanged } from '@/streetmix/client/src/store/actions/street.js'
 import {
   changeSegmentProperties,
   setBoundaryElevation,
   setSeaLevel,
-} from '~/src/store/slices/street.js'
-import { SETTINGS_UNITS_IMPERIAL } from '~/src/users/constants.js'
-import { processWidthInput } from '~/src/util/width_units.js'
+} from '@/streetmix/client/src/store/slices/street.js'
+import { SETTINGS_UNITS_IMPERIAL } from '@/streetmix/client/src/users/constants.js'
+import { processWidthInput } from '@/streetmix/client/src/util/width_units.js'
 import { UpDownInput } from './UpDownInput.js'
 
-import type { BoundaryPosition, UnitsSetting } from '@streetmix/types'
+import type { BoundaryPosition, UnitsSetting } from '@/streetmix/packages/types/src'
 
 interface ElevationControlProps {
   position: number | BoundaryPosition

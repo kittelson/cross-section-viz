@@ -4,7 +4,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { images } from '../../app/load_resources.js'
 import './SkyObjects.css'
 
-import type { SkyboxObject } from '@streetmix/types'
+import type { SkyboxObject } from '@/streetmix/packages/types/src'
 
 interface SkyObjectsProps {
   objects?: SkyboxObject[]

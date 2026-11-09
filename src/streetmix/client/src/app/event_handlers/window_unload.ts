@@ -1,10 +1,10 @@
-import store from '~/src/store'
-import { getSaveStreetIncomplete } from '~/src/streets/xhr.js'
+import store from '@/streetmix/client/src/store'
+import { getSaveStreetIncomplete } from '@/streetmix/client/src/streets/xhr.js'
 import {
   isThumbnailSaved,
   SAVE_THUMBNAIL_EVENTS,
   saveStreetThumbnail,
-} from '~/src/streets/image.js'
+} from '@/streetmix/client/src/streets/image.js'
 
 function checkIfChangesSaved(): boolean {
   if (store.getState().errors.abortEverything) {

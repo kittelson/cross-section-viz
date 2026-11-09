@@ -2,9 +2,9 @@ import { useState, useRef } from 'react'
 import { Transition } from 'react-transition-group'
 import { FormattedMessage } from 'react-intl'
 
-import { useSelector } from '~/src/store/hooks.js'
-import { CloseButton } from '~/src/ui/CloseButton.js'
-import { ExternalLink } from '~/src/ui/ExternalLink.js'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
+import { CloseButton } from '@/streetmix/client/src/ui/CloseButton.js'
+import { ExternalLink } from '@/streetmix/client/src/ui/ExternalLink.js'
 import './NotificationBar.css'
 
 const TRANSITION_DURATION = 250

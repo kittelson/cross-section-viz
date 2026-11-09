@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 
-import type { UserProfile } from '~/src/types/index.js'
-import { useSelector } from '~/src/store/hooks.js'
-import { ENV } from '~/src/app/config.js'
-import { Icon } from '~/src/ui/Icon.js'
-import USER_ROLES from '../../../../app/data/user_roles.json'
+import type { UserProfile } from '@/streetmix/client/src/types/index.js'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
+import { ENV } from '@/streetmix/client/src/app/config.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
 import { Dialog } from '../Dialog.js'
 import { FeatureFlagSettings } from './FeatureFlagSettings.js'
 import { GeneralSettings } from './GeneralSettings.js'
@@ -33,7 +32,7 @@ export function SettingsDialog({ category = 'profile' }: SettingsDialogProps) {
   // make `roles` initialize as an empty array.
   const { roles = [] } = user
   const showFlags: boolean =
-    ENV !== 'production' || roles.includes(USER_ROLES.ADMIN.value)
+    ENV !== 'production' || roles.includes('ADMIN')
 
   function handleSelectCategory(category: string): void {
     setActiveCategory(category)

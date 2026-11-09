@@ -1,10 +1,10 @@
 import { IntlMessageFormat } from 'intl-messageformat'
-import { LOCALES, DEFAULT_LOCALE, LOCALE_LEVELS } from '@streetmix/i18n'
+import { LOCALES, DEFAULT_LOCALE, LOCALE_LEVELS } from '@/streetmix/packages/i18n/src'
 
 import store, { observeStore, type RootState } from '../store'
 import { changeLocale } from '../store/slices/locale'
 
-import type { LocaleDefinition, LocaleLevel } from '@streetmix/i18n'
+import type { LocaleDefinition, LocaleLevel } from '@/streetmix/packages/i18n/src'
 
 /**
  * Initialize i18n / localization

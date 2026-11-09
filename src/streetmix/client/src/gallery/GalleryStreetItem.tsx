@@ -9,7 +9,7 @@ import { StreetName } from '../streets/StreetName.js'
 import { drawStreetThumbnail } from '../streets/thumbnail.js'
 import { Icon } from '../ui/Icon.js'
 
-import type { StreetAPIResponse } from '@streetmix/types'
+import type { StreetAPIResponse } from '@/streetmix/packages/types/src'
 import './GalleryStreetItem.css'
 import type { MessageValue } from 'react-intl'
 

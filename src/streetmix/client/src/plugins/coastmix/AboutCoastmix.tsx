@@ -1,12 +1,12 @@
 import { FormattedMessage } from 'react-intl'
 
-import logoCoastmix from 'url:./images/logo_horizontal_coastmix2.svg'
-import crbLogo from 'url:./images/crb.png'
-import oetLogo from 'url:./images/oet.svg'
-import catAvatar from 'url:./images/cat.jpg'
-import kellyAvatar from 'url:./images/kelly.jpg'
-import michaelAvatar from 'url:./images/michael.jpg'
-import { ExternalLink } from '~/src/ui/ExternalLink.js'
+import logoCoastmix from './images/logo_horizontal_coastmix2.svg?url'
+import crbLogo from './images/crb.png?url'
+import oetLogo from './images/oet.svg?url'
+import catAvatar from './images/cat.jpg?url'
+import kellyAvatar from './images/kelly.jpg?url'
+import michaelAvatar from './images/michael.jpg?url'
+import { ExternalLink } from '@/streetmix/client/src/ui/ExternalLink.js'
 import './AboutCoastmix.css'
 
 /* eslint-disable formatjs/no-literal-string-in-jsx */

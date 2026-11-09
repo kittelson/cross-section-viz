@@ -64,7 +64,7 @@ import {
 } from 'react-icons/fa6'
 import { MdOutlineAddRoad } from 'react-icons/md'
 
-import googleIcon from 'url:./icons/google.svg'
+import googleIcon from './icons/google.svg?url'
 
 const ICONS = {
   'arrow-left': [FaArrowLeft, 'fa'],

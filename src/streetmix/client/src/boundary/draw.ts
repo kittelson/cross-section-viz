@@ -1,5 +1,5 @@
 import seedrandom from 'seedrandom'
-import { getBoundaryItem } from '@streetmix/parts'
+import { getBoundaryItem } from '@/streetmix/packages/parts/src'
 
 import { generateRandSeed } from '../util/random.js'
 import { images } from '../app/load_resources.js'
@@ -12,7 +12,7 @@ import {
 import { drawSegmentImage, getElevation } from '../segments/view.js'
 import { getBoundaryImageHeight, getSpriteId } from './boundary.js'
 
-import type { BoundaryPosition } from '@streetmix/types'
+import type { BoundaryPosition } from '@/streetmix/packages/types/src'
 
 const INVALID_SHADE_COLOUR = 'rgba(204, 163, 173, .9)'
 

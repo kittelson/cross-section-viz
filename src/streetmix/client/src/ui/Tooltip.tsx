@@ -26,7 +26,7 @@ import type {
   Placement,
   UseRoleProps,
 } from '@floating-ui/react'
-import type { Optional } from '@streetmix/types'
+import type { Optional } from '@/streetmix/packages/types/src'
 
 import './Tooltip.css'
 

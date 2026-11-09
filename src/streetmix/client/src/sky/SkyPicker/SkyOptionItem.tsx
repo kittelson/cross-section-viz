@@ -1,6 +1,6 @@
-import { Icon } from '~/src/ui/Icon.js'
-import { Tooltip } from '~/src/ui/Tooltip.js'
-import { images } from '~/src/app/load_resources.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
+import { Tooltip } from '@/streetmix/client/src/ui/Tooltip.js'
+import { images } from '@/streetmix/client/src/app/load_resources.js'
 import './SkyOptionItem.css'
 
 interface SkyOptionItemProps {

@@ -1,7 +1,5 @@
-import USER_ROLES from '../../../app/data/user_roles.json'
 import { DRAGGING_TYPE_RESIZE } from '../segments/constants.js'
 import { handleSegmentResizeCancel } from '../segments/resizing.js'
-import { getSignInData, isSignedIn } from '../users/authentication.js'
 import { formatMessage } from '../locales/locale.js'
 import { showDialog } from '../store/slices/dialogs.js'
 import { addToast } from '../store/slices/toasts.js'
@@ -67,11 +65,7 @@ export function registerKeypresses(): void {
   // Secret menu to toggle feature flags
   // Only active in development/staging
   registerKeypress('shift f', () => {
-    if (
-      ENV !== 'production' ||
-      (isSignedIn() &&
-        getSignInData()?.details?.roles.includes(USER_ROLES.ADMIN.value))
-    ) {
+    if (ENV !== 'production') {
       store.dispatch(showDialog('FEATURE_FLAGS'))
     }
   })

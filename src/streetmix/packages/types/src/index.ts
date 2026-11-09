@@ -1,7 +1,7 @@
 import {
   SETTINGS_UNITS_IMPERIAL,
   SETTINGS_UNITS_METRIC,
-} from '@streetmix/client/src/users/constants.js'
+} from '@/streetmix/client/src/users/constants.js'
 
 import type React from 'react'
 import type { Delta } from 'jsondiffpatch'

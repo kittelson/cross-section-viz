@@ -5,7 +5,7 @@ import {
 } from './constants.js'
 
 import type * as Canvas from '@napi-rs/canvas'
-import type { FloodDetails, StreetState } from '@streetmix/types'
+import type { FloodDetails, StreetState } from '@/streetmix/packages/types/src'
 
 // Wave image is rendered at 8px tall, so we half it to render an "average".
 // It is doubled again in a surge.

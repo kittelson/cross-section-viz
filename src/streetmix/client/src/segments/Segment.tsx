@@ -2,12 +2,12 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { useDrag, useDrop } from 'react-dnd'
 import { useShepherd } from 'react-shepherd'
-import { getSegmentInfo } from '@streetmix/parts'
+import { getSegmentInfo } from '@/streetmix/packages/parts/src'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { PopupContainer } from '~/src/info_bubble/PopupContainer.js'
-import { EmptyDragPreview } from '~/src/ui/dnd/EmptyDragPreview.js'
-import { usePrevious } from '~/src/util/usePrevious.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { PopupContainer } from '@/streetmix/client/src/info_bubble/PopupContainer.js'
+import { EmptyDragPreview } from '@/streetmix/client/src/ui/dnd/EmptyDragPreview.js'
+import { usePrevious } from '@/streetmix/client/src/util/usePrevious.js'
 import { setActiveSegment } from '../store/slices/ui.js'
 import {
   incrementSegmentWidth,
@@ -28,7 +28,7 @@ import { RESIZE_TYPE_INCREMENT } from './resizing.js'
 import { TestSlope } from './TestSlope.js'
 import './Segment.css'
 
-import type { SliceItem, UnitsSetting } from '@streetmix/types'
+import type { SliceItem, UnitsSetting } from '@/streetmix/packages/types/src'
 
 interface SliceProps {
   sliceIndex: number

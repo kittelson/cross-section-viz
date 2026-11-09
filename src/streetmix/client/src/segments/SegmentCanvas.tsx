@@ -1,6 +1,6 @@
 import { memo, useState, useRef, useEffect } from 'react'
 import { Decimal } from 'decimal.js'
-import { getSegmentVariantInfo } from '@streetmix/parts'
+import { getSegmentVariantInfo } from '@/streetmix/packages/parts/src'
 
 import { useSelector } from '../store/hooks.js'
 import { drawSegmentContents, getVariantInfoDimensions } from './view.js'
@@ -11,7 +11,7 @@ import {
 } from './constants.js'
 import './SegmentCanvas.css'
 
-import type { SlopeProperties } from '@streetmix/types'
+import type { SlopeProperties } from '@/streetmix/packages/types/src'
 
 const GROUND_BASELINE = CANVAS_HEIGHT - GROUND_BASELINE_HEIGHT
 

@@ -5,7 +5,7 @@
  */
 import { orderBy } from 'es-toolkit'
 import { IntlProvider } from 'react-intl'
-import { getAllSegmentInfo } from '@streetmix/parts'
+import { getAllSegmentInfo } from '@/streetmix/packages/parts/src'
 
 import { useSelector } from '../store/hooks.js'
 import { Scrollable } from '../ui/Scrollable.js'

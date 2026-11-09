@@ -1,12 +1,12 @@
 import { useEffect, useCallback } from 'react'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
 import {
   setWelcomePanelVisible,
   setWelcomePanelDismissed,
-} from '~/src/store/slices/ui.js'
-import { isSignedIn } from '~/src/users/authentication.js'
-import { CloseButton } from '~/src/ui/CloseButton.js'
+} from '@/streetmix/client/src/store/slices/ui.js'
+import { isSignedIn } from '@/streetmix/client/src/users/authentication.js'
+import { CloseButton } from '@/streetmix/client/src/ui/CloseButton.js'
 import { registerKeypress, deregisterKeypress } from '../keypress.js'
 import { MODES, getMode } from '../mode.js'
 import { getIsReturningUser, setIsReturningUser } from './localstorage.js'

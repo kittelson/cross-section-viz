@@ -13,7 +13,7 @@ import type {
   SliceItem,
   SliceWarnings,
   StreetState,
-} from '@streetmix/types'
+} from '@/streetmix/packages/types/src'
 
 const BASE_DATA_SOURCE = 'common'
 const CAPACITIES = processCapacityData()

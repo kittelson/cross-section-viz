@@ -1,6 +1,6 @@
 import BOUNDARY_DEFS from './data/boundary_defs.json' with { type: 'json' }
 
-import type { BoundaryDefinition } from '@streetmix/types'
+import type { BoundaryDefinition } from '@/streetmix/packages/types/src'
 
 export function getBoundaryItem(variant: string): BoundaryDefinition {
   if (!(variant in BOUNDARY_DEFS)) {

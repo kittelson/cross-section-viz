@@ -3,19 +3,19 @@ import {
   prettifyWidth,
   stringifyMeasurementValue,
   convertMetricMeasurementToImperial,
-} from '@streetmix/utils'
+} from '@/streetmix/packages/utils/src'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { incrementSegmentWidth } from '~/src/store/actions/street.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { incrementSegmentWidth } from '@/streetmix/client/src/store/actions/street.js'
 import {
   MIN_SEGMENT_WIDTH,
   MAX_SEGMENT_WIDTH,
-} from '~/src/segments/constants.js'
-import { RESIZE_TYPE_TYPING, resizeSegment } from '~/src/segments/resizing.js'
-import { Icon } from '~/src/ui/Icon.js'
-import { Tooltip } from '~/src/ui/Tooltip.js'
-import { processWidthInput } from '~/src/util/width_units.js'
-import { SETTINGS_UNITS_IMPERIAL } from '~/src/users/constants.js'
+} from '@/streetmix/client/src/segments/constants.js'
+import { RESIZE_TYPE_TYPING, resizeSegment } from '@/streetmix/client/src/segments/resizing.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
+import { Tooltip } from '@/streetmix/client/src/ui/Tooltip.js'
+import { processWidthInput } from '@/streetmix/client/src/util/width_units.js'
+import { SETTINGS_UNITS_IMPERIAL } from '@/streetmix/client/src/users/constants.js'
 import { UpDownInput } from './UpDownInput.js'
 
 interface WidthControlProps {

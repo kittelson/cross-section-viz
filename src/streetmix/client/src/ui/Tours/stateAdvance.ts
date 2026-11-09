@@ -1,4 +1,4 @@
-import store, { observeStore, type RootState } from '~/src/store'
+import store, { observeStore, type RootState } from '@/streetmix/client/src/store'
 
 import type { Tour } from 'shepherd.js'
 

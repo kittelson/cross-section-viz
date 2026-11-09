@@ -1,6 +1,6 @@
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { setFeatureFlag } from '~/src/store/slices/flags.js'
-import { Checkbox } from '~/src/ui/Checkbox.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { setFeatureFlag } from '@/streetmix/client/src/store/slices/flags.js'
+import { Checkbox } from '@/streetmix/client/src/ui/Checkbox.js'
 import { Dialog } from '../Dialog.js'
 import './FeatureFlagDialog.css'
 

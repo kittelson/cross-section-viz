@@ -1,26 +1,26 @@
 import clone from 'just-clone'
 
-import { ERRORS } from '~/src/app/errors.js'
-import { formatMessage } from '~/src/locales/locale.js'
-import { checkSeaLevel } from '~/src/plugins/coastmix/sea_level.js'
+import { ERRORS } from '@/streetmix/client/src/app/errors.js'
+import { formatMessage } from '@/streetmix/client/src/locales/locale.js'
+import { checkSeaLevel } from '@/streetmix/client/src/plugins/coastmix/sea_level.js'
 import {
   RESIZE_TYPE_INCREMENT,
   RESIZE_TYPE_PRECISE_DRAGGING,
   resolutionForResizeType,
   normalizeSegmentWidth,
   cancelSegmentResizeTransitions,
-} from '~/src/segments/resizing.js'
-import { getSlopeValues } from '~/src/segments/slope.js'
-import { getVariantInfo } from '~/src/segments/variant_utils.js'
+} from '@/streetmix/client/src/segments/resizing.js'
+import { getSlopeValues } from '@/streetmix/client/src/segments/slope.js'
+import { getVariantInfo } from '@/streetmix/client/src/segments/variant_utils.js'
 import {
   setIgnoreStreetChanges,
   setLastStreet,
   saveStreetToServerIfNecessary,
-} from '~/src/streets/data_model.js'
-import { applyWarningsToSlices } from '~/src/streets/warnings.js'
-import { recalculateWidth } from '~/src/streets/width.js'
-import { saveStreetToServer } from '~/src/streets/xhr.js'
-import apiClient from '~/src/util/api.js'
+} from '@/streetmix/client/src/streets/data_model.js'
+import { applyWarningsToSlices } from '@/streetmix/client/src/streets/warnings.js'
+import { recalculateWidth } from '@/streetmix/client/src/streets/width.js'
+import { saveStreetToServer } from '@/streetmix/client/src/streets/xhr.js'
+import apiClient from '@/streetmix/client/src/util/api.js'
 import { showError } from '../slices/errors.js'
 import { updateSettings } from '../slices/settings.js'
 import { addToast } from '../slices/toasts.js'
@@ -46,7 +46,7 @@ import type {
   SliceItem,
   StreetAPIResponse,
   StreetState,
-} from '@streetmix/types'
+} from '@/streetmix/packages/types/src'
 
 /**
  * `updateStreetWidth` as a thunk action that automatically

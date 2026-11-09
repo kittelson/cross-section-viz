@@ -12,7 +12,7 @@ import {
 } from './data_model.js'
 import { isOwnedByCurrentUser } from './owner.js'
 
-import type { StreetState, HistoryState } from '@streetmix/types'
+import type { StreetState, HistoryState } from '@/streetmix/packages/types/src'
 
 const historyDiffer = create()
 

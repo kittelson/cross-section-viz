@@ -1,5 +1,5 @@
-import { CoastalFloodingPanel } from '~/src/plugins/coastmix'
-import { useSelector } from '~/src/store/hooks.js'
+import { CoastalFloodingPanel } from '@/streetmix/client/src/plugins/coastmix'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 import { FloodingDebugOverlay } from './FloodingDebugOverlay.js'
 import './CoastmixUI.css'
 

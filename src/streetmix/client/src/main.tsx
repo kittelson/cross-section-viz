@@ -14,14 +14,14 @@ import '@fontsource-variable/rubik/wght-italic.css'
 
 // Stylesheets
 import 'leaflet/dist/leaflet.css'
-import '~/styles/styles.css'
+import '@/streetmix/client/styles/styles.css'
 
 // Redux
-import store from '~/src/store'
+import store from '@/streetmix/client/src/store'
 
 // Main object
-import { initialize } from '~/src/app/initialization.js'
-import { App } from '~/src/app/App.js'
+import { initialize } from '@/streetmix/client/src/app/initialization.js'
+import { App } from '@/streetmix/client/src/app/App.js'
 
 // Error tracking
 // Load this before all other modules. Only load when run in production.

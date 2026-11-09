@@ -14,15 +14,15 @@ import {
   CARTO_API_KEY,
   PELIAS_API_KEY,
   PELIAS_HOST_NAME,
-} from '~/src/app/config.js'
-import { useDispatch, useSelector } from '~/src/store/hooks.js'
-import { setMapState } from '~/src/store/slices/map.js'
+} from '@/streetmix/client/src/app/config.js'
+import { useDispatch, useSelector } from '@/streetmix/client/src/store/hooks.js'
+import { setMapState } from '@/streetmix/client/src/store/slices/map.js'
 import {
   addLocation,
   clearLocation,
   saveStreetName,
-} from '~/src/store/slices/street.js'
-import { isOwnedByCurrentUser } from '~/src/streets/owner.js'
+} from '@/streetmix/client/src/store/slices/street.js'
+import { isOwnedByCurrentUser } from '@/streetmix/client/src/streets/owner.js'
 import { Dialog } from '../Dialog.js'
 import { ErrorBanner } from './ErrorBanner.js'
 import { GeoSearch } from './GeoSearch.js'
@@ -30,7 +30,7 @@ import { LocationMarker } from './LocationMarker.js'
 import { LocationPopup } from './LocationPopup.js'
 import './GeotagDialog.css'
 
-import type { LatLngObject, StreetState } from '@streetmix/types'
+import type { LatLngObject, StreetState } from '@/streetmix/packages/types/src'
 import type {
   FeatureCollection,
   GeoJsonProperties,

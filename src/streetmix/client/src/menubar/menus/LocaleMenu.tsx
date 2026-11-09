@@ -1,15 +1,15 @@
 import { FormattedMessage } from 'react-intl'
-import { DEFAULT_LOCALE } from '@streetmix/i18n'
+import { DEFAULT_LOCALE } from '@/streetmix/packages/i18n/src'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { changeLocale } from '~/src/store/slices/locale.js'
-import { clearMenus } from '~/src/store/slices/menus.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { changeLocale } from '@/streetmix/client/src/store/slices/locale.js'
+import { clearMenus } from '@/streetmix/client/src/store/slices/menus.js'
 import {
   getAvailableLocales,
   getActualLocaleFromRequested,
-} from '~/src/locales/locale.js'
-import { Icon } from '~/src/ui/Icon.js'
-import { LoadingSpinner } from '~/src/ui/LoadingSpinner.js'
+} from '@/streetmix/client/src/locales/locale.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
+import { LoadingSpinner } from '@/streetmix/client/src/ui/LoadingSpinner.js'
 import Menu, { type MenuProps } from './Menu.js'
 import { MenuItem } from './MenuItem.js'
 

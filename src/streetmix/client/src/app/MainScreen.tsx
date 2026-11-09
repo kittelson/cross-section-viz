@@ -1,4 +1,4 @@
-import { FloatingPanelPortal } from '~/src/ui/FloatingPanels'
+import { FloatingPanelPortal } from '@/streetmix/client/src/ui/FloatingPanels'
 
 interface MainScreenProps {
   children: React.ReactNode

@@ -1,8 +1,8 @@
 import { FormattedMessage, useIntl } from 'react-intl'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { setWeather } from '~/src/store/slices/street.js'
-import { Icon } from '~/src/ui/Icon.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { setWeather } from '@/streetmix/client/src/store/slices/street.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
 import { SkyOptionItem } from './SkyOptionItem.js'
 
 interface WeatherOptionsProps {

@@ -1,4 +1,4 @@
-import { ExternalLink } from '~/src/ui/ExternalLink.js'
+import { ExternalLink } from '@/streetmix/client/src/ui/ExternalLink.js'
 import './TeamMember.css'
 
 interface TeamMemberProps {

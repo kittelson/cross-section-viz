@@ -17,7 +17,7 @@ import {
   getStreet,
 } from '../util/api.js'
 
-import type { StreetAPIResponse } from '@streetmix/types'
+import type { StreetAPIResponse } from '@/streetmix/packages/types/src'
 
 let lastRequestedStreetId: string | null = null
 

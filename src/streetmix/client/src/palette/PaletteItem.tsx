@@ -8,7 +8,7 @@ import { Tooltip } from '../ui/Tooltip.js'
 import { EmptyDragPreview } from '../ui/dnd/EmptyDragPreview.js'
 import { createPaletteItemDragSpec } from '../segments/drag_and_drop.js'
 
-import type { SegmentDefinition } from '@streetmix/types'
+import type { SegmentDefinition } from '@/streetmix/packages/types/src'
 import './PaletteItem.css'
 
 interface PaletteItemProps {

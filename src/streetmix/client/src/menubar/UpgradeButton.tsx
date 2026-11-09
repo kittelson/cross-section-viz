@@ -1,6 +1,6 @@
 import { FormattedMessage } from 'react-intl'
 
-import streetmixPlusIcon from 'url:../ui/icons/streetmix-plus.svg'
+import streetmixPlusIcon from '../ui/icons/streetmix-plus.svg?url'
 import { Button } from '../ui/Button.js'
 import './UpgradeButton.css'
 

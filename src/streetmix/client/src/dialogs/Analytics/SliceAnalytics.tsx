@@ -1,11 +1,11 @@
-import { images } from '~/src/app/load_resources.js'
-import { getLocaleSliceName } from '~/src/segments/labels.js'
-import { useSelector } from '~/src/store/hooks.js'
+import { images } from '@/streetmix/client/src/app/load_resources.js'
+import { getLocaleSliceName } from '@/streetmix/client/src/segments/labels.js'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 import { CapacityBar } from './CapacityBar.js'
 import { CapacityMessage } from './CapacityMessage.js'
 import './SliceAnalytics.css'
 
-import type { CapacityForDisplay } from '@streetmix/types'
+import type { CapacityForDisplay } from '@/streetmix/packages/types/src'
 
 const BAR_COLORS = 4
 

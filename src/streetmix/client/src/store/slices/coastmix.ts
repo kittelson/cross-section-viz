@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { CoastmixState } from '@streetmix/types'
+import type { CoastmixState } from '@/streetmix/packages/types/src'
 
 const initialState: CoastmixState = {
   controlsVisible: false,

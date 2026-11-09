@@ -1,8 +1,8 @@
-import { useSelector } from '~/src/store/hooks.js'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 import { getRiseRunValues, getSlopeWarnings } from './slope.js'
 import './TestSlope.css'
 
-import type { SliceItem } from '@streetmix/types'
+import type { SliceItem } from '@/streetmix/packages/types/src'
 
 interface Props {
   slice: SliceItem

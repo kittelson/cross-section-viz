@@ -2,9 +2,9 @@ import { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useShepherd } from 'react-shepherd'
 
-import { tourOptions } from '~/src/ui/Tours'
-import { steps } from '~/src/ui/Tours/coastmix-practice.js'
-import { Button } from '~/src/ui/Button.js'
+import { tourOptions } from '@/streetmix/client/src/ui/Tours'
+import { steps } from '@/streetmix/client/src/ui/Tours/coastmix-practice.js'
+import { Button } from '@/streetmix/client/src/ui/Button.js'
 
 interface WelcomeCoastmixNewProps {
   handleDismiss: () => void

@@ -1,7 +1,7 @@
 import { memo } from 'react'
-import { prettifyWidth } from '@streetmix/utils'
+import { prettifyWidth } from '@/streetmix/packages/utils/src'
 
-import type { UnitsSetting } from '@streetmix/types'
+import type { UnitsSetting } from '@/streetmix/packages/types/src'
 
 interface MeasurementTextProps {
   value: number

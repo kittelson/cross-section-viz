@@ -1,11 +1,11 @@
-import { getSegmentInfo, getSegmentVariantInfo } from '@streetmix/parts'
+import { getSegmentInfo, getSegmentVariantInfo } from '@/streetmix/packages/parts/src'
 
-import { useDispatch } from '~/src/store/hooks.js'
-import { formatMessage } from '~/src/locales/locale.js'
-import { showDescription } from '~/src/store/slices/infoBubble.js'
+import { useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { formatMessage } from '@/streetmix/client/src/locales/locale.js'
+import { showDescription } from '@/streetmix/client/src/store/slices/infoBubble.js'
 import './DescriptionPrompt.css'
 
-import type { SliceDescription } from '@streetmix/types'
+import type { SliceDescription } from '@/streetmix/packages/types/src'
 
 function getDescriptionData(
   type: string,

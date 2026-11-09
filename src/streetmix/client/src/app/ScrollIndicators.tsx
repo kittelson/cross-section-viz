@@ -1,7 +1,7 @@
 import { memo, useEffect } from 'react'
 import { useIntl } from 'react-intl'
 
-import { Tooltip, TooltipGroup } from '~/src/ui/Tooltip.js'
+import { Tooltip, TooltipGroup } from '@/streetmix/client/src/ui/Tooltip.js'
 import { registerKeypress, deregisterKeypress } from './keypress.js'
 import './ScrollIndicators.css'
 

@@ -3,8 +3,8 @@ import {
   SliceTypes,
   getSegmentInfo,
   getSegmentVariantInfo,
-} from '@streetmix/parts'
-import { getWidthInMetric } from '@streetmix/utils'
+} from '@/streetmix/packages/parts/src'
+import { getWidthInMetric } from '@/streetmix/packages/utils/src'
 
 import { setIgnoreStreetChanges } from '../streets/data_model.js'
 import store, { observeStore } from '../store'
@@ -45,7 +45,7 @@ import type {
   SlopeProperties,
   SegmentDefinition,
   StreetJson,
-} from '@streetmix/types'
+} from '@/streetmix/packages/types/src'
 import type { DragSourceMonitor, DropTargetMonitor } from 'react-dnd'
 import type { RootState } from '../store'
 import type { DraggingState } from '../types'

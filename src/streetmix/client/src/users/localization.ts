@@ -5,7 +5,7 @@ import { setUnits } from '../store/slices/street.js'
 import { setUserUnits } from '../store/slices/settings.js'
 import { SETTINGS_UNITS_IMPERIAL, SETTINGS_UNITS_METRIC } from './constants.js'
 
-import type { UnitsSetting } from '@streetmix/types'
+import type { UnitsSetting } from '@/streetmix/packages/types/src'
 
 const COUNTRIES_IMPERIAL_UNITS = ['US']
 

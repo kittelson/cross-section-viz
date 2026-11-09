@@ -12,7 +12,7 @@ import { scheduleSavingStreetToServer, updateLastStreetInfo } from './xhr.js'
 import type {
   SliceItemForServerTransmission,
   StreetState,
-} from '@streetmix/types'
+} from '@/streetmix/packages/types/src'
 
 let _lastStreet: Partial<StreetState>
 

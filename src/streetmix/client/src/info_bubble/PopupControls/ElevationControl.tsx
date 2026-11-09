@@ -5,16 +5,16 @@ import {
   BUILDING_RIGHT_POSITION,
   CURB_HEIGHT,
   CURB_HEIGHT_IMPERIAL,
-} from '~/src/segments/constants.js'
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { segmentsChanged } from '~/src/store/actions/street.js'
-import { changeSegmentProperties } from '~/src/store/slices/street.js'
-import { Icon } from '~/src/ui/Icon.js'
-import { Tooltip } from '~/src/ui/Tooltip.js'
-import { SETTINGS_UNITS_IMPERIAL } from '~/src/users/constants.js'
+} from '@/streetmix/client/src/segments/constants.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { segmentsChanged } from '@/streetmix/client/src/store/actions/street.js'
+import { changeSegmentProperties } from '@/streetmix/client/src/store/slices/street.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
+import { Tooltip } from '@/streetmix/client/src/ui/Tooltip.js'
+import { SETTINGS_UNITS_IMPERIAL } from '@/streetmix/client/src/users/constants.js'
 import { VariantButton } from './VariantButton.js'
 
-import type { BoundaryPosition } from '@streetmix/types'
+import type { BoundaryPosition } from '@/streetmix/packages/types/src'
 
 interface ElevationControlProps {
   position: number | BoundaryPosition

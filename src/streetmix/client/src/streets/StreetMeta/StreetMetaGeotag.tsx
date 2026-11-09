@@ -1,11 +1,11 @@
 import { FormattedMessage, useIntl } from 'react-intl'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { showDialog } from '~/src/store/slices/dialogs.js'
-import { Icon } from '~/src/ui/Icon.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { showDialog } from '@/streetmix/client/src/store/slices/dialogs.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
 import { StreetMetaItem } from './StreetMetaItem.js'
 
-import type { StreetLocation } from '@streetmix/types'
+import type { StreetLocation } from '@/streetmix/packages/types/src'
 
 export function StreetMetaGeotag() {
   const street = useSelector((state) => state.street)

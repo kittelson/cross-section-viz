@@ -2,9 +2,9 @@ import { useEffect, useRef, createRef, cloneElement, useCallback } from 'react'
 import { useDrop } from 'react-dnd'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
-import { useSelector } from '~/src/store/hooks.js'
-import { usePrevious } from '~/src/util/usePrevious.js'
-import type { DraggingState } from '~/src/types/index.js'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
+import { usePrevious } from '@/streetmix/client/src/util/usePrevious.js'
+import type { DraggingState } from '@/streetmix/client/src/types/index.js'
 import { Segment } from '../segments/Segment.js'
 import {
   TILE_SIZE,

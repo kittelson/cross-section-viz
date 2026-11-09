@@ -1,15 +1,15 @@
 import { FormattedMessage, useIntl } from 'react-intl'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { setUserColorMode } from '~/src/store/slices/settings.js'
-import { Popover } from '~/src/ui/Popover.js'
-import RadioGroup from '~/src/ui/RadioGroup.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { setUserColorMode } from '@/streetmix/client/src/store/slices/settings.js'
+import { Popover } from '@/streetmix/client/src/ui/Popover.js'
+import RadioGroup from '@/streetmix/client/src/ui/RadioGroup.js'
 import {
   COLOR_MODE_DARK,
   COLOR_MODE_LIGHT,
   COLOR_MODE_AUTO,
   type ColorModes,
-} from '~/src/app/constants.js'
+} from '@/streetmix/client/src/app/constants.js'
 
 export function AppearanceSettings() {
   return (

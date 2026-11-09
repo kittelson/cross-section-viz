@@ -9,7 +9,7 @@ import type {
   CSSGradientStop,
   SkyboxDefWithStyles,
   SkyboxDefinition,
-} from '@streetmix/types'
+} from '@/streetmix/packages/types/src'
 
 /**
  * Converts information from skybox-defs.json to create a string value

@@ -1,14 +1,13 @@
 import { useCallback } from 'react'
 import { FormattedMessage } from 'react-intl'
 
-import streetmixPlusIcon from 'url:~/src/ui/icons/streetmix-plus.svg'
-import { signOut } from '~/src/users/authentication.js'
-import { Avatar } from '~/src/users/Avatar.js'
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { openGallery } from '~/src/store/actions/gallery.js'
-import { showDialog } from '~/src/store/slices/dialogs.js'
-import { Icon } from '~/src/ui/Icon.js'
-import USER_ROLES from '../../../../app/data/user_roles.json'
+import streetmixPlusIcon from '~/src/ui/icons/streetmix-plus.svg?url'
+import { signOut } from '@/streetmix/client/src/users/authentication.js'
+import { Avatar } from '@/streetmix/client/src/users/Avatar.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { openGallery } from '@/streetmix/client/src/store/actions/gallery.js'
+import { showDialog } from '@/streetmix/client/src/store/slices/dialogs.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
 import Menu, { type MenuProps } from './Menu.js'
 import { MenuItem } from './MenuItem.js'
 import { MenuSeparator } from './MenuSeparator.js'
@@ -30,8 +29,7 @@ export function IdentityMenu(props: MenuProps) {
     [user?.id, dispatch]
   )
 
-  const isAdmin: boolean =
-    user?.roles?.includes(USER_ROLES.ADMIN.value) ?? false
+  const isAdmin = false
 
   function handleSignOut() {
     signOut(false)

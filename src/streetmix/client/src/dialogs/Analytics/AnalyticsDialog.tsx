@@ -1,22 +1,22 @@
 import { useState, useRef } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { formatNumber } from '@streetmix/utils'
+import { formatNumber } from '@/streetmix/packages/utils/src'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { setShowAnalytics } from '~/src/store/actions/street.js'
-import { Terms } from '~/src/app/Terms.js'
-import { Button } from '~/src/ui/Button.js'
-import { Checkbox } from '~/src/ui/Checkbox.js'
-import { ExternalLink } from '~/src/ui/ExternalLink.js'
-import { Icon } from '~/src/ui/Icon.js'
-import { isOwnedByCurrentUser } from '~/src/streets/owner.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { setShowAnalytics } from '@/streetmix/client/src/store/actions/street.js'
+import { Terms } from '@/streetmix/client/src/app/Terms.js'
+import { Button } from '@/streetmix/client/src/ui/Button.js'
+import { Checkbox } from '@/streetmix/client/src/ui/Checkbox.js'
+import { ExternalLink } from '@/streetmix/client/src/ui/ExternalLink.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
+import { isOwnedByCurrentUser } from '@/streetmix/client/src/streets/owner.js'
 import {
   getCapacityData,
   getStreetCapacity,
   getRolledUpSegmentCapacities,
   saveCsv,
-} from '~/src/segments/capacity.js'
-import { SETTINGS_UNITS_IMPERIAL } from '~/src/users/constants.js'
+} from '@/streetmix/client/src/segments/capacity.js'
+import { SETTINGS_UNITS_IMPERIAL } from '@/streetmix/client/src/users/constants.js'
 import { Dialog } from '../Dialog.js'
 import { CapacitySources } from './CapacitySources.js'
 import { SliceAnalytics } from './SliceAnalytics.js'

@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { clearLocation } from './street.js'
 
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { LatLngObject } from '@streetmix/types'
+import type { LatLngObject } from '@/streetmix/packages/types/src'
 import type { GeoJsonProperties } from 'geojson'
 
 interface MapState {

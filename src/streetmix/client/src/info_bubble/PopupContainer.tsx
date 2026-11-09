@@ -21,7 +21,7 @@ import {
 } from '@floating-ui/react'
 import { useShepherd } from 'react-shepherd'
 
-import { useSelector } from '~/src/store/hooks.js'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 import { PopupContent } from './PopupContent.js'
 import './PopupContainer.css'
 
@@ -30,7 +30,7 @@ import type {
   Optional,
   Prettify,
   SectionElementTypeAndPosition,
-} from '@streetmix/types'
+} from '@/streetmix/packages/types/src'
 
 // Default settings
 const POPUP_DELAY = {

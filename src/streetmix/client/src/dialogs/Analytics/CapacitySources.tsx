@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { setCapacitySource } from '~/src/store/actions/street.js'
-import { DEFAULT_CAPACITY_SOURCE } from '~/src/streets/constants.js'
-import { isOwnedByCurrentUser } from '~/src/streets/owner.js'
-import { getAllCapacityDataSources } from '~/src/segments/capacity.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { setCapacitySource } from '@/streetmix/client/src/store/actions/street.js'
+import { DEFAULT_CAPACITY_SOURCE } from '@/streetmix/client/src/streets/constants.js'
+import { isOwnedByCurrentUser } from '@/streetmix/client/src/streets/owner.js'
+import { getAllCapacityDataSources } from '@/streetmix/client/src/segments/capacity.js'
 import './CapacitySources.css'
 
 export function CapacitySources() {

@@ -1,4 +1,4 @@
-import { segmentsChanged } from '~/src/segments/view'
+import { segmentsChanged } from '@/streetmix/client/src/segments/view'
 
 import { setLastStreet, setIgnoreStreetChanges } from './data_model'
 import { prepareStreet } from './templates'

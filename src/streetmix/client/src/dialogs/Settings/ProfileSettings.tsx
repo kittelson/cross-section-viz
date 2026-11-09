@@ -1,12 +1,12 @@
 import { useState, useRef, useId } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { updateDisplayName } from '~/src/store/slices/user.js'
-import { Button } from '~/src/ui/Button.js'
-import { LoadingSpinner } from '~/src/ui/LoadingSpinner.js'
-import { Popover } from '~/src/ui/Popover.js'
-import { patchUser } from '~/src/util/api.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { updateDisplayName } from '@/streetmix/client/src/store/slices/user.js'
+import { Button } from '@/streetmix/client/src/ui/Button.js'
+import { LoadingSpinner } from '@/streetmix/client/src/ui/LoadingSpinner.js'
+import { Popover } from '@/streetmix/client/src/ui/Popover.js'
+import { patchUser } from '@/streetmix/client/src/util/api.js'
 import './ProfileSettings.css'
 import type { MessageValue } from 'react-intl'
 

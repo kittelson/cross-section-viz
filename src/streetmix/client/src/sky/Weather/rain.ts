@@ -1,4 +1,4 @@
-import { FrameTicker } from '~/src/util/animation.js'
+import { FrameTicker } from '@/streetmix/client/src/util/animation.js'
 // Falling rain simulation using 2D canvas
 // - vanilla JS, no frameworks
 // - framerate independent physics

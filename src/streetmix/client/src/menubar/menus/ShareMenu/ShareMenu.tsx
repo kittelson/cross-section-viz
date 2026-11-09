@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { useIntl } from 'react-intl'
 
-import { useSelector } from '~/src/store/hooks.js'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 import Menu, { type MenuProps } from '../Menu.js'
 import { MenuSeparator } from '../MenuSeparator.js'
 import { CopyShareLink } from './CopyShareLink.js'

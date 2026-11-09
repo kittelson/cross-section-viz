@@ -2,10 +2,10 @@ import { IntlProvider, FormattedMessage } from 'react-intl'
 import ReactMarkdown from 'react-markdown'
 import rehypeExternalLinks from 'rehype-external-links'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { hideDescription } from '~/src/store/slices/infoBubble.js'
-import { formatMessage } from '~/src/locales/locale.js'
-import { FloatingPanel } from '~/src/ui/FloatingPanels'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { hideDescription } from '@/streetmix/client/src/store/slices/infoBubble.js'
+import { formatMessage } from '@/streetmix/client/src/locales/locale.js'
+import { FloatingPanel } from '@/streetmix/client/src/ui/FloatingPanels'
 import './DescriptionPanel.css'
 
 export function DescriptionPanel() {

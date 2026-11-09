@@ -1,15 +1,15 @@
 import { FormattedMessage, useIntl } from 'react-intl'
-import { DEFAULT_LOCALE } from '@streetmix/i18n'
+import { DEFAULT_LOCALE } from '@/streetmix/packages/i18n/src'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { changeLocale } from '~/src/store/slices/locale.js'
-import RadioGroup, { type RadioItemProps } from '~/src/ui/RadioGroup.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { changeLocale } from '@/streetmix/client/src/store/slices/locale.js'
+import RadioGroup, { type RadioItemProps } from '@/streetmix/client/src/ui/RadioGroup.js'
 import {
   getAvailableLocales,
   getActualLocaleFromRequested,
-} from '~/src/locales/locale.js'
+} from '@/streetmix/client/src/locales/locale.js'
 
-import type { LocaleDefinition } from '@streetmix/i18n'
+import type { LocaleDefinition } from '@/streetmix/packages/i18n/src'
 
 export function LanguageSettings() {
   const locale = useSelector((state) => state.locale.locale ?? DEFAULT_LOCALE)

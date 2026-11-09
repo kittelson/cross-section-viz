@@ -6,8 +6,8 @@ import Draggable, {
   type DraggableEventHandler,
 } from 'react-draggable'
 
-import { CloseButton } from '~/src/ui/CloseButton.js'
-import { Icon, type IconNames } from '~/src/ui/Icon.js'
+import { CloseButton } from '@/streetmix/client/src/ui/CloseButton.js'
+import { Icon, type IconNames } from '@/streetmix/client/src/ui/Icon.js'
 import { useFloatingPanelPortal } from './FloatingPanelPortalContext.js'
 import './FloatingPanel.css'
 

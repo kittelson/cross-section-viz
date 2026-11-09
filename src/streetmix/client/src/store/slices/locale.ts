@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { DEFAULT_LOCALE } from '@streetmix/i18n'
+import { DEFAULT_LOCALE } from '@/streetmix/packages/i18n/src'
 
 import { getAppTranslations, getSegmentTranslations } from '../../util/api.js'
 
-import type { TranslationRecord } from '@streetmix/types'
+import type { TranslationRecord } from '@/streetmix/packages/types/src'
 
 type LocaleMessages = Record<string, string>
 

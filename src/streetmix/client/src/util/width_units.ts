@@ -2,7 +2,7 @@ import { round } from 'es-toolkit'
 
 import { SETTINGS_UNITS_IMPERIAL } from '../users/constants'
 
-import type { UnitsSetting } from '@streetmix/types'
+import type { UnitsSetting } from '@/streetmix/packages/types/src'
 
 const IMPERIAL_CONVERSION_RATE = 0.3048
 

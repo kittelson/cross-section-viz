@@ -3,17 +3,17 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import {
   prettifyWidth,
   convertImperialMeasurementToMetric,
-} from '@streetmix/utils'
+} from '@/streetmix/packages/utils/src'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { updateStreetWidthAction as updateStreetWidth } from '~/src/store/actions/street.js'
-import { Icon } from '~/src/ui/Icon.js'
-import { processWidthInput } from '~/src/util/width_units.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { updateStreetWidthAction as updateStreetWidth } from '@/streetmix/client/src/store/actions/street.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
+import { processWidthInput } from '@/streetmix/client/src/util/width_units.js'
 import {
   SETTINGS_UNITS_IMPERIAL,
   SETTINGS_UNITS_METRIC,
-} from '~/src/users/constants.js'
-import { updateUnits } from '~/src/users/localization.js'
+} from '@/streetmix/client/src/users/constants.js'
+import { updateUnits } from '@/streetmix/client/src/users/localization.js'
 import {
   MIN_CUSTOM_STREET_WIDTH,
   MAX_CUSTOM_STREET_WIDTH,
@@ -23,7 +23,7 @@ import {
 import { normalizeStreetWidth } from '../width.js'
 import { StreetMetaItem } from './StreetMetaItem.js'
 
-import type { StreetJsonExtra } from '@streetmix/types'
+import type { StreetJsonExtra } from '@/streetmix/packages/types/src'
 import './StreetMetaWidth.css'
 import type { MessageValue } from 'react-intl'
 

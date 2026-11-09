@@ -2,12 +2,12 @@ import { useIntl } from 'react-intl'
 
 // Slope icon was created in-house, we don't have this in the <Icon /> pipeline
 // (yet) (TODO in future if this icon works out)
-import slopeIcon from 'url:./icon-slope.svg'
-import { useDispatch } from '~/src/store/hooks.js'
-import { segmentsChanged } from '~/src/store/actions/street.js'
-import { toggleSliceSlope } from '~/src/store/slices/street.js'
-import { Switch } from '~/src/ui/Switch.js'
-import { Tooltip } from '~/src/ui/Tooltip.js'
+import slopeIcon from './icon-slope.svg?url'
+import { useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { segmentsChanged } from '@/streetmix/client/src/store/actions/street.js'
+import { toggleSliceSlope } from '@/streetmix/client/src/store/slices/street.js'
+import { Switch } from '@/streetmix/client/src/ui/Switch.js'
+import { Tooltip } from '@/streetmix/client/src/ui/Tooltip.js'
 
 interface SlopeToggleProps {
   position: number

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useIntl } from 'react-intl'
 
-import { Icon } from '~/src/ui/Icon.js'
-import { Tooltip } from '~/src/ui/Tooltip.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
+import { Tooltip } from '@/streetmix/client/src/ui/Tooltip.js'
 
 import './GallerySearch.css'
 

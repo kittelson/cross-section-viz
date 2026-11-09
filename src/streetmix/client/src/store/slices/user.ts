@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-import { STREETMIX_INSTANCE } from '~/src/app/config.js'
-import USER_ROLES from '../../../../app/data/user_roles.json'
+import { STREETMIX_INSTANCE } from '@/streetmix/client/src/app/config.js'
 import { getGeoIp } from '../../util/api.js'
 
 import type { UserState, UserProfile, UserSignInData } from '../../types'
@@ -37,7 +36,7 @@ const userSlice = createSlice({
       state.signedIn = true
 
       if (
-        action.payload.details?.roles?.includes(USER_ROLES.SUBSCRIBER_1.value)
+        action.payload.details?.roles?.includes('SUBSCRIBER_1')
       ) {
         state.isSubscriber = true
       }
@@ -67,7 +66,7 @@ const userSlice = createSlice({
         // Unset isSubscriber only if the user doesn't have the role elsewhere
         if (
           state.signInData?.details?.roles?.includes(
-            USER_ROLES.SUBSCRIBER_1.value
+            'SUBSCRIBER_1'
           ) !== true
         ) {
           state.isSubscriber = false
@@ -80,7 +79,7 @@ const userSlice = createSlice({
         state.signInData.details = action.payload
 
         // QUICK FIX. A race condition is clobbering subscriber status elsewhere.
-        if (action.payload.roles?.includes(USER_ROLES.SUBSCRIBER_1.value)) {
+        if (action.payload.roles?.includes('SUBSCRIBER_1')) {
           state.isSubscriber = true
         }
       }

@@ -3,9 +3,9 @@ import { FormattedMessage } from 'react-intl'
 import ReactMarkdown from 'react-markdown'
 import rehypeExternalLinks from 'rehype-external-links'
 
-import { useSelector } from '~/src/store/hooks.js'
-import { LoadingSpinner } from '~/src/ui/LoadingSpinner.js'
-import { getChangelog } from '~/src/util/api.js'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
+import { LoadingSpinner } from '@/streetmix/client/src/ui/LoadingSpinner.js'
+import { getChangelog } from '@/streetmix/client/src/util/api.js'
 import { Dialog } from '../Dialog.js'
 import './WhatsNewDialog.css'
 

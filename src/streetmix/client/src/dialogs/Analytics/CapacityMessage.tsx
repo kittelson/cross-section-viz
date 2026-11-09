@@ -1,5 +1,5 @@
 import { FormattedMessage } from 'react-intl'
-import { formatNumber } from '@streetmix/utils'
+import { formatNumber } from '@/streetmix/packages/utils/src'
 
 interface CapacityMessageProps {
   locale: string

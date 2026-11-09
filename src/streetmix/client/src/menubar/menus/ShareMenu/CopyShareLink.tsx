@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import copy from 'copy-to-clipboard'
 
-import { Button } from '~/src/ui/Button.js'
-import { Icon } from '~/src/ui/Icon.js'
-import { Tooltip } from '~/src/ui/Tooltip.js'
+import { Button } from '@/streetmix/client/src/ui/Button.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
+import { Tooltip } from '@/streetmix/client/src/ui/Tooltip.js'
 
 interface CopyShareLinkProps {
   shareUrl: string

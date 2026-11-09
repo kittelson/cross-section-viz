@@ -4,13 +4,13 @@ import {
   getSegmentInfo,
   getSegmentVariantInfo,
   SliceTypes,
-} from '@streetmix/parts'
-import { convertImperialMeasurementToMetric } from '@streetmix/utils'
+} from '@/streetmix/packages/parts/src'
+import { convertImperialMeasurementToMetric } from '@/streetmix/packages/utils/src'
 
-import { METRIC_PRECISION } from '~/src/util/width_units.js'
+import { METRIC_PRECISION } from '@/streetmix/client/src/util/width_units.js'
 import { SEA_LEVEL_RISE_FEET, SURGE_HEIGHT_FEET } from './constants.js'
 
-import type { FloodDetails, SliceItem, StreetState } from '@streetmix/types'
+import type { FloodDetails, SliceItem, StreetState } from '@/streetmix/packages/types/src'
 
 const disallowFlooding = [
   SliceTypes.CAR,

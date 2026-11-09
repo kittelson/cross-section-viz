@@ -1,10 +1,10 @@
 import { useIntl } from 'react-intl'
 
-import { Icon } from '~/src/ui/Icon.js'
-import { Tooltip } from '~/src/ui/Tooltip.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
+import { Tooltip } from '@/streetmix/client/src/ui/Tooltip.js'
 import './EditableLabel.css'
 
-import type { SectionType } from '@streetmix/types'
+import type { SectionType } from '@/streetmix/packages/types/src'
 
 interface EditableLabelProps {
   readonly label: string | React.JSX.Element

@@ -1,5 +1,5 @@
-import type { UserState } from '~/src/types'
-import type { StreetState } from '@streetmix/types'
+import type { UserState } from '@/streetmix/client/src/types'
+import type { StreetState } from '@/streetmix/packages/types/src'
 import type { IntlShape, MessageValue } from 'react-intl'
 
 export interface SocialShareProps {

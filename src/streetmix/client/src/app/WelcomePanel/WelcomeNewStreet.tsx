@@ -1,6 +1,6 @@
 import { FormattedMessage } from 'react-intl'
 
-import { Button } from '~/src/ui/Button.js'
+import { Button } from '@/streetmix/client/src/ui/Button.js'
 
 interface WelcomeNewStreetProps {
   handleDismiss: React.MouseEventHandler

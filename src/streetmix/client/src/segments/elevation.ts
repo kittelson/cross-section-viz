@@ -1,6 +1,6 @@
-import { getWidthInMetric } from '@streetmix/utils'
+import { getWidthInMetric } from '@/streetmix/packages/utils/src'
 
-import type { MeasurementValues, UnitsSetting } from '@streetmix/types'
+import type { MeasurementValues, UnitsSetting } from '@/streetmix/packages/types/src'
 
 export function getElevationValue(
   elevation: number | MeasurementValues | undefined,

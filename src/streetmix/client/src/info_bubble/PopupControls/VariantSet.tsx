@@ -1,17 +1,17 @@
 import { FormattedMessage } from 'react-intl'
-import { getBoundaryItem, getSegmentInfo } from '@streetmix/parts'
+import { getBoundaryItem, getSegmentInfo } from '@/streetmix/packages/parts/src'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { segmentsChanged } from '~/src/store/actions/street.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { segmentsChanged } from '@/streetmix/client/src/store/actions/street.js'
 import {
   setBuildingVariant,
   changeSegmentVariant,
-} from '~/src/store/slices/street.js'
-import VARIANT_ICONS from '~/src/segments/variant_icons.yaml'
-import { getVariantInfo } from '~/src/segments/variant_utils.js'
+} from '@/streetmix/client/src/store/slices/street.js'
+import VARIANT_ICONS from '@/streetmix/client/src/segments/variant_icons.yaml'
+import { getVariantInfo } from '@/streetmix/client/src/segments/variant_utils.js'
 import { VariantButton } from './VariantButton.js'
 
-import type { SectionElementTypeAndPosition } from '@streetmix/types'
+import type { SectionElementTypeAndPosition } from '@/streetmix/packages/types/src'
 
 export function VariantSet(props: SectionElementTypeAndPosition) {
   const { type, position } = props

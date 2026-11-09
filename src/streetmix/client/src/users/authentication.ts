@@ -2,9 +2,8 @@ import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
 import * as Sentry from '@sentry/browser'
 
-import type { UserProfile } from '~/src/types'
-import { STREETMIX_INSTANCE } from '~/src/app/config.js'
-import USER_ROLES from '../../../app/data/user_roles.json'
+import type { UserProfile } from '@/streetmix/client/src/types'
+import { STREETMIX_INSTANCE } from '@/streetmix/client/src/app/config.js'
 import { STREET_TEMPLATES } from '../app/constants.js'
 import { showError, ERRORS } from '../app/errors.js'
 import {
@@ -238,13 +237,9 @@ async function fetchSignInDetails(userId: string) {
       throw response
     }
 
-    const { flags, roles = [] } = response.data
+    const { flags } = response.data
 
     const flagOverrides = [
-      // all role flag overrides
-      ...roles.map((key) =>
-        generateFlagOverrides(USER_ROLES[key].flags, `role:${key}`)
-      ),
       // user flag overrides
       generateFlagOverrides(flags, 'user'),
     ]

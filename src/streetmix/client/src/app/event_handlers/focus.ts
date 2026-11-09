@@ -1,6 +1,6 @@
-import store from '~/src/store'
-import { updateSettings } from '~/src/store/slices/settings.js'
-import { fetchStreetForVerification } from '~/src/streets/xhr.js'
+import store from '@/streetmix/client/src/store'
+import { updateSettings } from '@/streetmix/client/src/store/slices/settings.js'
+import { fetchStreetForVerification } from '@/streetmix/client/src/streets/xhr.js'
 
 export function onWindowFocus(): void {
   const state = store.getState()

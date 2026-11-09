@@ -1,6 +1,6 @@
 import seedrandom from 'seedrandom'
 import { maxBy } from 'es-toolkit'
-import { getSpriteDef } from '@streetmix/parts'
+import { getSpriteDef } from '@/streetmix/packages/parts/src'
 
 import { images } from '../app/load_resources'
 import {
@@ -9,7 +9,7 @@ import {
   getElevation,
 } from './view'
 import { TILE_SIZE, TILE_SIZE_ACTUAL } from './constants'
-import type { SlopeProperties } from '@streetmix/types'
+import type { SlopeProperties } from '@/streetmix/packages/types/src'
 
 const DEFAULT_SELECTION_WEIGHT = 50
 const DEFAULT_SCATTER_SPACING_MIN = 0

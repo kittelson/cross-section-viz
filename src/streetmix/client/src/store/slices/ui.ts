@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import type { DraggingState } from '~/src/types'
+import type { DraggingState } from '@/streetmix/client/src/types'
 import {
   DRAGGING_TYPE_NONE,
   DRAGGING_TYPE_RESIZE,
 } from '../../segments/constants'
 
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { BoundaryPosition } from '@streetmix/types'
+import type { BoundaryPosition } from '@/streetmix/packages/types/src'
 
 interface UiState {
   welcomePanelVisible: boolean

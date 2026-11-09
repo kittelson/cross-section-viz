@@ -2,10 +2,10 @@ import { useIntl } from 'react-intl'
 
 // icons were created in-house, we don't have this in the <Icon /> pipeline
 // (yet) (TODO in future if these icons work out)
-import leftSlopeIcon from 'url:./icon-left-slope.svg'
-import rightSlopeIcon from 'url:./icon-right-slope.svg'
-import { useSelector } from '~/src/store/hooks.js'
-import { Tooltip } from '~/src/ui/Tooltip.js'
+import leftSlopeIcon from './icon-left-slope.svg?url'
+import rightSlopeIcon from './icon-right-slope.svg?url'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
+import { Tooltip } from '@/streetmix/client/src/ui/Tooltip.js'
 import { SlopeControlTemp } from './SlopeControlTemp.js'
 // import { SlopeControlPin } from './SlopeControlPin.js'
 

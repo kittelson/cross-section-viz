@@ -1,9 +1,9 @@
 import { FormattedMessage } from 'react-intl'
 
-import { useSelector } from '~/src/store/hooks.js'
-import { Icon } from '~/src/ui/Icon.js'
-import { FACEBOOK_APP_ID } from '~/src/app/config.js'
-import { getPageTitle } from '~/src/app/page_title.js'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
+import { FACEBOOK_APP_ID } from '@/streetmix/client/src/app/config.js'
+import { getPageTitle } from '@/streetmix/client/src/app/page_title.js'
 import { MenuItem } from '../MenuItem.js'
 import type { SocialShareProps } from './helpers.js'
 

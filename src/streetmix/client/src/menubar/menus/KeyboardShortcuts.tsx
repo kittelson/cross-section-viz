@@ -1,7 +1,7 @@
 import { FormattedMessage } from 'react-intl'
 
-import { Icon } from '~/src/ui/Icon.js'
-import { KeyboardKey } from '~/src/ui/KeyboardKey.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
+import { KeyboardKey } from '@/streetmix/client/src/ui/KeyboardKey.js'
 import './KeyboardShortcuts.css'
 
 const shiftKey = (

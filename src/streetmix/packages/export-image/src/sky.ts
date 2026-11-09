@@ -1,6 +1,6 @@
 import * as Canvas from '@napi-rs/canvas'
 
-import type { SkyboxDefWithStyles, StreetJson } from '@streetmix/types'
+import type { SkyboxDefWithStyles, StreetJson } from '@/streetmix/packages/types/src'
 
 const SKY_GAP = 120 // height difference between sky-rear and sky-front images
 
@@ -114,10 +114,10 @@ async function drawClouds(
 
   // Grab images
   const skyFrontImgPath = import.meta
-    .resolve('@streetmix/illustrations/images/sky/sky-front.svg')
+    .resolve('@/streetmix/packages/illustrations/images/sky/sky-front.svg')
     .replace('file://', '')
   const skyRearImgPath = import.meta
-    .resolve('@streetmix/illustrations/images/sky/sky-rear.svg')
+    .resolve('@/streetmix/packages/illustrations/images/sky/sky-rear.svg')
     .replace('file://', '')
   const skyFrontImg = await Canvas.loadImage(skyFrontImgPath)
   const skyRearImg = await Canvas.loadImage(skyRearImgPath)

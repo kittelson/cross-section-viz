@@ -1,5 +1,5 @@
-import { BetaTag } from '~/src/ui/BetaTag.js'
-import { Icon } from '~/src/ui/Icon.js'
+import { BetaTag } from '@/streetmix/client/src/ui/BetaTag.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
 import { MenuItem } from '../MenuItem.js'
 
 export function ExportStreetmeter() {

@@ -1,13 +1,13 @@
 import { type MouseEvent } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 
-import { useDispatch } from '~/src/store/hooks.js'
+import { useDispatch } from '@/streetmix/client/src/store/hooks.js'
 import {
   removeSegmentAction,
   clearSegmentsAction,
-} from '~/src/store/actions/street.js'
-import { Button } from '~/src/ui/Button.js'
-import { Icon } from '~/src/ui/Icon.js'
+} from '@/streetmix/client/src/store/actions/street.js'
+import { Button } from '@/streetmix/client/src/ui/Button.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
 import './RemoveButton.css'
 
 interface RemoveButtonProps {

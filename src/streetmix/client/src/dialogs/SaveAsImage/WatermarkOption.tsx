@@ -1,10 +1,10 @@
 import { FormattedMessage, useIntl } from 'react-intl'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { updateSettings } from '~/src/store/slices/settings.js'
-import { Icon } from '~/src/ui/Icon.js'
-import { Tooltip } from '~/src/ui/Tooltip.js'
-import { Checkbox } from '~/src/ui/Checkbox.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { updateSettings } from '@/streetmix/client/src/store/slices/settings.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
+import { Tooltip } from '@/streetmix/client/src/ui/Tooltip.js'
+import { Checkbox } from '@/streetmix/client/src/ui/Checkbox.js'
 
 export function WatermarkOption() {
   const isSubscriber = useSelector((state) => state.user.isSubscriber)

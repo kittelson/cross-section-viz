@@ -1,6 +1,6 @@
-import { getSlopeValues } from '~/src/segments/slope.js'
-import { closeGallery } from '~/src/store/actions/gallery.js'
-import store from '~/src/store/index.js'
+import { getSlopeValues } from '@/streetmix/client/src/segments/slope.js'
+import { closeGallery } from '@/streetmix/client/src/store/actions/gallery.js'
+import store from '@/streetmix/client/src/store/index.js'
 import { waitFor, waitForElement } from './waitForElement.js'
 import { watchTourStateForStep } from './stateAdvance.js'
 

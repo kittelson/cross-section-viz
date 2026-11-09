@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useDragLayer, type XYCoord } from 'react-dnd'
 
-import { usePrevious } from '~/src/util/usePrevious.js'
+import { usePrevious } from '@/streetmix/client/src/util/usePrevious.js'
 import { SegmentCanvas } from './SegmentCanvas.js'
 import { DragTypes, type DragType, type DraggedItem } from './drag_and_drop.js'
 import './SegmentDragLayer.css'

@@ -1,4 +1,4 @@
-import { FrameTicker } from '~/src/util/animation.js'
+import { FrameTicker } from '@/streetmix/client/src/util/animation.js'
 
 const Ticker = new FrameTicker()
 

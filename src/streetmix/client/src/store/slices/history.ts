@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { Delta } from 'jsondiffpatch'
-import type { HistoryState } from '@streetmix/types'
+import type { HistoryState } from '@/streetmix/packages/types/src'
 
 export const MAX_UNDO_LIMIT = 100
 

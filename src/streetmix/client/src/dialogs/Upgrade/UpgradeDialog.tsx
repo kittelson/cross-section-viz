@@ -2,8 +2,7 @@ import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import axios from 'axios'
 
-import { useSelector } from '~/src/store/hooks.js'
-import userRoles from '../../../../app/data/user_roles.json'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 import { Dialog } from '../Dialog.js'
 import './UpgradeDialog.css'
 
@@ -16,7 +15,7 @@ export function UpgradeDialog() {
   const [error, setError] = useState<unknown>()
   const [data, setData] = useState<unknown>()
 
-  const hasTier1 = roles.includes(userRoles.SUBSCRIBER_1.value)
+  const hasTier1 = roles.includes('SUBSCRIBER_1')
 
   // eslint-disable-next-line
   async function onToken(token: string): Promise<void> {

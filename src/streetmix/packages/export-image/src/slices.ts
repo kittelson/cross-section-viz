@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { getSegmentInfo } from '@streetmix/parts'
+import { getSegmentInfo } from '@/streetmix/packages/parts/src'
 import { TILE_SIZE } from './constants.js'
 
 import type * as Canvas from '@napi-rs/canvas'
-import type { StreetJson } from '@streetmix/types'
+import type { StreetJson } from '@/streetmix/packages/types/src'
 
 /**
  * Draws slices.

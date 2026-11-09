@@ -14,7 +14,7 @@ import type {
   StreetAPIPayload,
   StreetAPIResponse,
   TranslationAPIResponse,
-} from '@streetmix/types'
+} from '@/streetmix/packages/types/src'
 
 const MAX_API_RETRY = 3
 const BASE_URL_API_V1 = '/api/v1'

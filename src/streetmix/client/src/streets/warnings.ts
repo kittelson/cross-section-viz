@@ -1,9 +1,9 @@
-import { getSegmentVariantInfo } from '@streetmix/parts'
-import { getWidthInMetric } from '@streetmix/utils'
+import { getSegmentVariantInfo } from '@/streetmix/packages/parts/src'
+import { getWidthInMetric } from '@/streetmix/packages/utils/src'
 
 import { getRiseRunValues, getSlopeWarnings } from '../segments/slope.js'
 
-import type { SliceItem, SliceWarnings, StreetJson } from '@streetmix/types'
+import type { SliceItem, SliceWarnings, StreetJson } from '@/streetmix/packages/types/src'
 import type { CalculatedWidths } from './width.js'
 
 export function applyWarningsToSlices(

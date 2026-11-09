@@ -2,7 +2,7 @@ import { useRef, useMemo } from 'react'
 import { Marker } from 'react-leaflet'
 
 import type { LeafletEvent, LeafletEventHandlerFn } from 'leaflet'
-import type { LatLngObject } from '@streetmix/types'
+import type { LatLngObject } from '@/streetmix/packages/types/src'
 
 interface LocationMarkerProps {
   position: LatLngObject

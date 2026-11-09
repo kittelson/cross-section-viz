@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
-import bostonLogo from 'url:./images/boston-logo.png'
-import chevronIcon from 'url:./images/boston-icon-chevron.svg'
-import cityHallIcon from 'url:./images/boston-icon-city-hall.svg'
-import lockIcon from 'url:./images/boston-icon-lock.svg'
-import { STREETMIX_INSTANCE } from '~/src/app/config.js'
+import bostonLogo from './images/boston-logo.png?url'
+import chevronIcon from './images/boston-icon-chevron.svg?url'
+import cityHallIcon from './images/boston-icon-city-hall.svg?url'
+import lockIcon from './images/boston-icon-lock.svg?url'
+import { STREETMIX_INSTANCE } from '@/streetmix/client/src/app/config.js'
 
 import './BostonHeader.css'
 

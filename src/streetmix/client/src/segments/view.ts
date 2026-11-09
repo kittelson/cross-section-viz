@@ -1,5 +1,5 @@
-import { getSegmentVariantInfo, getSpriteDef } from '@streetmix/parts'
-import { percentToNumber } from '@streetmix/utils'
+import { getSegmentVariantInfo, getSpriteDef } from '@/streetmix/packages/parts/src'
+import { percentToNumber } from '@/streetmix/packages/utils/src'
 
 import { images } from '../app/load_resources.js'
 import store from '../store'
@@ -23,7 +23,7 @@ import type {
   VariantGraphicsDefinition,
   VariantInfo,
   VariantInfoDimensions,
-} from '@streetmix/types'
+} from '@/streetmix/packages/types/src'
 
 // Adjust spacing between people to be slightly closer
 const PERSON_SPACING_ADJUSTMENT = -0.1 // in meters

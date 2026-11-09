@@ -1,6 +1,6 @@
 import { round } from 'es-toolkit'
-import { prettifyWidth } from '@streetmix/utils'
-import { getBoundaryItem } from '@streetmix/parts'
+import { prettifyWidth } from '@/streetmix/packages/utils/src'
+import { getBoundaryItem } from '@/streetmix/packages/parts/src'
 
 import { images } from '../app/load_resources.js'
 import { SETTINGS_UNITS_METRIC } from '../users/constants.js'
@@ -11,7 +11,7 @@ import {
 } from '../segments/constants.js'
 
 import type { IntlShape } from 'react-intl'
-import type { BoundaryPosition, UnitsSetting } from '@streetmix/types'
+import type { BoundaryPosition, UnitsSetting } from '@/streetmix/packages/types/src'
 
 /**
  * Returns sprite id, given variant and position

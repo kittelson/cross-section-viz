@@ -16,7 +16,7 @@ import type {
   UnknownVariantInfo,
   SliceVariantDetails,
   SpriteDefinition,
-} from '@streetmix/types'
+} from '@/streetmix/packages/types/src'
 
 // Re-assign to a variable and assign type
 // TODO: Use something like zod to help with this

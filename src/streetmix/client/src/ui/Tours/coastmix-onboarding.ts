@@ -1,11 +1,11 @@
 import { offset } from '@floating-ui/react'
 
-import store from '~/src/store'
+import store from '@/streetmix/client/src/store'
 import {
   hideCoastalFloodingPanel,
   resetCoastmixState,
-} from '~/src/store/slices/coastmix.js'
-import { showDialog } from '~/src/store/slices/dialogs.js'
+} from '@/streetmix/client/src/store/slices/coastmix.js'
+import { showDialog } from '@/streetmix/client/src/store/slices/dialogs.js'
 import { waitFor, waitForElement } from './waitForElement.js'
 
 import type { StepOptions, Tour } from 'shepherd.js'

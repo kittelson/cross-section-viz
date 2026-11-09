@@ -1,10 +1,10 @@
 import { useIntl } from 'react-intl'
 
-import { useSelector } from '~/src/store/hooks.js'
-import VARIANT_ICONS from '~/src/segments/variant_icons.yaml'
-import { Button } from '~/src/ui/Button.js'
-import { Icon, type IconNames } from '~/src/ui/Icon.js'
-import { Tooltip } from '~/src/ui/Tooltip.js'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
+import VARIANT_ICONS from '@/streetmix/client/src/segments/variant_icons.yaml'
+import { Button } from '@/streetmix/client/src/ui/Button.js'
+import { Icon, type IconNames } from '@/streetmix/client/src/ui/Icon.js'
+import { Tooltip } from '@/streetmix/client/src/ui/Tooltip.js'
 
 interface VariantButtonProps {
   set: string

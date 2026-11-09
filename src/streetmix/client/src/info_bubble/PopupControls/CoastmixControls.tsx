@@ -1,14 +1,14 @@
 import { useIntl } from 'react-intl'
-import { getBoundaryItem, getSegmentVariantInfo } from '@streetmix/parts'
+import { getBoundaryItem, getSegmentVariantInfo } from '@/streetmix/packages/parts/src'
 
-import { useSelector } from '~/src/store/hooks.js'
-import { Icon } from '~/src/ui/Icon.js'
-import { Tooltip } from '~/src/ui/Tooltip.js'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
+import { Tooltip } from '@/streetmix/client/src/ui/Tooltip.js'
 import { ElevationControlNew } from './ElevationControlNew.js'
 import { SlopeToggle } from './SlopeToggle.js'
 import { SlopeControl } from './SlopeControl.js'
 
-import type { BoundaryPosition } from '@streetmix/types'
+import type { BoundaryPosition } from '@/streetmix/packages/types/src'
 
 interface CoastmixControlProps {
   position: number | BoundaryPosition

@@ -1,5 +1,5 @@
-import { useSelector } from '~/src/store/hooks.js'
-import { Icon } from '~/src/ui/Icon.js'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
 
 interface ExternalLinkProps extends Partial<
   React.AnchorHTMLAttributes<HTMLAnchorElement>

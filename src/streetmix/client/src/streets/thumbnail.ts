@@ -1,16 +1,16 @@
-import { drawEarth } from '@streetmix/export-image/src/earth'
-import { drawSeaLevelRise } from '@streetmix/export-image/src/sealevel'
+import { drawEarth } from '@/streetmix/packages/export-image/src/earth'
+import { drawSeaLevelRise } from '@/streetmix/packages/export-image/src/sealevel'
 import {
   drawLabelBackground,
   drawLabels,
-} from '@streetmix/export-image/src/labels'
-import { drawNameplate } from '@streetmix/export-image/src/nameplate'
-import { drawSilhouette } from '@streetmix/export-image/src/silhouette'
+} from '@/streetmix/packages/export-image/src/labels'
+import { drawNameplate } from '@/streetmix/packages/export-image/src/nameplate'
+import { drawSilhouette } from '@/streetmix/packages/export-image/src/silhouette'
 import {
   getBoundaryItem,
   getSegmentInfo,
   getSegmentVariantInfo,
-} from '@streetmix/parts'
+} from '@/streetmix/packages/parts/src'
 
 import { images } from '../app/load_resources.js'
 import { getSkyboxDef, makeCanvasGradientStopArray } from '../sky'
@@ -31,7 +31,7 @@ import type {
   SkyboxObject,
   StreetJson,
   StreetState,
-} from '@streetmix/types'
+} from '@/streetmix/packages/types/src'
 
 const WATERMARK_FONT = 'Rubik Variable'
 const WATERMARK_FONT_SIZE = 24

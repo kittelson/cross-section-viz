@@ -1,6 +1,6 @@
 import { FormattedMessage } from 'react-intl'
 
-import { ExternalLink } from '~/src/ui/ExternalLink.js'
+import { ExternalLink } from '@/streetmix/client/src/ui/ExternalLink.js'
 import { Dialog } from '../Dialog.js'
 import './SentimentSurveyDialog.css'
 

@@ -1,13 +1,13 @@
-import { getSegmentInfo, SliceTypes } from '@streetmix/parts'
+import { getSegmentInfo, SliceTypes } from '@/streetmix/packages/parts/src'
 import { FormattedMessage } from 'react-intl'
 
 // TODO: use <Icon />
-import alertIcon from 'url:~/images/warning_alert.svg'
-import errorIcon from 'url:~/images/warning_error.svg'
-import { useSelector } from '~/src/store/hooks.js'
+import alertIcon from '~/images/warning_alert.svg?url'
+import errorIcon from '~/images/warning_error.svg?url'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 import './Warnings.css'
 
-import type { SliceItem } from '@streetmix/types'
+import type { SliceItem } from '@/streetmix/packages/types/src'
 
 interface WarningsProps {
   slice?: Pick<SliceItem, 'id' | 'type'>

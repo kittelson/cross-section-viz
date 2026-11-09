@@ -14,7 +14,7 @@ import { drawSlices } from './slices.js'
 import { drawWatermark } from './watermark.js'
 import { getTranslations } from './locale.js'
 
-import type { StreetAPIResponse } from '@streetmix/types'
+import type { StreetAPIResponse } from '@/streetmix/packages/types/src'
 import type { StreetImageExportOptions } from './index.js'
 
 // Register fonts
@@ -210,7 +210,7 @@ export async function makeStreetImage(
   try {
     // Resolve path to illustration package
     const file = import.meta
-      .resolve('@streetmix/illustrations/images/construction/cone.svg')
+      .resolve('@/streetmix/packages/illustrations/images/construction/cone.svg')
       .replace('file://', '')
     const image = await Canvas.loadImage(file)
 

@@ -1,9 +1,9 @@
 import { useRef, useState, useEffect } from 'react'
 import { debounce } from 'es-toolkit'
 
-import { Button } from '~/src/ui/Button.js'
-import { Icon } from '~/src/ui/Icon.js'
-import { Tooltip } from '~/src/ui/Tooltip.js'
+import { Button } from '@/streetmix/client/src/ui/Button.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
+import { Tooltip } from '@/streetmix/client/src/ui/Tooltip.js'
 import './UpDownInput.css'
 
 const EDIT_INPUT_DELAY = 200

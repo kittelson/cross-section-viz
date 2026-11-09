@@ -1,9 +1,9 @@
-import { getSlopeValues } from '~/src/segments/slope.js'
-import { useDispatch, useSelector } from '~/src/store/hooks.js'
-import { segmentsChanged } from '~/src/store/actions/street.js'
-import { setSlopeValue } from '~/src/store/slices/street.js'
-import { Button } from '~/src/ui/Button.js'
-import { Icon } from '~/src/ui/Icon.js'
+import { getSlopeValues } from '@/streetmix/client/src/segments/slope.js'
+import { useDispatch, useSelector } from '@/streetmix/client/src/store/hooks.js'
+import { segmentsChanged } from '@/streetmix/client/src/store/actions/street.js'
+import { setSlopeValue } from '@/streetmix/client/src/store/slices/street.js'
+import { Button } from '@/streetmix/client/src/ui/Button.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
 
 interface SlopeControlPinProps {
   position: number

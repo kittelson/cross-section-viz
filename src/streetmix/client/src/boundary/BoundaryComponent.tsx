@@ -1,26 +1,26 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useIntl } from 'react-intl'
 import { CSSTransition } from 'react-transition-group'
-import { getBoundaryItem } from '@streetmix/parts'
+import { getBoundaryItem } from '@/streetmix/packages/parts/src'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
 import {
   addBuildingFloor,
   removeBuildingFloor,
-} from '~/src/store/slices/street.js'
-import { setActiveSegment } from '~/src/store/slices/ui.js'
-import { usePrevious } from '~/src/util/usePrevious.js'
+} from '@/streetmix/client/src/store/slices/street.js'
+import { setActiveSegment } from '@/streetmix/client/src/store/slices/ui.js'
+import { usePrevious } from '@/streetmix/client/src/util/usePrevious.js'
 import {
   MAX_CANVAS_HEIGHT,
   GROUND_BASELINE_HEIGHT,
-} from '~/src/segments/constants.js'
-import { getElevation } from '~/src/segments/view.js'
+} from '@/streetmix/client/src/segments/constants.js'
+import { getElevation } from '@/streetmix/client/src/segments/view.js'
 import { PopupContainer } from '../info_bubble/PopupContainer.js'
 import { getBoundaryImageHeight } from './boundary.js'
 import { drawBoundary } from './draw.js'
 import './BoundaryComponent.css'
 
-import type { BoundaryPosition } from '@streetmix/types'
+import type { BoundaryPosition } from '@/streetmix/packages/types/src'
 
 /**
  * Creates building canvas element to draw on

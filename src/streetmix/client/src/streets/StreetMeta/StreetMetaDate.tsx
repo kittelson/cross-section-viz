@@ -1,6 +1,6 @@
-import { useSelector } from '~/src/store/hooks.js'
-import { DateTimeRelative } from '~/src/app/DateTimeRelative.js'
-import { Icon } from '~/src/ui/Icon.js'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
+import { DateTimeRelative } from '@/streetmix/client/src/app/DateTimeRelative.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
 import { isOwnedByCurrentUser } from '../owner.js'
 import { StreetMetaItem } from './StreetMetaItem.js'
 

@@ -1,12 +1,12 @@
 import { FormattedMessage, useIntl } from 'react-intl'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { setUserUnits } from '~/src/store/slices/settings.js'
-import RadioGroup from '~/src/ui/RadioGroup.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { setUserUnits } from '@/streetmix/client/src/store/slices/settings.js'
+import RadioGroup from '@/streetmix/client/src/ui/RadioGroup.js'
 import {
   SETTINGS_UNITS_IMPERIAL,
   SETTINGS_UNITS_METRIC,
-} from '~/src/users/constants.js'
+} from '@/streetmix/client/src/users/constants.js'
 
 // This is user-level setting! It does not adjust street units, as
 // it did in the past. The main effect is that you only see this

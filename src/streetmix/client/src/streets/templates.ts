@@ -2,8 +2,8 @@ import { nanoid } from 'nanoid'
 import clone from 'just-clone'
 import { load, JSON_SCHEMA } from 'js-yaml'
 import * as z from 'zod'
-import { getSegmentVariantInfo } from '@streetmix/parts'
-import { getWidthInMetric } from '@streetmix/utils'
+import { getSegmentVariantInfo } from '@/streetmix/packages/parts/src'
+import { getWidthInMetric } from '@/streetmix/packages/utils/src'
 
 import {
   normalizeSegmentWidth,
@@ -26,7 +26,7 @@ import type {
   SliceItem,
   StreetState,
   UnitsSetting,
-} from '@streetmix/types'
+} from '@/streetmix/packages/types/src'
 
 // TODO: put together with other measurement conversion code?
 const ROUGH_CONVERSION_RATE = (10 / 3) * 0.3048

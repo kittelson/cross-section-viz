@@ -1,7 +1,7 @@
 import { FormattedMessage, IntlProvider, useIntl } from 'react-intl'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { setSkybox } from '~/src/store/slices/street.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { setSkybox } from '@/streetmix/client/src/store/slices/street.js'
 import { DEFAULT_SKYBOX } from '../constants.js'
 import { getAllSkyboxDefs } from '..'
 import { SkyOptionItem } from './SkyOptionItem.js'

@@ -24,7 +24,7 @@ import {
 } from './constants.js'
 import { draggingResize } from './drag_and_drop.js'
 
-import type { Segment, UnitsSetting } from '@streetmix/types'
+import type { Segment, UnitsSetting } from '@/streetmix/packages/types/src'
 
 const SHORT_DELAY = 100
 

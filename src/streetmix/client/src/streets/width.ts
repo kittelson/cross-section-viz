@@ -9,7 +9,7 @@ import {
   MAX_CUSTOM_STREET_WIDTH_IMPERIAL
 } from './constants'
 
-import type { Segment, StreetJson, UnitsSetting } from '@streetmix/types'
+import type { Segment, StreetJson, UnitsSetting } from '@/streetmix/packages/types/src'
 
 export interface CalculatedWidths {
   streetWidth: Decimal

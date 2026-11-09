@@ -1,10 +1,10 @@
 import { FormattedMessage } from 'react-intl'
 
-import { useSelector } from '~/src/store/hooks.js'
-import { useGetUserQuery } from '~/src/store/services/api.js'
-import { Button } from '~/src/ui/Button.js'
-import { StreetName } from '~/src/streets/StreetName.js'
-import { Avatar } from '~/src/users/Avatar.js'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
+import { useGetUserQuery } from '@/streetmix/client/src/store/services/api.js'
+import { Button } from '@/streetmix/client/src/ui/Button.js'
+import { StreetName } from '@/streetmix/client/src/streets/StreetName.js'
+import { Avatar } from '@/streetmix/client/src/users/Avatar.js'
 import { goNewStreet } from '../routing.js'
 import { setIsReturningUser } from './localstorage.js'
 

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { SliceWarnings } from '@streetmix/types'
+import type { SliceWarnings } from '@/streetmix/packages/types/src'
 
 interface WarningState {
   slices: Record<string, Partial<SliceWarnings>>

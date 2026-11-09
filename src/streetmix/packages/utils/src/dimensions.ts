@@ -2,7 +2,7 @@ import { round } from 'es-toolkit'
 
 import { formatNumber } from './number_format.js'
 
-import type { MeasurementValues, UnitsSetting } from '@streetmix/types'
+import type { MeasurementValues, UnitsSetting } from '@/streetmix/packages/types/src'
 
 const SETTINGS_UNITS_METRIC = 0
 const SETTINGS_UNITS_IMPERIAL = 1

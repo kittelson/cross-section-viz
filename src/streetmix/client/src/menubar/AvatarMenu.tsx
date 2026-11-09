@@ -1,6 +1,6 @@
 import { useIntl } from 'react-intl'
 
-import streetmixPlusIcon from 'url:../ui/icons/streetmix-plus.svg'
+import streetmixPlusIcon from '../ui/icons/streetmix-plus.svg?url'
 import { Avatar } from '../users/Avatar.js'
 
 import type { UserProfile } from '../types'

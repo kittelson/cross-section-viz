@@ -1,9 +1,9 @@
-import { convertMetricMeasurementToImperial } from '@streetmix/utils'
-import { SliceTypes } from '@streetmix/parts'
+import { convertMetricMeasurementToImperial } from '@/streetmix/packages/utils/src'
+import { SliceTypes } from '@/streetmix/packages/parts/src'
 
-import { useSelector } from '~/src/store/hooks.js'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 
-import type { FloodDetails } from '@streetmix/types'
+import type { FloodDetails } from '@/streetmix/packages/types/src'
 import './FloodingDebugOverlay.css'
 
 const disallowFlooding = [

@@ -1,21 +1,21 @@
 import { useEffect } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { SliceTypes } from '@streetmix/parts'
+import { SliceTypes } from '@/streetmix/packages/parts/src'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
 import {
   hideCoastalFloodingPanel,
   setTargetYear,
   setStormSurge,
-} from '~/src/store/slices/coastmix.js'
-import { segmentsChanged } from '~/src/store/actions/street.js'
-import { BetaTag } from '~/src/ui/BetaTag.js'
-import { Button } from '~/src/ui/Button.js'
-import { Switch } from '~/src/ui/Switch.js'
-import { FloatingPanel } from '~/src/ui/FloatingPanels'
+} from '@/streetmix/client/src/store/slices/coastmix.js'
+import { segmentsChanged } from '@/streetmix/client/src/store/actions/street.js'
+import { BetaTag } from '@/streetmix/client/src/ui/BetaTag.js'
+import { Button } from '@/streetmix/client/src/ui/Button.js'
+import { Switch } from '@/streetmix/client/src/ui/Switch.js'
+import { FloatingPanel } from '@/streetmix/client/src/ui/FloatingPanels'
 import './CoastalFloodingPanel.css'
 
-import type { FloodDetails } from '@streetmix/types'
+import type { FloodDetails } from '@/streetmix/packages/types/src'
 
 function getAdditionalMessages(
   floodDetails: [FloodDetails | null, FloodDetails | null]

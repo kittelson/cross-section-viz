@@ -1,10 +1,10 @@
 import { FormattedMessage, useIntl } from 'react-intl'
 
-import { fetchGalleryPage } from '~/src/store/actions/gallery.js'
-import { useDispatch, useSelector } from '~/src/store/hooks.js'
-import { Button } from '~/src/ui/Button.js'
-import { Icon } from '~/src/ui/Icon.js'
-import { Tooltip, TooltipGroup } from '~/src/ui/Tooltip.js'
+import { fetchGalleryPage } from '@/streetmix/client/src/store/actions/gallery.js'
+import { useDispatch, useSelector } from '@/streetmix/client/src/store/hooks.js'
+import { Button } from '@/streetmix/client/src/ui/Button.js'
+import { Icon } from '@/streetmix/client/src/ui/Icon.js'
+import { Tooltip, TooltipGroup } from '@/streetmix/client/src/ui/Tooltip.js'
 import './GalleryPagination.css'
 
 export function GalleryPagination({ isLoading }: { isLoading: boolean }) {

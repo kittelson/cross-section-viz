@@ -1,8 +1,8 @@
-import { useSelector } from '~/src/store/hooks.js'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 import { DescriptionPrompt } from './DescriptionPrompt.js'
 import { Warnings } from './Warnings.js'
 
-import type { BoundaryPosition, SliceItem } from '@streetmix/types'
+import type { BoundaryPosition, SliceItem } from '@/streetmix/packages/types/src'
 
 interface PopupLowerProps {
   position: number | BoundaryPosition

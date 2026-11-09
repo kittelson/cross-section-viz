@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { type SliceDescription } from '@streetmix/types'
+import { type SliceDescription } from '@/streetmix/packages/types/src'
 
 import { startPrinting } from './app.js'
 

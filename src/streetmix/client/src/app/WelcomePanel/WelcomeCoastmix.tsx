@@ -1,5 +1,5 @@
-import { CoastmixOnboardingTour } from '~/src/ui/Tours/CoastmixOnboarding.js'
-import { Button } from '~/src/ui/Button.js'
+import { CoastmixOnboardingTour } from '@/streetmix/client/src/ui/Tours/CoastmixOnboarding.js'
+import { Button } from '@/streetmix/client/src/ui/Button.js'
 import './WelcomeCoastmix.css'
 
 interface WelcomeCoastmixProps {

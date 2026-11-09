@@ -1,9 +1,9 @@
 import { FormattedMessage } from 'react-intl'
 import { Popup } from 'react-leaflet'
 
-import { Button } from '~/src/ui/Button.js'
+import { Button } from '@/streetmix/client/src/ui/Button.js'
 
-import type { LatLngObject } from '@streetmix/types'
+import type { LatLngObject } from '@/streetmix/packages/types/src'
 import type { PointExpression } from 'leaflet'
 
 const POPUP_MAX_WIDTH = 300

@@ -1,6 +1,6 @@
 import { IntlProvider } from 'react-intl'
 
-import { useSelector } from '~/src/store/hooks.js'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 import { VariantSet } from './VariantSet.js'
 import { WidthControl } from './WidthControl.js'
 import { BuildingHeightControl } from './BuildingHeightControl.js'
@@ -8,7 +8,7 @@ import { ElevationControl } from './ElevationControl.js'
 import { CoastmixControls } from './CoastmixControls.js'
 import './PopupControls.css'
 
-import type { SectionElementTypeAndPosition } from '@streetmix/types'
+import type { SectionElementTypeAndPosition } from '@/streetmix/packages/types/src'
 
 export function PopupControls(props: SectionElementTypeAndPosition) {
   const { type, position } = props

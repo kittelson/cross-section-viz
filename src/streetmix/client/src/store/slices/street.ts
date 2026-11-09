@@ -3,20 +3,20 @@ import {
   getBoundaryItem,
   getSegmentInfo,
   getSegmentVariantInfo,
-} from '@streetmix/parts'
+} from '@/streetmix/packages/parts/src'
 
-import { getElevationValue } from '~/src/segments/elevation.js'
-import { getVariantString } from '~/src/segments/variant_utils.js'
-import { DEFAULT_SKYBOX } from '~/src/sky/constants.js'
-import { MAX_BUILDING_HEIGHT } from '~/src/segments/constants.js'
-import { SETTINGS_UNITS_METRIC } from '~/src/users/constants.js'
+import { getElevationValue } from '@/streetmix/client/src/segments/elevation.js'
+import { getVariantString } from '@/streetmix/client/src/segments/variant_utils.js'
+import { DEFAULT_SKYBOX } from '@/streetmix/client/src/sky/constants.js'
+import { MAX_BUILDING_HEIGHT } from '@/streetmix/client/src/segments/constants.js'
+import { SETTINGS_UNITS_METRIC } from '@/streetmix/client/src/users/constants.js'
 
 import type {
   BoundaryPosition,
   Segment,
   StreetState,
   WeatherEffect,
-} from '@streetmix/types'
+} from '@/streetmix/packages/types/src'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: StreetState = {

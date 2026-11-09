@@ -2,7 +2,7 @@ import {
   getBoundaryItem,
   getSegmentInfo,
   getSegmentVariantInfo,
-} from '@streetmix/parts'
+} from '@/streetmix/packages/parts/src'
 
 import { formatMessage } from '../locales/locale'
 import store from '../store'
@@ -14,7 +14,7 @@ import type {
   SectionType,
   SliceItem,
   StreetJson,
-} from '@streetmix/types'
+} from '@/streetmix/packages/types/src'
 
 const MAX_LABEL_LENGTH = 50
 

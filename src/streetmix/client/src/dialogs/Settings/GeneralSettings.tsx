@@ -1,9 +1,9 @@
 import { FormattedMessage } from 'react-intl'
 
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { setFeatureFlag } from '~/src/store/slices/flags.js'
-import { Popover } from '~/src/ui/Popover.js'
-import { Switch } from '~/src/ui/Switch.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { setFeatureFlag } from '@/streetmix/client/src/store/slices/flags.js'
+import { Popover } from '@/streetmix/client/src/ui/Popover.js'
+import { Switch } from '@/streetmix/client/src/ui/Switch.js'
 import { AppearanceSettings } from './AppearanceSettings.js'
 import { UnitSettings } from './UnitSettings.js'
 

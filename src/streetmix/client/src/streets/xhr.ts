@@ -56,7 +56,7 @@ import type {
   StreetAPIPayload,
   StreetAPIResponse,
   StreetData,
-} from '@streetmix/types'
+} from '@/streetmix/packages/types/src'
 
 const SAVE_STREET_DELAY = 500
 

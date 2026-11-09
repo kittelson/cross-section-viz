@@ -1,6 +1,6 @@
 import { debounce } from 'es-toolkit'
 
-import type { UserSettings } from '~/src/types/index.js'
+import type { UserSettings } from '@/streetmix/client/src/types/index.js'
 import { MODES, getMode } from '../app/mode.js'
 import store, { observeStore, type RootState } from '../store'
 import { updateSettings, type SettingsState } from '../store/slices/settings.js'

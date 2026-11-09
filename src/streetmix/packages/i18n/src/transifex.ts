@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { transifexApi } from '@transifex/api'
 
-import type { TranslationRecord } from '@streetmix/types'
+import type { TranslationRecord } from '@/streetmix/packages/types/src'
 
 const ORGANIZATION_SLUG = 'streetmix'
 const PROJECT_SLUG = 'streetmix'

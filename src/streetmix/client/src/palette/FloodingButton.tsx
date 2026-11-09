@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { useIntl } from 'react-intl'
 
-import { toggleCoastalFloodingPanel } from '~/src/store/slices/coastmix.js'
+import { toggleCoastalFloodingPanel } from '@/streetmix/client/src/store/slices/coastmix.js'
 import { Button } from '../ui/Button.js'
 import { Icon } from '../ui/Icon.js'
 import { Tooltip } from '../ui/Tooltip.js'

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import FEATURE_FLAGS from '@streetmix/feature-flags'
+import FEATURE_FLAGS from '@/streetmix/packages/feature-flags/flags.json'
 
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { FeatureFlagDefinition, FeatureFlags } from '../../types'

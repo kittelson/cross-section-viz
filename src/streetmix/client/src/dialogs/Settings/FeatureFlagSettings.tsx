@@ -1,6 +1,6 @@
-import { useSelector, useDispatch } from '~/src/store/hooks.js'
-import { setFeatureFlag } from '~/src/store/slices/flags.js'
-import { Switch } from '~/src/ui/Switch.js'
+import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
+import { setFeatureFlag } from '@/streetmix/client/src/store/slices/flags.js'
+import { Switch } from '@/streetmix/client/src/ui/Switch.js'
 
 {
   /* Admin-only feature */
