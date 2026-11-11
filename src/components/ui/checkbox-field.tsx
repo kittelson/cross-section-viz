@@ -31,7 +31,7 @@ export function CheckboxField({
       <label htmlFor={name} className="absolute inset-0 cursor-pointer">
         <span className="sr-only">{label ?? name}</span>
       </label>
-      <div className="relative z-10 pointer-events-none">
+      <div className="pointer-events-none relative z-10">
         <Field
           orientation="horizontal"
           className="justify-between"

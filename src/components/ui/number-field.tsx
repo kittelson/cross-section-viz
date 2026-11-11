@@ -41,7 +41,9 @@ export function NumberField({
   useEffect(() => {
     setDraft((current) => {
       if (value == null || Number.isNaN(value)) {
-        return current !== '' && Number.isFinite(Number(current)) ? '' : current;
+        return current !== '' && Number.isFinite(Number(current))
+          ? ''
+          : current;
       }
       return Number(current) !== value ? String(value) : current;
     });
