@@ -1,8 +1,13 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { routes } from '@/routes'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { basename, routes } from '@/routes';
 
-const router = createBrowserRouter(routes)
+const router = createBrowserRouter(routes, { basename });
 
 export default function App() {
-  return <RouterProvider router={router} />
+  return (
+    <TooltipProvider>
+      <RouterProvider router={router} />
+    </TooltipProvider>
+  );
 }
