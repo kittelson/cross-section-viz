@@ -101,7 +101,7 @@ export function SuggestedEditsTable() {
           <TableHead>Safety</TableHead>
           <TableHead>Economic</TableHead>
           <TableHead>Environmental</TableHead>
-          <TableHead>Social</TableHead>
+          <TableHead>Access to destinations</TableHead>
           <TableHead>Mode Shift</TableHead>
         </TableRow>
       </TableHeader>
@@ -122,7 +122,7 @@ export function SuggestedEditsTable() {
               <ImpactCell marks={row.environmental} />
             </TableCell>
             <TableCell>
-              <ImpactCell marks={row.social} />
+              <ImpactCell marks={row.accessToDestinations} />
             </TableCell>
             <TableCell>
               <ImpactCell marks={row.modeShift} />

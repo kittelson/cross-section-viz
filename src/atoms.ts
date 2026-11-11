@@ -10,7 +10,7 @@ export const projectDetailsAtom = atom<ProjectDetailsFormValues>({
   goals: { ...defaultProjectDetails.goals },
 });
 
-export const roadwayWidthFtAtom = atom<number | null>(82);
+export const roadwayRightOfWayFtAtom = atom<number | null>(82);
 
 export const capacityScenariosAtom = atom<CapacityScenario[]>(
   defaultCapacityScenarios.map((scenario) => ({ ...scenario })),

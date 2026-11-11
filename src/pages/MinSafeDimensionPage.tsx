@@ -15,7 +15,7 @@ export function MinSafeDimensionPage() {
       </p>
       <p className="mt-4 text-muted-foreground">
         This cross-section takes up <span className="font-semibold">68'</span>{' '}
-        of ROW and the existing ROW is{' '}
+        of right-of-way and the existing right-of-way is{' '}
         <span className="font-semibold">80'</span>. Therefore, you have{' '}
         <span className="font-semibold">12'</span> remaining.
       </p>

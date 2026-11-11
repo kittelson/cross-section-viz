@@ -306,25 +306,23 @@ export function ProjectDetailsPage() {
               <FieldLegend>Project Goals</FieldLegend>
               <div className="grid gap-3">
                 {projectGoalOptions.map((goal) => (
-                  <div
+                  <Controller
                     key={goal.name}
-                    className="cursor-pointer rounded-lg border p-2 hover:bg-muted/50"
-                  >
-                    <Controller
-                      name={`goals.${goal.name}`}
-                      control={form.control}
-                      render={({ field, fieldState }) => (
-                        <CheckboxField
-                          name={field.name}
-                          label={goal.label}
-                          value={field.value}
-                          invalid={fieldState.invalid}
-                          error={fieldState.error}
-                          onChange={field.onChange}
-                        />
-                      )}
-                    />
-                  </div>
+                    name={`goals.${goal.name}`}
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <CheckboxField
+                        name={field.name}
+                        label={goal.label}
+                        description={goal.description}
+                        value={field.value}
+                        invalid={fieldState.invalid}
+                        error={fieldState.error}
+                        className="rounded-lg border p-2 hover:bg-muted/50"
+                        onChange={field.onChange}
+                      />
+                    )}
+                  />
                 ))}
               </div>
             </FieldSet>

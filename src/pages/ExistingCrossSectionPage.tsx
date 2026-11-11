@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import { Ruler } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { roadwayWidthFtAtom } from '@/atoms';
+import { roadwayRightOfWayFtAtom } from '@/atoms';
 import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import {
@@ -14,7 +14,7 @@ import existingCrossSection from '@/images/streetmixPlaceholders/existing.png';
 import { paths } from '@/paths';
 
 export function ExistingCrossSectionPage() {
-  const [width, setWidth] = useAtom(roadwayWidthFtAtom);
+  const [rightOfWay, setRightOfWay] = useAtom(roadwayRightOfWayFtAtom);
 
   return (
     <div className="mx-auto max-w-5xl">
@@ -26,7 +26,7 @@ export function ExistingCrossSectionPage() {
       </p>
       <div className="mt-6">
         <Field className="max-w-40">
-          <FieldLabel htmlFor="roadway-width">Width</FieldLabel>
+          <FieldLabel htmlFor="roadway-width">Right-of-way</FieldLabel>
           <InputGroup>
             <InputGroupInput
               id="roadway-width"
@@ -34,10 +34,10 @@ export function ExistingCrossSectionPage() {
               inputMode="decimal"
               min={1}
               step="any"
-              value={width ?? ''}
+              value={rightOfWay ?? ''}
               onChange={(event) => {
                 const value = event.target.value;
-                setWidth(value === '' ? null : Number(value));
+                setRightOfWay(value === '' ? null : Number(value));
               }}
             />
             <InputGroupAddon>

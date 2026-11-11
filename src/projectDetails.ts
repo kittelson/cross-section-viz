@@ -38,11 +38,36 @@ export const intersectionTypeOptions = [
 ] as const;
 
 export const projectGoalOptions = [
-  { name: 'safety', label: 'Safety' },
-  { name: 'economic', label: 'Economic' },
-  { name: 'environmental', label: 'Environmental' },
-  { name: 'social', label: 'Social' },
-  { name: 'modeShift', label: 'Mode Shift' },
+  {
+    name: 'safety',
+    label: 'Safety',
+    description:
+      'Safety reflects the level of crash risk and perceived comfort for all roadway users.',
+  },
+  {
+    name: 'economic',
+    label: 'Economic',
+    description:
+      'Economic impact reflects how roadway design influences local business activity, property value, and overall economic vitality.',
+  },
+  {
+    name: 'environmental',
+    label: 'Environmental',
+    description:
+      'Environmental impact reflects how roadway design affects air quality, emissions, energy use, stormwater runoff, and urban heat.',
+  },
+  {
+    name: 'accessToDestinations',
+    label: 'Access to destinations',
+    description:
+      'Access to destinations reflects how safely and conveniently people of all ages, abilities, and incomes can reach jobs, services, and community resources.',
+  },
+  {
+    name: 'modeShift',
+    label: 'Mode Shift',
+    description:
+      'Mode shift reflects the extent to which roadway design encourages travel by walking, bicycling, and transit instead of driving.',
+  },
 ] as const;
 
 export const projectDetailsSchema = z.object({
@@ -87,7 +112,7 @@ export const projectDetailsSchema = z.object({
     safety: z.boolean(),
     economic: z.boolean(),
     environmental: z.boolean(),
-    social: z.boolean(),
+    accessToDestinations: z.boolean(),
     modeShift: z.boolean(),
   }),
 });
@@ -127,7 +152,7 @@ export const defaultProjectDetails: ProjectDetailsFormValues = {
     safety: true,
     economic: true,
     environmental: true,
-    social: true,
+    accessToDestinations: true,
     modeShift: false,
   },
 };

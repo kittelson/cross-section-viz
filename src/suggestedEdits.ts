@@ -18,7 +18,7 @@ export type SuggestedEditRow = {
   safety: ImpactMarks;
   economic: ImpactMarks;
   environmental: ImpactMarks;
-  social: ImpactMarks;
+  accessToDestinations: ImpactMarks;
   modeShift: ImpactMarks;
 };
 
@@ -29,7 +29,7 @@ export const suggestedEditRows: SuggestedEditRow[] = [
     safety: { checks: 2 },
     economic: { neutral: true },
     environmental: { checks: 2 },
-    social: { checks: 1 },
+    accessToDestinations: { checks: 1 },
     modeShift: { checks: 1 },
   },
   {
@@ -38,7 +38,7 @@ export const suggestedEditRows: SuggestedEditRow[] = [
     safety: { checks: 3 },
     economic: { crosses: 2 },
     environmental: { crosses: 2 },
-    social: { checks: 2 },
+    accessToDestinations: { checks: 2 },
     modeShift: { checks: 3 },
   },
   {
@@ -47,7 +47,7 @@ export const suggestedEditRows: SuggestedEditRow[] = [
     safety: { checks: 2 },
     economic: { checks: 2 },
     environmental: { checks: 2 },
-    social: { checks: 3 },
+    accessToDestinations: { checks: 3 },
     modeShift: { checks: 2 },
   },
   {
@@ -56,7 +56,7 @@ export const suggestedEditRows: SuggestedEditRow[] = [
     safety: { checks: 2 },
     economic: { checks: 2 },
     environmental: { checks: 2 },
-    social: { checks: 2 },
+    accessToDestinations: { checks: 2 },
     modeShift: { checks: 2 },
   },
   {
@@ -65,7 +65,7 @@ export const suggestedEditRows: SuggestedEditRow[] = [
     safety: { checks: 1, crosses: 1 },
     economic: { checks: 2 },
     environmental: { checks: 2 },
-    social: { checks: 2 },
+    accessToDestinations: { checks: 2 },
     modeShift: { checks: 3 },
   },
   {
@@ -74,7 +74,7 @@ export const suggestedEditRows: SuggestedEditRow[] = [
     safety: { checks: 3, crosses: 3 },
     economic: { checks: 1, crosses: 1 },
     environmental: { checks: 1, crosses: 2 },
-    social: { checks: 3 },
+    accessToDestinations: { checks: 3 },
     modeShift: { neutral: true },
   },
   {
@@ -83,7 +83,7 @@ export const suggestedEditRows: SuggestedEditRow[] = [
     safety: { checks: 2 },
     economic: { checks: 1 },
     environmental: { crosses: 1 },
-    social: { neutral: true },
+    accessToDestinations: { neutral: true },
     modeShift: { crosses: 1 },
   },
   {
@@ -95,7 +95,7 @@ export const suggestedEditRows: SuggestedEditRow[] = [
       nearTerm: { checks: 2 },
       longTerm: { crosses: 2 },
     },
-    social: { checks: 1 },
+    accessToDestinations: { checks: 1 },
     modeShift: { crosses: 3 },
   },
   {
@@ -104,7 +104,7 @@ export const suggestedEditRows: SuggestedEditRow[] = [
     safety: { crosses: 2 },
     economic: { neutral: true },
     environmental: { crosses: 2 },
-    social: { crosses: 1 },
+    accessToDestinations: { crosses: 1 },
     modeShift: { crosses: 1 },
   },
   {
@@ -122,7 +122,7 @@ export const suggestedEditRows: SuggestedEditRow[] = [
       nearTerm: { checks: 2 },
       longTerm: { crosses: 2 },
     },
-    social: { crosses: 2 },
+    accessToDestinations: { crosses: 2 },
     modeShift: { crosses: 3 },
   },
 ];
