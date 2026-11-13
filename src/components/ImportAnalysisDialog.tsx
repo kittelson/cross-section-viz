@@ -1,5 +1,6 @@
 import { Upload } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import type { VariantProps } from 'class-variance-authority';
+import { Button, buttonVariants } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -10,11 +11,23 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-export function ImportAnalysisDialog() {
+export function ImportAnalysisDialog({
+  triggerSize,
+  triggerClassName,
+}: {
+  triggerSize?: VariantProps<typeof buttonVariants>['size'];
+  triggerClassName?: string;
+} = {}) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Import analysis</Button>
+        <Button
+          variant="outline"
+          size={triggerSize}
+          className={triggerClassName}
+        >
+          Import analysis
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

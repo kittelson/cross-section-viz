@@ -1,54 +1,44 @@
 import { Link } from 'react-router-dom';
 import { BlueLink } from '@/components/BlueLink';
 import { ImportAnalysisDialog } from '@/components/ImportAnalysisDialog';
+import { LearnMoreSection } from '@/components/LearnMoreSection';
 import { Button } from '@/components/ui/button';
 import { paths } from '@/paths';
+
+const primaryActionClassName = 'h-12 px-6 text-base';
 
 export function HomePage() {
   return (
     <div className="mx-auto max-w-3xl">
-      <h1 className="text-3xl font-semibold tracking-tight text-balance">
-        MassDOT Cross Section Reallocation Tool
-      </h1>
-      <div className="mt-6 space-y-4 text-base leading-relaxed text-muted-foreground">
-        <p>
-          Streets make up more than 80 percent of public space in cities and
-          towns. From one edge of the right-of-way to the other, planners,
-          engineers, and community groups are coming together to decide how they
-          want to allocate this precious resource.
-        </p>
-        <p>
-          The MassDOT Cross Section Reallocation Tool lets you design multiple
-          roadway alternatives using{' '}
-          <BlueLink
-            href="https://streetmix.net"
-            target="_blank"
-            rel="noreferrer"
-          >
-            StreetMix
-          </BlueLink>
-          . Then, the tool compares how each alternative influences not just
-          transportation outcomes, but livability, equity,
-          economic/environmental health, and more.
-        </p>
-        <p>
-          Based on research report{' '}
-          <BlueLink
-            href="https://www.nationalacademies.org/publications/26788"
-            target="_blank"
-            rel="noreferrer"
-          >
-            NCHRP 1036 - Roadway Cross Section Reallocation: A Guide
-          </BlueLink>
-          .
-        </p>
-      </div>
-      <div className="mt-8 flex flex-wrap gap-3">
-        <Button asChild>
-          <Link to={paths.existingCrossSection}>New Analysis</Link>
-        </Button>
-        <ImportAnalysisDialog />
-      </div>
+      <section className="flex min-h-[min(32rem,calc(100svh-12rem))] flex-col justify-center py-10 sm:py-16">
+        <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+          MassDOT Cross Section Reallocation Tool
+        </h1>
+        <div className="mt-4 max-w-2xl space-y-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+          <p>
+            Design roadway alternatives using{' '}
+            <BlueLink
+              href="https://streetmix.net"
+              target="_blank"
+              rel="noreferrer"
+            >
+              StreetMix
+            </BlueLink>{' '}
+            and compare their impacts.
+          </p>
+        </div>
+        <div className="mt-10 flex flex-wrap gap-4">
+          <Button asChild size="lg" className={primaryActionClassName}>
+            <Link to={paths.existingCrossSection}>New Analysis</Link>
+          </Button>
+          <ImportAnalysisDialog
+            triggerSize="lg"
+            triggerClassName={primaryActionClassName}
+          />
+        </div>
+      </section>
+
+      <LearnMoreSection />
     </div>
   );
 }
