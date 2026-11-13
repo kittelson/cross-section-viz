@@ -1,7 +1,9 @@
+import { BottomNavButtons } from '@/components/BottomNavButtons';
 import { CapacityTab } from '@/components/output/CapacityTab';
 import { ComparisonTab } from '@/components/output/ComparisonTab';
 import { ImpactsTab } from '@/components/output/ImpactsTab';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { paths } from '@/paths';
 
 export function OutputPage() {
   return (
@@ -23,6 +25,7 @@ export function OutputPage() {
           <CapacityTab />
         </TabsContent>
       </Tabs>
+      <BottomNavButtons backTo={paths.editCrossSection} />
     </div>
   );
 }

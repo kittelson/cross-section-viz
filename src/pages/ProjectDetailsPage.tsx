@@ -3,6 +3,7 @@ import { useAtom } from 'jotai';
 import { Controller, useForm, type Resolver } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { projectDetailsAtom } from '@/atoms';
+import { BottomNavButtons } from '@/components/BottomNavButtons';
 import { Button } from '@/components/ui/button';
 import { CheckboxField } from '@/components/ui/checkbox-field';
 import { FieldGroup, FieldLegend, FieldSet } from '@/components/ui/field';
@@ -329,8 +330,7 @@ export function ProjectDetailsPage() {
           </div>
         </FieldGroup>
 
-        <div className="mt-8 flex gap-2">
-          <Button type="submit">Continue</Button>
+        <div className="mt-8">
           <Button
             type="button"
             variant="outline"
@@ -345,6 +345,10 @@ export function ProjectDetailsPage() {
             Reset
           </Button>
         </div>
+        <BottomNavButtons
+          backTo={paths.existingCrossSection}
+          continueSubmit
+        />
       </form>
     </div>
   );

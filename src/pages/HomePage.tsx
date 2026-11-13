@@ -19,10 +19,20 @@ export function HomePage() {
         </p>
         <p>
           The MassDOT Cross Section Reallocation Tool lets you design multiple
-          roadway alternatives using StreetMix. Then, the tool compares how each
-          alternative influences not just transportation outcomes, but
-          livability, economic and environmental health, equity, and many other
-          concerns. Based on research report{' '}
+          roadway alternatives using{' '}
+          <BlueLink
+            href="https://streetmix.net"
+            target="_blank"
+            rel="noreferrer"
+          >
+            StreetMix
+          </BlueLink>
+          . Then, the tool compares how each alternative influences not just
+          transportation outcomes, but livability, equity,
+          economic/environmental health, and more.
+        </p>
+        <p>
+          Based on research report{' '}
           <BlueLink
             href="https://www.nationalacademies.org/publications/26788"
             target="_blank"

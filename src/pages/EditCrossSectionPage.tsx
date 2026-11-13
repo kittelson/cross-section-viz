@@ -1,7 +1,6 @@
-import { Link } from 'react-router-dom';
 import { AlternativeConfigForm } from '@/components/AlternativeConfigForm';
+import { BottomNavButtons } from '@/components/BottomNavButtons';
 import { SuggestedEditsDialog } from '@/components/SuggestedEditsDialog';
-import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import minSafeDimension from '@/images/streetmixPlaceholders/minSafeDimension.png';
 import showDetails from '@/images/streetmixPlaceholders/showDetails.png';
@@ -74,11 +73,10 @@ export function EditCrossSectionPage() {
           <AlternativeConfigForm />
         </aside>
       </div>
-      <div className="mt-8">
-        <Button asChild>
-          <Link to={paths.output}>Continue</Link>
-        </Button>
-      </div>
+      <BottomNavButtons
+        backTo={paths.minSafeDimension}
+        continueTo={paths.output}
+      />
     </div>
   );
 }

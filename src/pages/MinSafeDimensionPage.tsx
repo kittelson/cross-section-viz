@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { BottomNavButtons } from '@/components/BottomNavButtons';
 import minSafeDimension from '@/images/streetmixPlaceholders/minSafeDimension.png';
 import { paths } from '@/paths';
 
@@ -24,11 +23,10 @@ export function MinSafeDimensionPage() {
         alt="Minimum safe dimension cross section"
         className="mt-6 w-full"
       />
-      <div className="mt-8">
-        <Button asChild>
-          <Link to={paths.editCrossSection}>Continue</Link>
-        </Button>
-      </div>
+      <BottomNavButtons
+        backTo={paths.projectDetails}
+        continueTo={paths.editCrossSection}
+      />
     </div>
   );
 }

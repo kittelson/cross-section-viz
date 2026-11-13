@@ -1,8 +1,7 @@
 import { useAtom } from 'jotai';
 import { Ruler } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { roadwayRightOfWayFtAtom } from '@/atoms';
-import { Button } from '@/components/ui/button';
+import { BottomNavButtons } from '@/components/BottomNavButtons';
 import { Field, FieldLabel } from '@/components/ui/field';
 import {
   InputGroup,
@@ -54,11 +53,7 @@ export function ExistingCrossSectionPage() {
         alt="Existing roadway cross section"
         className="mt-6 w-full"
       />
-      <div className="mt-8">
-        <Button asChild>
-          <Link to={paths.projectDetails}>Continue</Link>
-        </Button>
-      </div>
+      <BottomNavButtons backTo={paths.home} continueTo={paths.projectDetails} />
     </div>
   );
 }
