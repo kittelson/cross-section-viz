@@ -65,8 +65,6 @@ export interface StreetBoundary {
   elevation: number
 }
 
-// Subset of @types/leaflet's `LatLngExpression` type, which is not
-// serializable. Don't use that one.
 export interface LatLngObject {
   lat: number
   lng: number

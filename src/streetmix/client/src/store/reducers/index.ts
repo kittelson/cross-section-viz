@@ -4,7 +4,6 @@ import dialogs from '../slices/dialogs'
 import history from '../slices/history'
 import infoBubble from '../slices/infoBubble'
 import locale from '../slices/locale'
-import map from '../slices/map'
 import menus from '../slices/menus'
 import settings from '../slices/settings'
 import street from '../slices/street'
@@ -20,7 +19,6 @@ const reducers = {
   history,
   infoBubble,
   locale,
-  map,
   menus,
   settings,
   street,

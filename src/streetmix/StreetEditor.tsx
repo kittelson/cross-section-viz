@@ -5,7 +5,6 @@ import '@fontsource-variable/manrope'
 import '@fontsource-variable/overpass'
 import '@fontsource-variable/rubik'
 import '@fontsource-variable/rubik/wght-italic.css'
-import 'leaflet/dist/leaflet.css'
 import '@/streetmix/client/styles/styles.css'
 
 import store from '@/streetmix/client/src/store'

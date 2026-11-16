@@ -341,21 +341,6 @@ const streetSlice = createSlice({
       state.schemaVersion = action.payload
     },
 
-    addLocation(state, action) {
-      state.location = action.payload
-    },
-
-    clearLocation(state) {
-      state.location = null
-
-      // If the street name was added as a result of geotagging, but not
-      // updated by the user, then clearing the location also resets the
-      // street name
-      if (!state.userUpdated) {
-        state.name = null
-      }
-    },
-
     setBoundaryElevation: {
       reducer(
         state,
@@ -529,8 +514,6 @@ export const {
   setUnits,
   updateStreetWidth,
   updateSchemaVersion,
-  addLocation,
-  clearLocation,
   setBoundaryElevation,
   addBuildingFloor,
   removeBuildingFloor,

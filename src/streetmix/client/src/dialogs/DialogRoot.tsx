@@ -4,7 +4,6 @@ import { ErrorBoundary } from '../util/ErrorBoundary.js'
 // Import all dialogs here
 import { AboutDialog } from './About'
 import { AnalyticsDialog } from './Analytics'
-import { GeotagDialog } from './Geotag'
 import { SaveAsImageDialog } from './SaveAsImage'
 import { SettingsDialog } from './Settings'
 import { ErrorDialog } from './ErrorDialog.js'
@@ -12,7 +11,6 @@ import { ErrorDialog } from './ErrorDialog.js'
 const DIALOG_COMPONENTS = {
   ABOUT: AboutDialog,
   ANALYTICS: AnalyticsDialog,
-  GEOTAG: GeotagDialog,
   SAVE_AS_IMAGE: SaveAsImageDialog,
   SETTINGS: SettingsDialog,
 }
