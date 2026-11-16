@@ -102,12 +102,6 @@ export function Boundary({
   const street = useSelector((state) => state.street)
   const activeSegment = useSelector((state) => state.ui.activeSegment)
   const readOnly = useSelector((state) => state.app.readOnly)
-  const leftBoundaryEditable = useSelector(
-    (state) => state.flags.EDIT_BOUNDARY_LEFT.value
-  )
-  const rightBoundaryEditable = useSelector(
-    (state) => state.flags.EDIT_BOUNDARY_RIGHT.value
-  )
   const scale = useSelector((state) => state.system.devicePixelRatio)
 
   const dispatch = useDispatch()
@@ -126,11 +120,7 @@ export function Boundary({
 
   const intl = useIntl()
 
-  const isEditable =
-    !(
-      (!leftBoundaryEditable && position === 'left') ||
-      (!rightBoundaryEditable && position === 'right')
-    ) && !readOnly
+  const isEditable = !readOnly
   const variant = street.boundary[position].variant
   const floors = street.boundary[position].floors
   const elevation = street.boundary[position].elevation

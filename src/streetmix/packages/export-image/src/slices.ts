@@ -99,8 +99,6 @@ export function drawSlices(
 //     multiplier * (groundLevelOffsetY / TILESET_POINT_PER_PIXEL) -
 //     multiplier * elevationValue
 
-//   const coastmixMode = store.getState().flags.COASTMIX_MODE.value
-
 //   if (graphics.ground) {
 //     const sprites = normalizeSpriteDefs(graphics.ground)
 

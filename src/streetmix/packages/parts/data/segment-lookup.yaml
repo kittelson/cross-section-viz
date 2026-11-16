@@ -3,7 +3,6 @@ sidewalk:
   nameKey: sidewalk
   owner: PEDESTRIAN
   zIndex: 30
-  coastmixPaletteOrder: 20
   defaultWidth:
     metric: 1.8
     imperial: 6
@@ -60,7 +59,6 @@ sidewalk-tree:
   nameKey: sidewalk-tree
   owner: NATURE
   zIndex: 22
-  coastmixPaletteOrder: 21
   defaultWidth:
     metric: 1.2
     imperial: 4
@@ -94,7 +92,6 @@ sidewalk-bike-rack:
   nameKey: bike-rack
   owner: FURNITURE
   zIndex: 23
-  coastmixPaletteOrder: 22
   defaultWidth:
     metric: 1.5
     imperial: 5
@@ -182,7 +179,6 @@ sidewalk-bench:
   nameKey: bench
   owner: FURNITURE
   zIndex: 24
-  coastmixPaletteOrder: 23
   defaultWidth:
     metric: 1.2
     imperial: 4
@@ -226,7 +222,6 @@ outdoor-dining:
   nameKey: outdoor-dining
   owner: FURNITURE
   zIndex: 24
-  coastmixPaletteOrder: 24
   defaultWidth:
     metric: 2.4
     imperial: 8
@@ -288,7 +283,6 @@ sidewalk-wayfinding:
   nameKey: wayfinding-sign
   owner: FURNITURE
   zIndex: 21
-  coastmixPaletteOrder: 25
   defaultWidth:
     metric: 1.2
     imperial: 4
@@ -335,7 +329,6 @@ sidewalk-lamp:
   nameKey: sidewalk-lamp
   owner: FURNITURE
   zIndex: 19
-  coastmixPaletteOrder: 26
   defaultWidth:
     metric: 1.2
     imperial: 4
@@ -653,7 +646,6 @@ divider:
   nameKey: divider
   owner: NATURE
   zIndex: 20
-  coastmixPaletteOrder: 2
   defaultWidth:
     metric: 0.5
     imperial: 2
@@ -813,35 +805,6 @@ divider:
           - id: dome
             variants:
               type: default
-crosswalk:
-  name: Crosswalk
-  nameKey: crosswalk
-  defaultWidth:
-    metric: 3
-    imperial: 10
-  defaultVariant: zebra-crossing
-  defaultElevation: 0
-  enableElevation: true
-  enableWithFlag: SEGMENT_CROSSWALK
-  variants:
-    - crosswalk-type
-  details:
-    zebra-crossing:
-      components:
-        lanes:
-          - id: asphalt
-            variants:
-              color: regular
-        markings:
-          - id: markings--crosswalk-zebra
-    zebra-crossing-bike:
-      components:
-        lanes:
-          - id: asphalt
-            variants:
-              color: regular
-        markings:
-          - id: markings--crosswalk-zebra-bike
 temporary:
   name: Temporary barrier
   nameKey: temporary-barrier
@@ -906,9 +869,6 @@ drainage-channel:
   name: Drainage channel
   nameKey: drainage-channel
   owner: DRAINAGE
-  coastmixPaletteOrder: 50
-  unlockWithFlag: SEGMENT_DRAINAGE_CHANNEL_UNLOCKED
-  unlockCondition: SUBSCRIBE
   defaultWidth:
     metric: 1
     imperial: 3.25
@@ -938,61 +898,6 @@ drainage-channel:
             variants:
               drainage-sides:
                 - vertical
-      offsetY: -50
-bioswale:
-  name: Rain garden
-  nameKey: rain-garden
-  owner: DRAINAGE
-  enableWithFlag: COASTMIX_MODE
-  coastmixPaletteOrder: 3
-  unlockCondition: SUBSCRIBE
-  description:
-    key: rain-garden
-    image: bioswale-02.jpg
-    imageCredit: Lou Huang
-  defaultWidth:
-    metric: 3
-    imperial: 10
-  rules:
-    minWidth:
-      metric: 2.45
-      imperial: 8
-  variants:
-    - bioswale-vegetation
-  details:
-    bush:
-      components:
-        lanes:
-          - id: earth
-            variants:
-              type: default
-        objects:
-          - id: planting-strip
-            variants:
-              type: grass
-          - id: bioswale
-            variants:
-              plants:
-                - bush
-              sides:
-                - slanted
-      offsetY: -50
-    tree:
-      components:
-        lanes:
-          - id: earth
-            variants:
-              type: default
-        objects:
-          - id: planting-strip
-            variants:
-              type: grass
-          - id: bioswale
-            variants:
-              plants:
-                - tree
-              sides:
-                - slanted
       offsetY: -50
 scooter:
   name: Electric scooter
@@ -1230,7 +1135,6 @@ bike-lane:
   nameKey: bike-lane
   owner: BIKE
   zIndex: 16
-  coastmixPaletteOrder: 30
   defaultWidth:
     metric: 1.8
     imperial: 6
@@ -1792,7 +1696,6 @@ bikeshare:
   nameKey: bikeshare-station
   owner: FURNITURE
   zIndex: 21
-  coastmixPaletteOrder: 31
   defaultWidth:
     metric: 2
     imperial: 7
@@ -1858,7 +1761,6 @@ food-truck:
   nameKey: foodtruck
   owner: CAR
   zIndex: 20
-  coastmixPaletteOrder: 32
   defaultWidth:
     metric: 3
     imperial: 10
@@ -2100,7 +2002,6 @@ parking-lane:
   nameKey: parking-lane
   owner: CAR
   zIndex: 13
-  coastmixPaletteOrder: 40
   defaultWidth:
     metric: 2
     imperial: 7
@@ -2391,7 +2292,6 @@ drive-lane:
   nameKey: drive-lane
   owner: CAR
   zIndex: 14
-  coastmixPaletteOrder: 41
   defaultWidth:
     metric: 3
     imperial: 10
@@ -3007,7 +2907,6 @@ bus-lane:
   nameKey: bus-lane
   owner: TRANSIT
   zIndex: 15
-  coastmixPaletteOrder: 42
   defaultWidth:
     metric: 3.6
     imperial: 12
@@ -3365,7 +3264,6 @@ streetcar:
   nameKey: streetcar
   owner: TRANSIT
   zIndex: 15
-  coastmixPaletteOrder: 43
   defaultWidth:
     metric: 3.6
     imperial: 12
@@ -3472,7 +3370,6 @@ light-rail:
   nameKey: light-rail
   owner: TRANSIT
   zIndex: 15
-  coastmixPaletteOrder: 44
   defaultWidth:
     metric: 3.6
     imperial: 12
@@ -3578,7 +3475,6 @@ transit-shelter:
   nameKey: transit-shelter
   owner: TRANSIT
   zIndex: 20
-  coastmixPaletteOrder: 45
   defaultWidth:
     metric: 2.7
     imperial: 9
@@ -3658,7 +3554,6 @@ brt-station:
   nameKey: brt-station
   owner: TRANSIT
   zIndex: 20
-  coastmixPaletteOrder: 46
   defaultWidth:
     metric: 4
     imperial: 13.5
@@ -3718,7 +3613,6 @@ brt-lane:
   nameKey: brt-lane
   owner: TRANSIT
   zIndex: 15
-  coastmixPaletteOrder: 47
   defaultWidth:
     metric: 3.5
     imperial: 11.667
@@ -3782,35 +3676,6 @@ brt-lane:
           - id: brt-bus
             variants:
               direction: outbound
-train:
-  name: “Inception” train
-  nameKey: inception-train
-  owner: TRANSIT
-  zIndex: 10
-  defaultWidth:
-    metric: 4.2
-    imperial: 14
-  enableWithFlag: SEGMENT_INCEPTION_TRAIN
-  description:
-    key: inception-train
-    image: train.jpg
-  rules:
-    minWidth:
-      metric: 4.2
-      imperial: 14
-  variants:
-    - ""
-  details:
-    "":
-      components:
-        lanes:
-          - id: asphalt
-            variants:
-              color: regular
-        vehicles:
-          - id: train
-            variants:
-              type: default
 magic-carpet:
   name: Magic carpet
   nameKey: magic-carpet
@@ -3864,66 +3729,6 @@ magic-carpet:
           - id: magic-carpet
             variants:
               magic-carpet-occupants: jasmine-aladdin
-beach:
-  name: Beach
-  nameKey: beach
-  owner: NATURE
-  defaultWidth:
-    metric: 1.2
-    imperial: 4
-  rules:
-    slope: berm
-  defaultVariant: lounger
-  enableWithFlag: COASTMIX_MODE
-  coastmixPaletteOrder: 4
-  variants:
-    - beach-type
-  details:
-    beach:
-      components:
-        lanes:
-          - id: beach
-            variants:
-              type: default
-    lounger:
-      components:
-        lanes:
-          - id: beach
-            variants:
-              type: default
-        objects:
-          - id: beach-lounger
-            variants:
-              type: default
-            offsetX: 50
-marsh:
-  name: Marsh
-  nameKey: marsh
-  owner: NATURE
-  defaultWidth:
-    metric: 1.2
-    imperial: 4
-  description:
-    key: marsh
-    image: marsh-01.jpg
-  rules:
-    slope: berm
-  defaultVariant: marsh
-  enableWithFlag: COASTMIX_MODE
-  coastmixPaletteOrder: 5
-  variants:
-    - marsh-type
-  details:
-    marsh:
-      components:
-        lanes:
-          - id: earth
-            variants:
-              type: default
-        objects:
-          - id: marsh-grass
-            variants:
-              type: default
 wall:
   name: Wall
   nameKey: wall
@@ -3933,8 +3738,6 @@ wall:
     metric: 0.75
     imperial: 2.5
   defaultVariant: low
-  enableWithFlag: COASTMIX_MODE
-  coastmixPaletteOrder: 10
   variants:
     - wall-height
   details:
@@ -3964,8 +3767,6 @@ guardrail:
   defaultWidth:
     metric: 0.25
     imperial: 1
-  enableWithFlag: COASTMIX_MODE
-  coastmixPaletteOrder: 11
   variants:
     - guardrail-type
   details:
@@ -3981,47 +3782,5 @@ guardrail:
               color: regular
         objects:
           - id: guardrail
-            variants:
-              type: default
-slope:
-  name: Slope
-  nameKey: slope
-  defaultWidth:
-    metric: 2.4
-    imperial: 8
-  defaultSlope:
-    - metric: 0.15
-      imperial: 0.5
-    - metric: 0.9
-      imperial: 3
-  rules:
-    slope: berm
-  enableWithFlag: COASTMIX_MODE
-  coastmixPaletteOrder: 1
-  variants:
-    - slope-type
-  details:
-    grass:
-      name: Grassy hill
-      nameKey: grass-hill
-      components:
-        lanes:
-          - id: sidewalk
-            variants:
-              color: regular
-        objects:
-          - id: planting-strip
-            variants:
-              type: grass
-    dune:
-      name: Sand dune
-      nameKey: sand-dune
-      components:
-        lanes:
-          - id: beach
-            variants:
-              type: default
-        objects:
-          - id: marsh-grass
             variants:
               type: default

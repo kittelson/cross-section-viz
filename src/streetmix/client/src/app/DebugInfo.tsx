@@ -11,7 +11,6 @@ export function DebugInfo() {
   const [isVisible, setVisible] = useState(false)
   const settings = useSelector((state) => state.settings)
   const street = useSelector((state) => state.street)
-  const flags = useSelector((state) => state.flags)
   const history = useSelector((state) => state.history)
   const user = useSelector((state) => state.user)
 
@@ -47,7 +46,7 @@ export function DebugInfo() {
 
     if (isVisible) {
       textareaEl.current.value = JSON.stringify(
-        { street, user, settings, flags, history },
+        { street, user, settings, history },
         null,
         2
       )
@@ -61,7 +60,7 @@ export function DebugInfo() {
         }
       }, 0)
     }
-  }, [isVisible, settings, street, flags, history, user])
+  }, [isVisible, settings, street, history, user])
 
   // This should only be called when the debug window becomes invisible.
   // This will also be called once during component initialization, that

@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl'
 import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 import { Popover } from '@/streetmix/client/src/ui/Popover.js'
 import Slider from '@/streetmix/client/src/ui/Slider.js'
-import { StreetmixPlusPrompt } from '@/streetmix/client/src/app/StreetmixPlusPrompt.js'
 import { SETTINGS_UNITS_METRIC } from '@/streetmix/client/src/users/constants.js'
 import './CustomScale.css'
 
@@ -25,14 +24,9 @@ export function CustomScale({
   onChange = () => {},
 }: CustomScaleProps) {
   const units = useSelector((state) => state.settings.units)
-  const allowCustomScale = useSelector(
-    (state) => state.flags.SAVE_AS_IMAGE_CUSTOM_DPI.value
-  )
   const { width = 0, height = 0 } = baseDimensions
 
   function handleChangeScale([value]: [number]): void {
-    if (!allowCustomScale) return
-
     // Make sure value is within range
     const scale = Math.min(
       Math.max(MIN_IMAGE_MULTIPLIER, value),
@@ -42,17 +36,6 @@ export function CustomScale({
     onChange(scale)
   }
 
-  const classNames = ['custom-scale-control']
-  if (!allowCustomScale) {
-    classNames.push('custom-scale-disabled')
-  }
-
-  const description = (
-    <FormattedMessage
-      id="dialogs.save.option-custom-scale.description"
-      defaultMessage="Download image up to 500% of original size."
-    />
-  )
 
   // TODO: Metric unit scale should not use dpi but dots per cm?
   return (
@@ -64,29 +47,23 @@ export function CustomScale({
         />
         <span className="custom-scale-popover">
           <Popover>
-            {!allowCustomScale ? (
-              <StreetmixPlusPrompt>{description}</StreetmixPlusPrompt>
-            ) : (
-              description
-            )}
+            <FormattedMessage
+              id="dialogs.save.option-custom-scale.description"
+              defaultMessage="Download image up to 500% of original size."
+            />
           </Popover>
         </span>
       </div>
-      <div className={classNames.join(' ')}>
+      <div className="custom-scale-control">
         <Slider
           id="custom-scale"
           min={MIN_IMAGE_MULTIPLIER}
           max={MAX_IMAGE_MULTIPLIER}
           step={0.25}
           value={[scale]}
-          disabled={!allowCustomScale}
           onValueChange={handleChangeScale}
         />
-        <div
-          className={`custom-scale-info ${
-            allowCustomScale ? '' : 'custom-scale-info-disabled'
-          }`}
-        >
+        <div className="custom-scale-info">
           {/* eslint-disable formatjs/no-literal-string-in-jsx */}
           <strong>{scale * 100}%</strong> &mdash;&nbsp;
           <FormattedMessage

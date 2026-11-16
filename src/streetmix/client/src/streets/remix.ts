@@ -61,7 +61,6 @@ export function remixStreet() {
   if (isSignedIn()) {
     // If we're signed in, there should always be a userId, but the type checker
     // wants us to account for the value still being `null`.
-    // Note: in Coastmix mode, we assume "signed in" with a `null` user.
     setStreetCreatorId(getSignInData()?.userId ?? null)
   } else {
     setStreetCreatorId(null)

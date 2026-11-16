@@ -36,7 +36,6 @@ import {
   DRAGGING_TYPE_NONE,
   DRAGGING_TYPE_MOVE,
   DRAGGING_TYPE_RESIZE,
-  CURB_HEIGHT,
 } from './constants.js'
 import { segmentsChanged } from './view.js'
 
@@ -430,46 +429,6 @@ function doDropHeuristics(
   }
 
   draggedItem.variantString = getVariantString(variant)
-
-  // First attempt at automatically assigning an elevation value
-  // if adjacent slices' elevations have been raised
-  // See Linear issue SMX-242 for a better algorithm that needs to be
-  // applied. For now, gate this behind the Coastmix feature flag.
-  const isCoastmixMode = store.getState().flags.COASTMIX_MODE.value ?? false
-  if (isCoastmixMode) {
-    let leftElevation: number
-    // Get the boundary elevation if at left end of section
-    if (left === null) {
-      leftElevation = street.boundary.left.elevation ?? CURB_HEIGHT
-      // Make sure there are values
-    } else if (left.slope.on && left.slope.values.length > 1) {
-      leftElevation = Math.max(...left.slope.values)
-    } else {
-      leftElevation = left.elevation
-    }
-
-    let rightElevation: number
-    // Get the boundary elevation if at right end of section
-    if (right === null) {
-      rightElevation = street.boundary.right.elevation ?? CURB_HEIGHT
-      // Make sure there are values
-    } else if (right.slope.on && right.slope.values.length > 1) {
-      rightElevation = Math.max(...right.slope.values)
-    } else {
-      rightElevation = right.elevation
-    }
-
-    // Use the highest elevation as the target drop elevation
-    const highestElevation = Math.max(leftElevation, rightElevation)
-
-    // Only apply highestElevation if not sloped
-    if (!draggedItem.slope.on) {
-      draggedItem.elevation = highestElevation
-      // We need to set this to make sure that variants don't override
-      // the elevation
-      draggedItem.elevationChanged = true
-    }
-  }
 }
 
 export function onBodyMouseUp(): void {

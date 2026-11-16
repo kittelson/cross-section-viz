@@ -418,34 +418,6 @@ const streetSlice = createSlice({
       },
     },
 
-    // This is like `setBoundaryElevation` but it changes only waterfront
-    // boundaries, and up to both at the same time
-    setSeaLevel(state, action: PayloadAction<number>) {
-      const value = action.payload
-
-      if (typeof value !== 'number' || Number.isNaN(value)) {
-        return
-      }
-
-      // function getBoundaryItem(str: string) {
-      //   return {
-      //     str,
-      //     waterfront: true
-      //   }
-      // }
-
-      // Set both boundaries if they are waterfronts
-      const left = getBoundaryItem(state.boundary.left.variant)
-      const right = getBoundaryItem(state.boundary.right.variant)
-
-      if (left.waterfront) {
-        state.boundary.left.elevation = value
-      }
-      if (right.waterfront) {
-        state.boundary.right.elevation = value
-      }
-    },
-
     // TODO: Buildings could be a child slice?
     addBuildingFloor(state, action: PayloadAction<BoundaryPosition>) {
       const position = action.payload
@@ -600,7 +572,6 @@ export const {
   addLocation,
   clearLocation,
   setBoundaryElevation,
-  setSeaLevel,
   addBuildingFloor,
   removeBuildingFloor,
   setBuildingFloorValue,

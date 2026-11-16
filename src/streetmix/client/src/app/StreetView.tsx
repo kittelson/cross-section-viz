@@ -4,7 +4,6 @@ import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 import { usePrevious } from '@/streetmix/client/src/util/usePrevious.js'
 import { Boundary } from '@/streetmix/client/src/boundary/index.js'
 import { PopupContainerGroup } from '@/streetmix/client/src/info_bubble/PopupContainer.js'
-import { SeaLevel } from '@/streetmix/client/src/plugins/coastmix/index.js'
 import { ResizeGuides } from '../segments/ResizeGuides.js'
 import { EmptySegmentContainer } from '../segments/EmptySegmentContainer.js'
 import { animate } from '../util/helpers.js'
@@ -93,9 +92,6 @@ export function StreetView() {
 
   const street = useSelector((state) => state.street)
   const draggingType = useSelector((state) => state.ui.draggingType)
-  const coastmixMode = useSelector(
-    (state) => state.flags.COASTMIX_MODE.value ?? false
-  )
 
   // Keep previous state for comparisons (ported from legacy behavior)
   const prevState = usePrevious({
@@ -350,9 +346,6 @@ export function StreetView() {
               />
               <ResizeGuides />
               <EmptySegmentContainer />
-              {coastmixMode && (
-                <SeaLevel boundaryWidth={boundaryWidth} scrollPos={scrollPos} />
-              )}
               <div className="street-section-ground" />
             </section>
           </PopupContainerGroup>

@@ -1,12 +1,8 @@
 import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 
-import type { UserProfile } from '@/streetmix/client/src/types/index.js'
-import { useSelector } from '@/streetmix/client/src/store/hooks.js'
-import { ENV } from '@/streetmix/client/src/app/config.js'
 import { Icon } from '@/streetmix/client/src/ui/Icon.js'
 import { Dialog } from '../Dialog.js'
-import { FeatureFlagSettings } from './FeatureFlagSettings.js'
 import { GeneralSettings } from './GeneralSettings.js'
 import { LanguageSettings } from './LanguageSettings.js'
 import { ProfileSettings } from './ProfileSettings.js'
@@ -23,16 +19,7 @@ interface SettingsDialogProps {
  * session. Don't use this for street-level settings.
  */
 export function SettingsDialog({ category = 'profile' }: SettingsDialogProps) {
-  const user: Partial<UserProfile> = useSelector(
-    (state) => state.user?.signInData?.details ?? {}
-  )
   const [activeCategory, setActiveCategory] = useState(category)
-
-  // `user` is allowed to initialize as an empty object, and in that case
-  // make `roles` initialize as an empty array.
-  const { roles = [] } = user
-  const showFlags: boolean =
-    ENV !== 'production' || roles.includes('ADMIN')
 
   function handleSelectCategory(category: string): void {
     setActiveCategory(category)
@@ -40,9 +27,6 @@ export function SettingsDialog({ category = 'profile' }: SettingsDialogProps) {
 
   let SettingsPanel
   switch (activeCategory) {
-    case 'feature-flags':
-      SettingsPanel = <FeatureFlagSettings />
-      break
     case 'general':
       SettingsPanel = <GeneralSettings />
       break
@@ -133,28 +117,6 @@ export function SettingsDialog({ category = 'profile' }: SettingsDialogProps) {
                       defaultMessage="Language"
                     />
                   </li>
-                  {showFlags && (
-                    <li
-                      onClick={() => {
-                        handleSelectCategory('feature-flags')
-                      }}
-                      className={
-                        activeCategory === 'feature-flags'
-                          ? 'settings-menu-active'
-                          : ''
-                      }
-                    >
-                      <Icon
-                        name="flag"
-                        size="18"
-                        className="settings-menu-icon"
-                      />
-                      {/* Not translated, on purpose */}
-                      {/* eslint-disable formatjs/no-literal-string-in-jsx */}
-                      Feature flags
-                      {/* eslint-enable formatjs/no-literal-string-in-jsx */}
-                    </li>
-                  )}
                 </ul>
               </div>
               <div className="settings-dialog-right">{SettingsPanel}</div>

@@ -91,15 +91,7 @@ export function formatMessage(
  * of what each level is.
  */
 function getLocaleLevel(): LocaleLevel {
-  const flags = store.getState().flags
-
-  // The lowest level marked "true" takes priority.
-  let level: LocaleLevel = LOCALE_LEVELS.LEVEL_4
-  if (flags.LOCALES_LEVEL_3.value) level = LOCALE_LEVELS.LEVEL_3
-  if (flags.LOCALES_LEVEL_2.value) level = LOCALE_LEVELS.LEVEL_2
-  if (flags.LOCALES_LEVEL_1.value) level = LOCALE_LEVELS.LEVEL_1
-
-  return level
+  return LOCALE_LEVELS.LEVEL_3
 }
 
 /**

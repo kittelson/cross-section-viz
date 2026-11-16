@@ -70,7 +70,6 @@ export function drawSegmentImage(
   // Settings
   const state = store.getState()
   dpi = dpi ?? state.system.devicePixelRatio ?? 1
-  const debugRect = state.flags.DEBUG_SEGMENT_CANVAS_RECTANGLES.value || false
 
   // Get image definition
   const svg = images.get(id)
@@ -106,12 +105,6 @@ export function drawSegmentImage(
   // `rotate()` requires radians, this is how we transform angles to radians
   ctx.rotate((rotate * Math.PI) / 180)
   ctx.translate(-translateX, -translateY)
-
-  // These rectangles are telling us that we're drawing at the right places.
-  if (debugRect === true) {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.2)'
-    ctx.fillRect(dx, dy, dw, dh)
-  }
 
   // Round all values to whole numbers when we render. Decimal values can
   // introduce tiny "seams" at tiled assets, for example.
@@ -448,8 +441,6 @@ export function drawSegmentContents(
     slope.on = false
     slope.values = []
   }
-
-  const coastmixMode = store.getState().flags.COASTMIX_MODE.value
 
   if (graphics.ground) {
     const sprites = normalizeSpriteDefs(graphics.ground)
@@ -843,22 +834,9 @@ export function drawSegmentContents(
           graphics.scatter.originY + PERSON_SPRITE_OFFSET_Y) ||
         PERSON_SPRITE_OFFSET_Y
 
-      const people = PEOPLE
-        // Temporarily: filter out all people that uses the `beach` tag
-        // outside of Coastmix mode
-        // TODO: figure out how to specify tags for inclusion/exclusion
-        // possibly append the beach list when needed.
-        // @ts-expect-error TS7006 vendored streetmix, fix during cleanup
-        .filter((person) => {
-          if (coastmixMode) {
-            return true
-          } else {
-            return !person.tags?.includes('beach')
-          }
-        })
-
       drawScatteredSprites(
-        people,
+        // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
+        PEOPLE,
         ctx,
         actualWidth,
         offsetLeft - left * TILE_SIZE * multiplier,

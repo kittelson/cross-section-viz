@@ -178,32 +178,7 @@ export interface StreetState extends StreetJsonExtra {
   editCount: number
 }
 
-export interface StreetPluginData {
-  coastmix?: CoastmixState
-}
-
-export interface CoastmixState {
-  controlsVisible: boolean
-  targetYear: number | null
-  stormSurge: boolean
-  floodDetails: [FloodDetails | null, FloodDetails | null]
-}
-
-// Flood distance is a number expressed in pixels (for now, I don't think
-// that should always remain the case), `null` for no flooding from this
-// direction (as opposed to `0` which can mean flooding is possible, it's
-// just flooding for zero distance), and the string `max` for maximum
-// flooding. Infinity is normally a good number to use, but that value is
-// not serializable to JSON!
-export type FloodDistance = number | null | 'max'
-
-export interface FloodDetails {
-  direction: 'left' | 'right'
-  distance: FloodDistance
-  rise: number
-  floodedTypes: string[]
-  flooded: boolean
-}
+export type StreetPluginData = Record<string, unknown>
 
 export interface HistoryState {
   stack: Delta[]
@@ -260,10 +235,7 @@ export interface SegmentLookup {
   defaultElevation?: number | MeasurementValues
   defaultSlope?: Array<number | MeasurementValues>
   enableElevation?: boolean
-  enableWithFlag?: string
-  unlockWithFlag?: string
   unlockCondition?: UnlockCondition
-  coastmixPaletteOrder?: number
   description?: SliceDescription
   rules?: {
     minWidth?: MeasurementValues

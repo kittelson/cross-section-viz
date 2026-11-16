@@ -9,9 +9,7 @@ import type { StreetLocation } from '@/streetmix/packages/types/src'
 
 export function StreetMetaGeotag() {
   const street = useSelector((state) => state.street)
-  const editable = useSelector(
-    (state) => !state.app.readOnly && state.flags.GEOTAG.value
-  )
+  const editable = useSelector((state) => !state.app.readOnly)
   const dispatch = useDispatch()
   const intl = useIntl()
 

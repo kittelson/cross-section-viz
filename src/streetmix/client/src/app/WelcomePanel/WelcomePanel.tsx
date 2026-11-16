@@ -44,9 +44,6 @@ export function WelcomePanel() {
   const { readOnly } = useSelector((state) => state.app)
   const { welcomePanelVisible: isVisible, welcomePanelDismissed: isDismissed } =
     useSelector((state) => state.ui)
-  const coastmixMode = useSelector(
-    (state) => state.flags.COASTMIX_MODE?.value ?? false
-  )
   const dispatch = useDispatch()
 
   // Determine what type of welcome panel to show
@@ -98,10 +95,7 @@ export function WelcomePanel() {
 
   // Set up and tear down when a welcome panel is shown
   useEffect(() => {
-    // In Coastmix mode, don't set up these event listeners to hide the welcome
-    // panel, because the `save_street` event fires right away on page load,
-    // and I think we want to depend on some other events anyway.
-    if (!isVisible || coastmixMode) return
+    if (!isVisible) return
 
     // Hide welcome panel on certain events
     // TODO: Consider dispatching from elsewhere, and not via event listeners
@@ -117,7 +111,7 @@ export function WelcomePanel() {
       window.removeEventListener('stmx:save_street', handleDismissed)
       deregisterKeypress('esc', handleDismissed)
     }
-  }, [isVisible, coastmixMode, handleDismissed])
+  }, [isVisible, handleDismissed])
 
   if (!isVisible) {
     return null

@@ -1,12 +1,10 @@
 import { DRAGGING_TYPE_RESIZE } from '../segments/constants.js'
 import { handleSegmentResizeCancel } from '../segments/resizing.js'
 import { formatMessage } from '../locales/locale.js'
-import { showDialog } from '../store/slices/dialogs.js'
 import { addToast } from '../store/slices/toasts.js'
 import { handleUndo, handleRedo } from '../store/actions/history.js'
 import store from '../store'
 import { registerKeypress } from './keypress.js'
-import { ENV } from './config.js'
 
 export function onGlobalKeyDown(event: KeyboardEvent): void {
   switch (event.key) {
@@ -61,14 +59,6 @@ export function registerKeypresses(): void {
     },
     () => {} // noop
   )
-
-  // Secret menu to toggle feature flags
-  // Only active in development/staging
-  registerKeypress('shift f', () => {
-    if (ENV !== 'production') {
-      store.dispatch(showDialog('FEATURE_FLAGS'))
-    }
-  })
 
   // Undo
   registerKeypress(

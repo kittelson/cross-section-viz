@@ -30,9 +30,6 @@ export function ToastContainer() {
   const [cancelMap] = useState(() => new WeakMap())
   const toasts = useSelector((state) => state.toasts)
   const contentDirection = useSelector((state) => state.app.contentDirection)
-  const showLifeBar = useSelector(
-    (state) => state.flags.TOAST_LIFE_BAR?.value ?? false
-  )
   const dispatch = useDispatch()
 
   const items =
@@ -172,11 +169,6 @@ export function ToastContainer() {
           // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
           <animated.div style={style}>
             {childComponent}
-            {/* Toast countdown debugger */}
-            {showLifeBar && (
-              // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
-              <animated.div className="toast-lifebar" style={{ right: life }} />
-            )}
           </animated.div>
         )
       })}

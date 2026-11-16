@@ -17,9 +17,7 @@ interface StreetNameCoords {
 
 export function StreetNameplateContainer() {
   const isVisible = useSelector((state) => !state.ui.welcomePanelVisible)
-  const isEditable = useSelector(
-    (state) => !state.app.readOnly && state.flags.EDIT_STREET_NAME.value
-  )
+  const isEditable = useSelector((state) => !state.app.readOnly)
   const streetName = useSelector((state) => state.street.name)
   const dispatch = useDispatch()
   const intl = useIntl()

@@ -1,5 +1,4 @@
-import { FormattedMessage } from 'react-intl'
-import { getBoundaryItem, getSegmentInfo } from '@/streetmix/packages/parts/src'
+import { getSegmentInfo } from '@/streetmix/packages/parts/src'
 
 import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
 import { segmentsChanged } from '@/streetmix/client/src/store/actions/street.js'
@@ -31,12 +30,6 @@ export function VariantSet(props: SectionElementTypeAndPosition) {
 
     return null
   })
-  const universalElevation = useSelector(
-    (state) => state.flags.UNIVERSAL_ELEVATION_CONTROLS?.value ?? false
-  )
-  const coastmixMode = useSelector(
-    (state) => state.flags.COASTMIX_MODE?.value ?? false
-  )
   const dispatch = useDispatch()
 
   let variantSets: string[] = []
@@ -53,13 +46,6 @@ export function VariantSet(props: SectionElementTypeAndPosition) {
 
   // Remove any empty entries
   variantSets = variantSets.filter((x) => x !== '')
-
-  // If we are doing universal elevation or Coastmix, filter out elevation
-  // Note -- if these buttons are present, and a slice elevation has been
-  // marked as user-changed, then these buttons won't do anything
-  if (universalElevation || coastmixMode) {
-    variantSets = variantSets.filter((x) => x !== 'elevation')
-  }
 
   function isVariantCurrentlySelected(set: string, selection: string): boolean {
     let bool = false
@@ -120,36 +106,7 @@ export function VariantSet(props: SectionElementTypeAndPosition) {
   function renderVariantsSelection():
     Array<React.ReactElement> | React.ReactElement | null {
     if (type === 'boundary') {
-      if (coastmixMode) {
-        const waterItems = variantSets.filter((id) => {
-          const item = getBoundaryItem(id)
-          return item.waterfront ?? false
-        })
-        const landItems = variantSets.filter((id) => {
-          const item = getBoundaryItem(id)
-          return !item.waterfront
-        })
-        return (
-          <>
-            <h4>
-              <FormattedMessage
-                id="boundary.group.land"
-                defaultMessage="Land"
-              />
-            </h4>
-            {renderButtonGroup('boundary', landItems, 'boundary1')}
-            <h4>
-              <FormattedMessage
-                id="boundary.group.waterfront"
-                defaultMessage="Waterfront"
-              />
-            </h4>
-            {renderButtonGroup('boundary', waterItems, 'boundary2')}
-          </>
-        )
-      } else {
-        return renderButtonGroup('boundary', variantSets)
-      }
+      return renderButtonGroup('boundary', variantSets)
     } else {
       return variantSets.map((set) =>
         renderButtonGroup(set, Object.keys(VARIANT_ICONS[set]))

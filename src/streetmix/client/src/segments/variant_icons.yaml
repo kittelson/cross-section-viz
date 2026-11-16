@@ -2,36 +2,6 @@ boundary:
   waterfront:
     id: waterfront
     title: Waterfront
-    disableWithFlag: COASTMIX_MODE
-  waterfront2:
-    id: waterfront
-    title: Waterfront
-    enableWithFlag: COASTMIX_MODE
-  beach:
-    id: beach
-    iconSet: tabler
-    title: Beach
-    enableWithFlag: COASTMIX_MODE
-  marsh:
-    id: marsh
-    title: Marsh
-    enableWithFlag: COASTMIX_MODE
-  water:
-    id: water
-    title: Water
-    enableWithFlag: COASTMIX_MODE
-  dock:
-    id: dock
-    title: Dock
-    enableWithFlag: COASTMIX_MODE
-  fishing-boat:
-    id: fishing-boat
-    title: Fishing boat
-    enableWithFlag: COASTMIX_MODE
-  cargo-ship:
-    id: cargo-ship
-    title: Cargo ship
-    enableWithFlag: COASTMIX_MODE
   grass:
     id: grass
     title: Grass
@@ -309,13 +279,9 @@ car-type:
   car-with-bus:
     id: car-with-bus
     title: Car with bus
-    unlockCondition: SUBSCRIBE
-    unlockWithFlag: VARIANT_MIXED_DRIVE_LANES_1
   car-with-bike:
     id: car-with-bike
     title: Car with bike
-    unlockCondition: SUBSCRIBE
-    unlockWithFlag: VARIANT_MIXED_DRIVE_LANES_2
   sharrow:
     id: sharrow
     title: Sharrow
@@ -427,13 +393,9 @@ universal-elevation:
   sidewalk:
     id: elevation-higher
     title: Sidewalk level
-    unlockCondition: SUBSCRIBE
-    unlockWithFlag: ELEVATION_CONTROLS_UNLOCKED
   road:
     id: elevation-lower
     title: Street level
-    unlockCondition: SUBSCRIBE
-    unlockWithFlag: ELEVATION_CONTROLS_UNLOCKED
 temporary-barrier-type:
   traffic-cone:
     id: traffic-cone

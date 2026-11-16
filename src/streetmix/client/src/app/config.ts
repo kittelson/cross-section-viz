@@ -1,6 +1,4 @@
 export const ENV: string | undefined = import.meta.env.MODE
-export const STREETMIX_INSTANCE: string | undefined =
-  undefined
 export const SPONSOR_BANNER: string | undefined = undefined
 export const FACEBOOK_APP_ID: string | undefined = undefined
 export const PELIAS_API_KEY: string | undefined = undefined

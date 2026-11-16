@@ -23,14 +23,3 @@
     transform: translate3d(0, 0, 0);
   }
 }
-
-.toast-lifebar {
-  position: absolute;
-  bottom: 10px;
-  left: 0;
-  width: auto;
-  height: 5px;
-  background-color: rgb(192 192 192 / 70%);
-  border-radius: 4px;
-  border-top-left-radius: 0;
-}

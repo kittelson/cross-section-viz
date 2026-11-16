@@ -1,7 +1,6 @@
 import { FormattedMessage } from 'react-intl'
 
-import { useSelector, useDispatch } from '@/streetmix/client/src/store/hooks.js'
-import { openGallery } from '@/streetmix/client/src/store/actions/gallery.js'
+import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 import { URL_NEW_STREET, STREET_TEMPLATES } from '@/streetmix/client/src/app/constants.js'
 import { BetaTag } from '@/streetmix/client/src/ui/BetaTag.js'
 import { Icon } from '@/streetmix/client/src/ui/Icon.js'
@@ -17,74 +16,33 @@ function openTemplate(template: string, tour: boolean = false): void {
 }
 
 export function NewStreetMenu(props: MenuProps) {
-  const templatesEnabled = useSelector(
-    (state) => state.flags.NEW_STREET_TEMPLATES.value ?? false
-  )
-  const coastmixEnabled = useSelector(
-    (state) => state.flags.COASTMIX_MODE.value ?? false
-  )
   const user = useSelector((state) => state.user)
-  const dispatch = useDispatch()
-
-  function handleExamples() {
-    dispatch(openGallery({ userId: 'examples' }))
-  }
 
   return (
     <Menu {...props}>
-      {coastmixEnabled && (
-        <>
-          <MenuItem
-            onClick={() => {
-              openTemplate(STREET_TEMPLATES.EMPTY_WATERFRONT)
-            }}
-          >
-            <Icon name="new-street" className="menu-item-icon" />
-            <FormattedMessage
-              id="coastmix.new-empty"
-              defaultMessage="New empty waterfront"
-            />
-            <Icon name="external-link" />
-          </MenuItem>
-          <MenuItem onClick={handleExamples}>
-            <FormattedMessage
-              id="coastmix.new-from-examples"
-              defaultMessage="From examples..."
-            />
-          </MenuItem>
-          <MenuSeparator />
-        </>
-      )}
-
-      {/* Temporarily disable this in Coastmix mode */}
-      {!coastmixEnabled && (
-        <>
-          {' '}
-          <MenuItem
-            onClick={() => {
-              openTemplate(STREET_TEMPLATES.DEFAULT)
-            }}
-          >
-            <Icon name="new-street" className="menu-item-icon" />
-            <FormattedMessage
-              id="menu.new-street.default"
-              defaultMessage="New example street"
-            />
-            <Icon name="external-link" />
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              openTemplate(STREET_TEMPLATES.EMPTY)
-            }}
-          >
-            <FormattedMessage
-              id="menu.new-street.empty"
-              defaultMessage="New empty street"
-            />
-            <Icon name="external-link" />
-          </MenuItem>
-        </>
-      )}
+      <MenuItem
+        onClick={() => {
+          openTemplate(STREET_TEMPLATES.DEFAULT)
+        }}
+      >
+        <Icon name="new-street" className="menu-item-icon" />
+        <FormattedMessage
+          id="menu.new-street.default"
+          defaultMessage="New example street"
+        />
+        <Icon name="external-link" />
+      </MenuItem>
+      <MenuItem
+        onClick={() => {
+          openTemplate(STREET_TEMPLATES.EMPTY)
+        }}
+      >
+        <FormattedMessage
+          id="menu.new-street.empty"
+          defaultMessage="New empty street"
+        />
+        <Icon name="external-link" />
+      </MenuItem>
       <MenuItem
         onClick={() => {
           openTemplate(STREET_TEMPLATES.COPY)
@@ -106,32 +64,29 @@ export function NewStreetMenu(props: MenuProps) {
         />
         <BetaTag />
       </MenuItem> */}
-      {/* Temporarily disable this in Coastmix mode */}
-      {templatesEnabled && !coastmixEnabled && (
-        <>
-          <MenuSeparator />
-          <div className="dropdown-menu-label" role="presentation">
-            <FormattedMessage
-              id="menu.new-street.templates-label"
-              defaultMessage="Street templates"
-            />
-            <BetaTag />
-          </div>
-          <MenuItem
-            disabled={!user.signedIn}
-            onClick={() => {
-              openTemplate(STREET_TEMPLATES.STROAD)
-            }}
-          >
-            <FormattedMessage
-              id="menu.new-street.templates.stroad"
-              defaultMessage="Stroad"
-            />
-            <Icon name="external-link" />
-          </MenuItem>
-          {!user.signedIn && <SignInPromo type="template" />}
-        </>
-      )}
+      <>
+        <MenuSeparator />
+        <div className="dropdown-menu-label" role="presentation">
+          <FormattedMessage
+            id="menu.new-street.templates-label"
+            defaultMessage="Street templates"
+          />
+          <BetaTag />
+        </div>
+        <MenuItem
+          disabled={!user.signedIn}
+          onClick={() => {
+            openTemplate(STREET_TEMPLATES.STROAD)
+          }}
+        >
+          <FormattedMessage
+            id="menu.new-street.templates.stroad"
+            defaultMessage="Stroad"
+          />
+          <Icon name="external-link" />
+        </MenuItem>
+        {!user.signedIn && <SignInPromo type="template" />}
+      </>
     </Menu>
   )
 }

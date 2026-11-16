@@ -2,8 +2,6 @@ import axios, { type AxiosInstance, type AxiosResponse } from 'axios'
 import axiosRetry, { exponentialDelay } from 'axios-retry'
 
 import {
-  type SentimentComment,
-  type SentimentVote,
   type UserProfile,
   type UserSettingsData,
 } from '../types'
@@ -172,25 +170,6 @@ class APIClient {
     return await this.client.get(`${BASE_URL_API_V1}/streets?page=${page}`)
   }
 
-  // TODO: API response type
-  getSentimentSurveyStreet = async (): APIResponse<unknown> => {
-    return await this.client.get(`${BASE_URL_API_V1}/votes`)
-  }
-
-  // TODO: API response type
-  postSentimentSurveyVote = async (
-    payload: SentimentVote
-  ): APIResponse<unknown> => {
-    return await this.client.post(`${BASE_URL_API_V1}/votes`, payload)
-  }
-
-  // TODO: API response type
-  putSentimentSurveyComment = async (
-    payload: SentimentComment
-  ): APIResponse<unknown> => {
-    return await this.client.put(`${BASE_URL_API_V1}/votes`, payload)
-  }
-
   getChangelog = async (): APIResponse<string> => {
     return await this.client.get(`${BASE_URL_SERVICES}/changelog`)
   }
@@ -218,9 +197,6 @@ export const {
   deleteStreet,
   deleteStreetImage,
   getGalleryForAllStreets,
-  getSentimentSurveyStreet,
-  postSentimentSurveyVote,
-  putSentimentSurveyComment,
   getChangelog,
   getGeoIp,
 } = client

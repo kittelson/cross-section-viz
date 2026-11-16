@@ -2,7 +2,6 @@ import clone from 'just-clone'
 
 import { ERRORS } from '@/streetmix/client/src/app/errors.js'
 import { formatMessage } from '@/streetmix/client/src/locales/locale.js'
-import { checkSeaLevel } from '@/streetmix/client/src/plugins/coastmix/sea_level.js'
 import {
   RESIZE_TYPE_INCREMENT,
   RESIZE_TYPE_PRECISE_DRAGGING,
@@ -40,7 +39,6 @@ import { setInfoBubbleMouseInside } from '../slices/infoBubble.js'
 import { setActiveSegment, setImmediateRemoval } from '../slices/ui.js'
 import { setSliceWarnings } from '../slices/warnings.js'
 
-import { setFloodDetails } from '../slices/coastmix.js'
 import type { Dispatch, RootState } from '../index.js'
 import type {
   SliceItem,
@@ -72,8 +70,7 @@ export function updateStreetDataAction(data: Partial<StreetState>) {
 
 export const segmentsChanged = (force = false) => {
   return async (dispatch: Dispatch, getState: () => RootState) => {
-    const { street, coastmix } = getState()
-    const { targetYear, stormSurge } = coastmix
+    const { street } = getState()
 
     const calculatedWidths = recalculateWidth(street)
 
@@ -115,13 +112,6 @@ export const segmentsChanged = (force = false) => {
       calculatedWidths
     )
     await dispatch(setSliceWarnings(sliceWarnings))
-
-    // Calculate flood details
-    // This is using a stale version of `street` and might not include
-    // the updated occupiedWidth, remainingWidth etc? but it still seems to
-    // be okay.
-    const floodDetails = checkSeaLevel(street, targetYear, stormSurge)
-    dispatch(setFloodDetails(floodDetails))
 
     // ToDo: Refactor this out to be dispatched as well
     // Forcing a save is necessary when the data to be saved is not in the

@@ -68,12 +68,6 @@ body:not(.safari).gallery-visible .street-section-sky {
   }
 }
 
-.gallery-search {
-  display: flex;
-  flex-grow: 1;
-  justify-content: center;
-}
-
 .gallery-street-count {
   display: flex;
   flex-direction: row;

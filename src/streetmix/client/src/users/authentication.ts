@@ -3,8 +3,6 @@ import { jwtDecode } from 'jwt-decode'
 import * as Sentry from '@sentry/browser'
 
 import type { UserProfile } from '@/streetmix/client/src/types'
-import { STREETMIX_INSTANCE } from '@/streetmix/client/src/app/config.js'
-import { STREET_TEMPLATES } from '../app/constants.js'
 import { showError, ERRORS } from '../app/errors.js'
 import {
   MODES,
@@ -13,11 +11,6 @@ import {
   setMode,
   getModeData,
 } from '../app/mode.js'
-import {
-  generateFlagOverrides,
-  applyFlagOverrides,
-  type FeatureFlagOverrides,
-} from '../app/flag_utils.js'
 import { formatMessage } from '../locales/locale.js'
 import { setPromoteStreet } from '../streets/remix.js'
 import {
@@ -68,12 +61,7 @@ function clearAllClientSignInData() {
 
 export function onStorageChange() {
   // This forces sign out in other tabs when the localstorage value is unset.
-  // Do not do this in Coastmix because it does not have user accounts.
-  if (
-    isSignedIn() &&
-    !window.localStorage[LOCAL_STORAGE_SIGN_IN_ID] &&
-    STREETMIX_INSTANCE !== 'coastmix'
-  ) {
+  if (isSignedIn() && !window.localStorage[LOCAL_STORAGE_SIGN_IN_ID]) {
     setMode(MODES.FORCE_RELOAD_SIGN_OUT)
     processMode()
   } else if (!isSignedIn() && window.localStorage[LOCAL_STORAGE_SIGN_IN_ID]) {
@@ -146,12 +134,6 @@ export async function loadSignIn() {
     return true
   }
 
-  // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
-  const storage = JSON.parse(window.localStorage.getItem('flags'))
-  const sessionOverrides = generateFlagOverrides(storage, 'session')
-
-  let flagOverrides: FeatureFlagOverrides[] = []
-
   if (signInData && signInData.token && signInData.userId) {
     const decoded = jwtDecode(signInData.token)
 
@@ -167,28 +149,10 @@ export async function loadSignIn() {
     if (currentDate >= expDate) {
       await refreshLoginToken(signInData.refreshToken)
     }
-    flagOverrides = await fetchSignInDetails(signInData.userId)
+    await fetchSignInDetails(signInData.userId)
   } else {
     store.dispatch(clearSignInData())
   }
-
-  const instanceFlags =
-    STREETMIX_INSTANCE === 'coastmix'
-      ? {
-          ANALYTICS: false,
-          ENVIRONMENTS_UNLOCKED: true,
-          WEATHER_EFFECTS: true,
-          COASTMIX_MODE: true,
-        }
-      : null
-  const instanceOverrides = generateFlagOverrides(instanceFlags, 'instance')
-
-  applyFlagOverrides(
-    store.getState().flags,
-    ...flagOverrides,
-    instanceOverrides,
-    sessionOverrides
-  )
 
   _signInLoaded()
 
@@ -240,22 +204,10 @@ async function fetchSignInDetails(userId: string) {
       throw response
     }
 
-    const { flags } = response.data
-
-    const flagOverrides = [
-      // user flag overrides
-      // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
-      generateFlagOverrides(flags, 'user'),
-    ]
-
     receiveSignInDetails(response.data)
-    return flagOverrides
   } catch (error) {
     errorReceiveSignInDetails(error)
   }
-
-  // Catch-all return
-  return []
 }
 
 function receiveSignInDetails(details: UserProfile) {
@@ -382,15 +334,8 @@ function _signInLoaded() {
         setMode(MODES.CONTINUE)
       }
     } else {
-      // We have a different default street in Coastmix
-      const isCoastmixMode = store.getState().flags.COASTMIX_MODE.value ?? false
-
-      if (isCoastmixMode) {
-        setMode(MODES.NEW_STREET, { type: STREET_TEMPLATES.COASTAL_ROAD })
-      } else {
-        // New street created using default values
-        setMode(MODES.NEW_STREET)
-      }
+      // New street created using default values
+      setMode(MODES.NEW_STREET)
     }
   }
   mode = getMode()

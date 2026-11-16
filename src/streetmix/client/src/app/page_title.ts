@@ -1,10 +1,9 @@
 import { getSignInData, isSignedIn } from '../users/authentication.js'
 import { formatMessage } from '../locales/locale.js'
-import { STREETMIX_INSTANCE } from './config.js'
 
 import type { StreetState } from '@/streetmix/packages/types/src'
 
-const APP_TITLE = STREETMIX_INSTANCE !== 'coastmix' ? 'Streetmix' : 'Coastmix'
+const APP_TITLE = 'Streetmix'
 
 /**
  * Updates page title.

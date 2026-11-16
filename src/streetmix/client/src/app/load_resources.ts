@@ -10,11 +10,6 @@ export const images = new Map()
 const IMAGES_TO_BE_LOADED = [
   '/assets/icons.svg',
   '/assets/images.svg',
-  '/images/wordmark.svg',
-  '/images/wordmark_black.svg',
-  '/images/wordmark_white.svg',
-  '/images/wordmark_coastmix_black.svg',
-  '/images/wordmark_coastmix_white.svg',
   '/images/sky-front.svg',
   '/images/sky-rear.svg',
 ]

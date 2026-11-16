@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-import { STREETMIX_INSTANCE } from '@/streetmix/client/src/app/config.js'
 import { getGeoIp } from '../../util/api.js'
 
 import type { UserState, UserProfile, UserSignInData } from '../../types'
@@ -8,8 +7,8 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: UserState = {
   signInData: null,
-  signedIn: STREETMIX_INSTANCE === 'coastmix',
-  isSubscriber: STREETMIX_INSTANCE === 'coastmix',
+  signedIn: false,
+  isSubscriber: false,
   isCoilPluginSubscriber: false,
   geolocation: {
     attempted: false,
@@ -45,12 +44,8 @@ const userSlice = createSlice({
     clearSignInData(state) {
       state.signInData = null
       state.isCoilPluginSubscriber = false
-
-      // Do not reset this state to `false` if we are in Coastmix
-      if (STREETMIX_INSTANCE !== 'coastmix') {
-        state.signedIn = false
-        state.isSubscriber = false
-      }
+      state.signedIn = false
+      state.isSubscriber = false
     },
 
     setCoilPluginSubscriber(

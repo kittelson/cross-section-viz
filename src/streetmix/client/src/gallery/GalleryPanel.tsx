@@ -7,13 +7,9 @@ import { GalleryError } from './GalleryError.js'
 import { GalleryLoading } from './GalleryLoading.js'
 import { GalleryContents } from './GalleryContents.js'
 import { GalleryPagination } from './GalleryPagination.js'
-import { GallerySearch } from './GallerySearch.js'
 
 export function GalleryPanel() {
   const { mode, userId } = useSelector((state) => state.gallery)
-  const gallerySearch = useSelector(
-    (state) => state.flags.GALLERY_SEARCH.value ?? false
-  )
 
   const { data: user, isError, isLoading } = useGetUserQuery(userId)
 
@@ -39,11 +35,6 @@ export function GalleryPanel() {
             <FormattedMessage id="gallery.all" defaultMessage="All streets" />
           )}
         </div>
-        {gallerySearch && (
-          <div className="gallery-search">
-            <GallerySearch />
-          </div>
-        )}
         <div className="gallery-street-count">
           <GalleryPagination isLoading={mode === 'loading' || isLoading} />
         </div>

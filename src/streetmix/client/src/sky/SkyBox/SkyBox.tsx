@@ -18,9 +18,6 @@ export function SkyBox(props: SkyBoxProps) {
   const skybox: string = useSelector(
     (state) => state.street.skybox ?? DEFAULT_SKYBOX
   )
-  const animations = useSelector(
-    (state) => state.flags.SKY_ANIMATED_CLOUDS?.value ?? false
-  )
 
   const { cloudOpacity, foregroundGradient, backgroundObjects } =
     getSkyboxDef(skybox)
@@ -42,13 +39,8 @@ export function SkyBox(props: SkyBoxProps) {
     foregroundStyle.opacity = 0
   }
 
-  const classes = ['street-section-sky']
-  if (animations) {
-    classes.push('sky-animations')
-  }
-
   return (
-    <section className={classes.join(' ')}>
+    <section className="street-section-sky">
       <SkyBackground skybox={skybox} />
       <SkyObjects objects={backgroundObjects} />
       <div className="rear-clouds" style={rearCloudStyle} />

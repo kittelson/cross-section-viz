@@ -3,7 +3,6 @@
  * available street segments. Users can drag and drop segments from the palette
  * onto the street.
  */
-import { orderBy } from 'es-toolkit'
 import { IntlProvider } from 'react-intl'
 import { getAllSegmentInfo } from '@/streetmix/packages/parts/src'
 
@@ -14,38 +13,16 @@ import { PaletteItem } from './PaletteItem.js'
 import './PaletteItems.css'
 
 export function PaletteItems() {
-  const flags = useSelector((state) => state.flags)
   const locale = useSelector((state) => state.locale)
 
   const items = getAllSegmentInfo()
-
-  // For each palette item, filter out the ones that have been disabled
-  // by feature flag
-  const filteredItems = items.filter(
-    (i) =>
-      i.enableWithFlag === undefined ||
-      (i.enableWithFlag !== undefined && flags[i.enableWithFlag]?.value)
-  )
-
-  // If we're in Coastmix mode, sort all items by `coastmixPaletteOrder`.
-  // Drop items without this property.
-  const coastmixMode = flags.COASTMIX_MODE?.value ?? false
-  let displayedItems
-  if (coastmixMode) {
-    const items = filteredItems.filter(
-      (i) => typeof i.coastmixPaletteOrder !== 'undefined'
-    )
-    displayedItems = orderBy(items, ['coastmixPaletteOrder'], ['asc'])
-  } else {
-    displayedItems = filteredItems
-  }
 
   return (
     <TooltipGroup>
       <Scrollable className="palette-items">
         <IntlProvider locale={locale.locale} messages={locale.segmentInfo}>
           <ul>
-            {displayedItems.map((i) => (
+            {items.map((i) => (
               <PaletteItem key={i.id} item={i} />
             ))}
           </ul>

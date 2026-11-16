@@ -12,7 +12,6 @@ import { getStreetImage } from '@/streetmix/client/src/streets/image.js'
 import { normalizeSlug } from '@/streetmix/client/src/util/helpers.js'
 import { Dialog } from '../Dialog.js'
 import { CustomScale } from './CustomScale.js'
-import { WatermarkOption } from './WatermarkOption.js'
 import './SaveAsImageDialog.css'
 
 const DEFAULT_IMAGE_DPI = 2
@@ -27,31 +26,14 @@ export function SaveAsImageDialog() {
   const [downloadDataUrl, setDownloadDataUrl] = useState<string>()
   const [baseDimensions, setBaseDimensions] = useState({})
   const locale = useSelector((state) => state.locale.locale)
-  const coastmixMode = useSelector((state) => state.flags.COASTMIX_MODE.value)
   const {
     saveAsImageTransparentSky: transparentSky,
     saveAsImageSegmentNamesAndWidths: segmentNames,
     saveAsImageStreetName: streetName,
-    saveAsImageSeaLevelRise: seaLevelRise,
   } = useSelector((state) => state.settings)
-  // even if watermarks are off, override if user isn't subscribed, or we are
-  // in coastmix mode
-  const watermark = useSelector(
-    (state) =>
-      state.settings.saveAsImageWatermark ||
-      !state.user.isSubscriber ||
-      coastmixMode
-  )
   const street = useSelector((state) => state.street)
-  const { floodDetails, stormSurge } = useSelector((state) => state.coastmix)
   const intl = useIntl()
   const dispatch = useDispatch()
-
-  // New export pipeline for testing
-  const newExport = useSelector(
-    (state) => state.flags.SAVE_AS_IMAGE_NEW_EXPORT_PIPELINE.value
-  )
-  const [isNewExport, setNewExport] = useState(newExport)
 
   useEffect(() => {
     async function update() {
@@ -70,26 +52,7 @@ export function SaveAsImageDialog() {
       await updatePreview()
     }, 100)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    transparentSky,
-    segmentNames,
-    streetName,
-    seaLevelRise,
-    watermark,
-    isNewExport,
-  ])
-
-  // Same as above but ONLY update preview if we're using the new export
-  // pipeline, and the scale changes
-  useEffect(() => {
-    if (isNewExport) {
-      setIsLoading(true)
-      window.setTimeout(async () => {
-        await updatePreview()
-      }, 100)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scale, isNewExport])
+  }, [transparentSky, segmentNames, streetName])
 
   function makeFilename() {
     let filename = normalizeSlug(street.name)
@@ -122,14 +85,6 @@ export function SaveAsImageDialog() {
     dispatch(updateSettings({ saveAsImageStreetName: event.target.checked }))
   }
 
-  const toggleSeaLevelRise = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateSettings({ saveAsImageSeaLevelRise: event.target.checked }))
-  }
-
-  const toggleNewExport = () => {
-    setNewExport(!isNewExport)
-  }
-
   const handleChangeScale = (value: number) => {
     setErrorMessage2(false) // Clears "too big" error if present
     setScale(value)
@@ -157,18 +112,6 @@ export function SaveAsImageDialog() {
   const handleClickDownloadImage = (event: React.MouseEvent) => {
     event.preventDefault()
     setIsSaving(true)
-
-    if (isNewExport) {
-      const filename = makeFilename()
-      saveAs(
-        `/api/v1/streets/${street.id}/image?transparentSky=${transparentSky}&labels=${segmentNames}&streetName=${streetName}&seaLevelRise=${seaLevelRise}&watermark=${watermark}&locale=${locale}&scale=${scale}&experimental=1`,
-        filename
-      )
-      window.setTimeout(() => {
-        setIsSaving(false)
-      }, 0)
-      return
-    }
 
     try {
       // Update the image with the actual size before saving.
@@ -202,25 +145,12 @@ export function SaveAsImageDialog() {
       transparentSky,
       segmentNames,
       streetName,
-      coastmixMode ? seaLevelRise : false,
-      floodDetails,
-      stormSurge,
       DEFAULT_IMAGE_DPI * scale,
-      coastmixMode ? watermark && 'coastmix' : watermark,
       locale
     )
   }
 
   const updatePreview = async (): Promise<void> => {
-    // If we're previewing using the new export image pipeline, set url
-    // to the API export directly, then skip the rest of the function
-    if (isNewExport) {
-      setDownloadDataUrl(
-        `/api/v1/streets/${street.id}/image?transparentSky=${transparentSky}&labels=${segmentNames}&streetName=${streetName}&seaLevelRise=${seaLevelRise}&watermark=${watermark}&locale=${locale}&scale=${scale}&experimental=1`
-      )
-      return
-    }
-
     await updatePreviewImage(1)
     // Only set base dimensions when preview is generated at scale = 1.
     // The custom slider will update target dimensions by multiplying base * scale
@@ -267,14 +197,6 @@ export function SaveAsImageDialog() {
           </header>
           <div className="dialog-content">
             <div className="save-as-image-options">
-              {newExport && (
-                <div style={{ marginTop: 0, marginBottom: '0.25em' }}>
-                  {/* eslint-disable-next-line formatjs/no-literal-string-in-jsx */}
-                  <Checkbox onChange={toggleNewExport} checked={isNewExport}>
-                    New export pipeline (WIP)
-                  </Checkbox>
-                </div>
-              )}
               <Checkbox onChange={toggleSegmentNames} checked={segmentNames}>
                 <FormattedMessage
                   id="dialogs.save.option-labels"
@@ -299,16 +221,6 @@ export function SaveAsImageDialog() {
                 />
               </Checkbox>
 
-              {coastmixMode && (
-                <Checkbox onChange={toggleSeaLevelRise} checked={seaLevelRise}>
-                  <FormattedMessage
-                    id="dialogs.save.option-sea-level-rise"
-                    defaultMessage="Sea level rise"
-                  />
-                </Checkbox>
-              )}
-
-              {!coastmixMode && <WatermarkOption />}
             </div>
             {street.weather !== null && (
               <div className="save-as-image-weather-alert">
@@ -354,13 +266,11 @@ export function SaveAsImageDialog() {
                 </div>
               )}
             </div>
-            {!coastmixMode && (
-              <CustomScale
-                scale={scale}
-                baseDimensions={baseDimensions}
-                onChange={handleChangeScale}
-              />
-            )}
+            <CustomScale
+              scale={scale}
+              baseDimensions={baseDimensions}
+              onChange={handleChangeScale}
+            />
             <div className="save-as-image-download">
               {errorMessage2 && (
                 <span className="save-as-image-too-large-error">

@@ -1,7 +1,6 @@
 import type { ColorModes } from '@/streetmix/client/src/app/constants'
 import type { SerializedError } from '@reduxjs/toolkit'
 import type {
-  StreetState,
   GeolocationData,
   UnitsSetting,
 } from '@/streetmix/packages/types/src'
@@ -19,7 +18,6 @@ export interface UserSettings {
   saveAsImageSegmentNamesAndWidths: boolean
   saveAsImageStreetName: boolean
   saveAsImageTransparentSky: boolean
-  saveAsImageWatermark: boolean
   units: UnitsSetting
 }
 
@@ -31,7 +29,6 @@ export interface UserProfile {
   id: string
   displayName: string
   profileImageUrl: string
-  flags: object // TODO: be more specific
   roles: string[]
   data: UserSettings
 }
@@ -56,17 +53,6 @@ export interface UserState {
 }
 
 export type ContentDirection = 'ltr' | 'rtl'
-
-export interface SentimentVote {
-  score: number
-  data: StreetState
-  streetId: string
-}
-
-export interface SentimentComment {
-  id: string
-  comment: string
-}
 
 type ToastComponent =
   | 'TOAST_UNDO'
@@ -94,20 +80,6 @@ export interface ToastItemWithMessage extends BaseToastItem {
 }
 
 export type ToastItem = ToastItemWithComponent | ToastItemWithMessage
-
-export interface FeatureFlagDefinition {
-  label: string
-  defaultValue: boolean
-  enabled?: boolean
-}
-
-export interface FeatureFlagSetting extends FeatureFlagDefinition {
-  value: boolean
-  source: string
-}
-
-export type FeatureFlags = Record<string, FeatureFlagDefinition>
-export type FeatureFlagSettings = Record<string, FeatureFlagSetting>
 
 export interface DraggingState {
   isDragging: boolean

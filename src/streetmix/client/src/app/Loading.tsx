@@ -1,6 +1,5 @@
 import { useLayoutEffect, useRef } from 'react'
 
-import { STREETMIX_INSTANCE } from './config.js'
 import './Loading.css'
 
 interface LoadingProps {
@@ -12,9 +11,6 @@ interface LoadingProps {
 
 export function Loading({ isLoading = true }: LoadingProps) {
   const loadingStuckNotice = useRef<HTMLDivElement>(null)
-
-  // Use instance environment variable because flags are not available here.
-  const coastmixMode = STREETMIX_INSTANCE === 'coastmix'
 
   useLayoutEffect(() => {
     // A "not loading" troubleshooting popup to provide a "way out" of totally
@@ -35,9 +31,6 @@ export function Loading({ isLoading = true }: LoadingProps) {
   const classNames = []
   if (!isLoading) {
     classNames.push('hidden')
-  }
-  if (coastmixMode) {
-    classNames.push('coastmix-loader')
   }
 
   return (

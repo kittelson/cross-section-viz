@@ -27,16 +27,12 @@ type VariantIconDefinition = (
   title: string
   color?: string // CSS colors
   unlockCondition?: string // todo enums
-  unlockWithFlag?: string // todo enums
-  enableWithFlag?: string // todo enums
-  disableWithFlag?: string
 }
 
 type VariantIcons = Record<string, Record<string, VariantIconDefinition>>
 
 export function VariantButton(props: VariantButtonProps) {
   const { set, selection, isSelected, onClick } = props
-  const flags = useSelector((state) => state.flags)
   const isSignedIn = useSelector((state) => state.user.signedIn)
   const isSubscriber = useSelector((state) => state.user.isSubscriber)
   const intl = useIntl()
@@ -44,18 +40,6 @@ export function VariantButton(props: VariantButtonProps) {
   const icon = (VARIANT_ICONS as VariantIcons)[set][selection]
 
   if (icon === undefined) return null
-
-  // If a variant is not enabled by feature flag, skip it
-  if (icon.enableWithFlag !== undefined) {
-    const flag = flags[icon.enableWithFlag]
-    if (!flag?.value) return null
-  }
-
-  // If a variant is specifically disabled by feature flag, skip it
-  if (icon.disableWithFlag !== undefined) {
-    const flag = flags[icon.disableWithFlag]
-    if (flag?.value) return null
-  }
 
   const label = intl.formatMessage({
     id: `variant-icons.${set}|${selection}`,
@@ -67,11 +51,7 @@ export function VariantButton(props: VariantButtonProps) {
 
   // If there is an enable condition, add a note to the tooltip if it
   // is locked for a reason (e.g. must sign in, must be a subscriber)
-  // If an "unlock flag" is set, enable the thing
-  if (
-    icon.unlockCondition !== undefined &&
-    !(icon.unlockWithFlag !== undefined && flags[icon.unlockWithFlag]?.value)
-  ) {
+  if (icon.unlockCondition !== undefined) {
     switch (icon.unlockCondition) {
       case 'SUBSCRIBE':
         if (!isSubscriber) {

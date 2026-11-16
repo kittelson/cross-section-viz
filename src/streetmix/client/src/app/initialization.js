@@ -18,7 +18,6 @@ import { segmentsChanged } from '../store/actions/street'
 import { everythingLoaded } from '../store/slices/app'
 import { detectGeolocation } from '../store/slices/user'
 import { showDialog } from '../store/slices/dialogs'
-import { initializeFlagSubscribers } from './flag_utils'
 import { addEventListeners } from './event_listeners'
 import { getMode, MODES, processMode } from './mode'
 import { processUrl } from './page_url'
@@ -109,7 +108,6 @@ function onEverythingLoaded() {
   setIgnoreStreetChanges(false)
   setLastStreet()
   initStreetDataChangedListener()
-  initializeFlagSubscribers()
   initSettingsStoreObserver()
   initStreetThumbnailSubscriber()
 
@@ -153,8 +151,6 @@ function onEverythingLoaded() {
     const whatsNewTimestamp = 1793723875622 // Hard-coded value
 
     const state = store.getState()
-    const whatsNewFlag = state.flags.ALWAYS_DISPLAY_WHATS_NEW.value
-    const coastmixMode = state.flags.COASTMIX_MODE.value
     const locale = state.locale.locale
 
     if (window.localStorage[LSKEY_WELCOME_DISMISSED]) {
@@ -182,14 +178,7 @@ function onEverythingLoaded() {
     // - If locale is not English, do not show What's New. (We haven't localized it.)
     // - If LocalStorage has no What's New timestamp, display What's New.
     // - If LocalStorage has a timestamp value older than current, display What's New.
-    // - Never display in Coastmix mode.
-    if (
-      (welcomeDismissed &&
-        canDisplayWhatsNew &&
-        locale === 'en' &&
-        !coastmixMode) ||
-      whatsNewFlag
-    ) {
+    if (welcomeDismissed && canDisplayWhatsNew && locale === 'en') {
       store.dispatch(showDialog('WHATS_NEW'))
       window.localStorage[LSKEY_WHATSNEW_LAST_TIMESTAMP] = whatsNewTimestamp
     }

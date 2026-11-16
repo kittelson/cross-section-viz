@@ -24,7 +24,6 @@ import {
   createSliceDropTargetSpec,
 } from './drag_and_drop.js'
 import { RESIZE_TYPE_INCREMENT } from './resizing.js'
-import { TestSlope } from './TestSlope.js'
 import './Segment.css'
 
 import type { SliceItem, UnitsSetting } from '@/streetmix/packages/types/src'
@@ -45,9 +44,7 @@ export function Segment(props: SliceProps) {
   const warnings = useSelector(
     (state) => state.warnings.slices[segment.id] ?? {}
   )
-  const enableAnalytics = useSelector(
-    (state) => state.flags.ANALYTICS.value && state.street.showAnalytics
-  )
+  const enableAnalytics = useSelector((state) => state.street.showAnalytics)
   const locale = useSelector((state) => state.locale.locale)
   const activeSegment = useSelector((state) => state.ui.activeSegment)
   const readOnly = useSelector((state) => state.app.readOnly)
@@ -314,7 +311,6 @@ export function Segment(props: SliceProps) {
               {renderSegmentCanvas('new', newRef)}
             </CSSTransition>
           </div>
-          <TestSlope slice={segment} />
           <div className="active-bg" />
           <EmptyDragPreview dragPreview={dragPreview} />
         </button>

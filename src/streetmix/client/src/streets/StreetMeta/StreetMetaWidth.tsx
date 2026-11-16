@@ -34,9 +34,7 @@ const DEFAULT_STREET_WIDTHS_METRIC = [12, 18, 24]
 
 export function StreetMetaWidth() {
   const street = useSelector((state) => state.street)
-  const editable = useSelector(
-    (state) => !state.app.readOnly && state.flags.EDIT_STREET_WIDTH.value
-  )
+  const editable = useSelector((state) => !state.app.readOnly)
   const locale = useSelector((state) => state.locale.locale)
   const dispatch = useDispatch()
   const width = prettifyWidth(street.width, street.units, locale)

@@ -35,44 +35,6 @@
   background-size: 250px 280px;
 }
 
-/* A setting activates this class and turns on environmental animations
-   This is so it can be disabled based on preference or performance reasons */
-.sky-animations {
-  .rear-clouds {
-    animation-name: rear-clouds-move;
-    animation-duration: 60s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-  }
-
-  .front-clouds {
-    animation-name: front-clouds-move;
-    animation-duration: 30s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-  }
-}
-
-@keyframes rear-clouds-move {
-  from {
-    background-position: 0 0;
-  }
-
-  to {
-    background-position: 250px 0;
-  }
-}
-
-@keyframes front-clouds-move {
-  from {
-    background-position: 0 0;
-  }
-
-  to {
-    background-position: 250px 0;
-  }
-}
-
 .sky-foreground {
   position: absolute;
   top: 0;

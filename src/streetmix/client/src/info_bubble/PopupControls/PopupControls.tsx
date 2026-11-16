@@ -4,8 +4,6 @@ import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 import { VariantSet } from './VariantSet.js'
 import { WidthControl } from './WidthControl.js'
 import { BuildingHeightControl } from './BuildingHeightControl.js'
-import { ElevationControl } from './ElevationControl.js'
-import { CoastmixControls } from './CoastmixControls.js'
 import './PopupControls.css'
 
 import type { SectionElementTypeAndPosition } from '@/streetmix/packages/types/src'
@@ -13,10 +11,6 @@ import type { SectionElementTypeAndPosition } from '@/streetmix/packages/types/s
 export function PopupControls(props: SectionElementTypeAndPosition) {
   const { type, position } = props
   const { locale, segmentInfo } = useSelector((state) => state.locale)
-  const universalElevation = useSelector(
-    (state) => state.flags.UNIVERSAL_ELEVATION_CONTROLS.value
-  )
-  const coastmixMode = useSelector((state) => state.flags.COASTMIX_MODE.value)
 
   // Determine width or height control type
   let widthOrHeightControl
@@ -41,12 +35,6 @@ export function PopupControls(props: SectionElementTypeAndPosition) {
         </IntlProvider>
         <div className="non-variant">
           {widthOrHeightControl}
-
-          {/* Universal elevation control for slices only, if not in Coastmix mode */}
-          {typeof position === 'number' &&
-            universalElevation &&
-            !coastmixMode && <ElevationControl position={position} />}
-          {coastmixMode && <CoastmixControls position={position} />}
         </div>
       </div>
     </div>

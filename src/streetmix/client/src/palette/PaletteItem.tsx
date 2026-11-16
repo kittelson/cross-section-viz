@@ -16,7 +16,6 @@ interface PaletteItemProps {
 }
 
 export function PaletteItem({ item }: PaletteItemProps) {
-  const flags = useSelector((state) => state.flags)
   const isSignedIn = useSelector((state) => state.user.signedIn)
   const isSubscriber = useSelector((state) => state.user.isSubscriber)
   const intl = useIntl()
@@ -39,10 +38,7 @@ export function PaletteItem({ item }: PaletteItemProps) {
   let isLocked = false
   let sublabel
 
-  if (
-    unlockCondition &&
-    !(item.unlockWithFlag !== undefined && flags[item.unlockWithFlag]?.value)
-  ) {
+  if (unlockCondition) {
     switch (unlockCondition) {
       case 'SUBSCRIBE':
         if (!isSubscriber) {

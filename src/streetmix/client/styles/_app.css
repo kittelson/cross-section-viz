@@ -30,24 +30,6 @@
   background-repeat: no-repeat;
 }
 
-.streetmix-logo-horizontal {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/logo_horizontal.svg");
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
-.streetmix-wordmark {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/wordmark_green.svg");
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
 #svg {
   display: none;
 }

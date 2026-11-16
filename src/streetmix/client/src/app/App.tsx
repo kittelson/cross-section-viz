@@ -6,7 +6,6 @@ import { DndProvider } from 'react-dnd-multi-backend'
 import { HTML5toTouch } from 'rdndmb-html5-to-touch'
 import { FloatingTree } from '@floating-ui/react'
 
-import { CoastmixUI } from '@/streetmix/client/src/plugins/coastmix'
 import { MenusContainer } from '../menubar/MenusContainer.js'
 import { StreetNameplateContainer } from '../streets/StreetNameplateContainer.js'
 import { DescriptionPanel } from '../info_bubble/DescriptionPanel.js'
@@ -16,7 +15,6 @@ import { SkyPicker } from '../sky/SkyPicker'
 import { Gallery } from '../gallery/Gallery.js'
 import { SegmentDragLayer } from '../segments/SegmentDragLayer.js'
 import { ToastContainer } from '../ui/Toasts'
-import { SentimentSurveyContainer } from '../sentiment/SentimentSurveyContainer.js'
 import { useSelector } from '../store/hooks.js'
 import { DebugInfo } from './DebugInfo.js'
 import { BlockingShield } from './BlockingShield.js'
@@ -38,7 +36,6 @@ export function App() {
   ) // TODO use real type
   const everythingLoaded = useSelector((state) => state.app.everythingLoaded)
   const colorMode = useSelector((state) => state.settings.colorMode)
-  const coastmixMode = useSelector((state) => state.flags.COASTMIX_MODE.value)
   const isSubscriber = useSelector((state) => state.user.isSubscriber)
 
   // TODO: Move other initialization methods here.
@@ -49,14 +46,14 @@ export function App() {
       // Turn off loading after initial loading is done
       setLoading(false)
 
-      // initialize only Userback in Coastmix mode or if user is a subscriber
-      if (coastmixMode || isSubscriber) {
+      // initialize only Userback if user is a subscriber
+      if (isSubscriber) {
         await initUserback()
       }
     }
 
     init()
-  }, [coastmixMode, isSubscriber])
+  }, [isSubscriber])
 
   // Set color mode on top level DOM element
   useEffect(() => {
@@ -78,7 +75,6 @@ export function App() {
               <DndProvider options={HTML5toTouch} context={window}>
                 {/* DndProvider allows multiple children; IntlProvider does not */}
                 <NotificationBar />
-                {/* <BostonHeader /> */}
                 {/* Don't have this with <NotificationBar at the same time */}
                 <BlockingShield />
                 <BlockingError />
@@ -96,8 +92,6 @@ export function App() {
                   <SegmentDragLayer />
                   <StreetView />
                   <ToastContainer />
-                  <SentimentSurveyContainer />
-                  <CoastmixUI />
                 </MainScreen>
                 <SponsorBanner />
               </DndProvider>

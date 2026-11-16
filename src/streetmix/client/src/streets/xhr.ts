@@ -23,7 +23,6 @@ import {
   newBlockingAjaxRequest,
 } from '../util/fetch_blocking.js'
 import store from '../store'
-import { setCoastmixState } from '../store/slices/coastmix.js'
 import { updateSettings } from '../store/slices/settings.js'
 import {
   saveStreetId,
@@ -307,14 +306,6 @@ export function unpackServerStreetData(
   store.dispatch(updateStreetData(street))
   store.dispatch(resetUndoStack())
 
-  // Set Coastmix plugin state, if enabled and data is present
-  if (
-    store.getState().flags.COASTMIX_MODE.value === true &&
-    transmission.data.plugins.coastmix !== undefined
-  ) {
-    store.dispatch(setCoastmixState(transmission.data.plugins.coastmix))
-  }
-
   if (id) {
     // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
     setStreetId(id, namespacedId)
@@ -356,16 +347,6 @@ export function packServerStreetDataRaw(): StreetAPIPayload {
   // This will be implied through authorization header
   // @ts-expect-error TS2339 vendored streetmix, fix during cleanup
   delete data.street.creatorId
-
-  if (store.getState().flags.SAVE_UNDO.value === true) {
-    data.history = clone(store.getState().history)
-  }
-
-  // Only save this data if we need to. Note that this deletes Coastmix plugin
-  // data if the flag is turned off. This wouldn't happen in production
-  if (store.getState().flags.COASTMIX_MODE.value === true) {
-    data.plugins.coastmix = clone(store.getState().coastmix)
-  }
 
   const street = store.getState().street
   const transmission = {

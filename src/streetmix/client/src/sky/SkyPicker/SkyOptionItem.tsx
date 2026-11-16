@@ -1,4 +1,3 @@
-import { Icon } from '@/streetmix/client/src/ui/Icon.js'
 import { Tooltip } from '@/streetmix/client/src/ui/Tooltip.js'
 import { images } from '@/streetmix/client/src/app/load_resources.js'
 import './SkyOptionItem.css'
@@ -8,7 +7,6 @@ interface SkyOptionItemProps {
   iconImage?: string
   iconStyle?: React.CSSProperties
   isSelected: boolean
-  isUnlocked: boolean
   onClick: React.MouseEventHandler
   children?: React.ReactNode
 }
@@ -18,7 +16,6 @@ export function SkyOptionItem({
   iconImage,
   iconStyle,
   isSelected = false,
-  isUnlocked = false,
   onClick = () => {},
   children,
 }: SkyOptionItemProps) {
@@ -27,8 +24,6 @@ export function SkyOptionItem({
   if (isSelected) {
     classNames.push('sky-option-selected')
   }
-
-  const isDisabled = !isUnlocked && !isSelected
 
   function handleClick(event: React.MouseEvent) {
     onClick(event)
@@ -41,14 +36,7 @@ export function SkyOptionItem({
         className={classNames.join(' ')}
         style={iconStyle}
         onClick={handleClick}
-        disabled={isDisabled}
       >
-        {isDisabled && (
-          <>
-            <div className="sky-option-disabled-overlay" />
-            <Icon name="lock" />
-          </>
-        )}
         {children}
         {iconImage !== undefined && (
           <img

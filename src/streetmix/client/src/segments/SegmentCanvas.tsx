@@ -35,9 +35,6 @@ export const SegmentCanvas = memo(function SegmentCanvas({
   const [firstRender, setFirstRender] = useState(true)
   const canvasEl = useRef<HTMLCanvasElement>(null)
   const dpi = useSelector((state) => state.system.devicePixelRatio)
-  const redrawCanvas = useSelector(
-    (state) => state.flags.DEBUG_SEGMENT_CANVAS_RECTANGLES.value
-  )
 
   useEffect(() => {
     if (!canvasEl.current) return
@@ -59,7 +56,7 @@ export const SegmentCanvas = memo(function SegmentCanvas({
 
     // Only redraw on certain specific prop changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [variantString, actualWidth, elevation, redrawCanvas, slope])
+  }, [variantString, actualWidth, elevation, slope])
 
   function drawSegment(canvas: HTMLCanvasElement): void {
     const ctx = canvas.getContext('2d')
