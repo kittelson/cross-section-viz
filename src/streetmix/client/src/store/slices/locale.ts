@@ -1,9 +1,29 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { DEFAULT_LOCALE } from '@/streetmix/packages/i18n/src'
 
-import { getAppTranslations, getSegmentTranslations } from '../../util/api.js'
-
 import type { TranslationRecord } from '@/streetmix/packages/types/src'
+
+type TranslationModule = { default: TranslationRecord }
+
+const MAIN_TRANSLATIONS = import.meta.glob<TranslationModule>(
+  '/src/streetmix/packages/i18n/locales/*/main.json'
+)
+const SEGMENT_TRANSLATIONS = import.meta.glob<TranslationModule>(
+  '/src/streetmix/packages/i18n/locales/*/segment-info.json'
+)
+
+async function loadTranslation(
+  modules: Record<string, () => Promise<TranslationModule>>,
+  locale: string,
+  file: string
+): Promise<TranslationRecord> {
+  const load =
+    modules[`/src/streetmix/packages/i18n/locales/${locale}/${file}`]
+  if (load === undefined) {
+    throw new Error(`No ${file} translation for locale "${locale}"`)
+  }
+  return (await load()).default
+}
 
 type LocaleMessages = Record<string, string>
 
@@ -49,15 +69,14 @@ function flattenObject(obj: TranslationRecord): LocaleMessages {
 export const changeLocale = createAsyncThunk(
   'locale/changeLocale',
   async (locale: string) => {
-    const messages = await getAppTranslations(locale)
-    const segmentInfo = await getSegmentTranslations(locale)
+    const [messages, segmentInfo] = await Promise.all([
+      loadTranslation(MAIN_TRANSLATIONS, locale, 'main.json'),
+      loadTranslation(SEGMENT_TRANSLATIONS, locale, 'segment-info.json'),
+    ])
 
     return {
       locale,
-      translation: {
-        messages: messages.data,
-        segmentInfo: segmentInfo.data,
-      },
+      translation: { messages, segmentInfo },
     }
   }
 )
