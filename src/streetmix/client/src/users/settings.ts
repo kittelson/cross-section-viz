@@ -1,40 +1,24 @@
 import { debounce } from 'es-toolkit'
 
 import type { UserSettings } from '@/streetmix/client/src/types/index.js'
-import { MODES, getMode } from '../app/mode.js'
 import store, { observeStore, type RootState } from '../store'
 import { updateSettings, type SettingsState } from '../store/slices/settings.js'
-import { setAppFlags } from '../store/slices/app.js'
-import { putUserSettings } from '../util/api.js'
-import { getSignInData, isSignedIn } from './authentication.js'
 
 const LOCAL_STORAGE_SETTINGS_ID = 'settings'
 const SAVE_SETTINGS_DELAY = 500
 
 export function loadSettings() {
-  // Get server settings.
-  let serverSettings: Partial<UserSettings> = {}
-  const signInData = getSignInData()
-  if (isSignedIn() && signInData?.details) {
-    serverSettings = signInData.details.data
-  }
-
-  // Get local settings.
   // Skip this if localStorage is corrupted
-  let localSettings: Partial<UserSettings> = {}
+  let settings: Partial<UserSettings> = {}
   try {
     const parsed = JSON.parse(
       // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
       window.localStorage.getItem(LOCAL_STORAGE_SETTINGS_ID)
     )
-    localSettings = parsed ?? {}
+    settings = parsed ?? {}
   } catch (err) {
     console.error(err)
   }
-
-  // Merge settings to a new object. Server settings take priority and will
-  // overwrite local settings.
-  const settings = Object.assign({}, localSettings, serverSettings)
 
   // If `units` setting uses a legacy value, change it to `0`
   // @ts-expect-error `units` value of 2 is deprecated.
@@ -42,35 +26,13 @@ export function loadSettings() {
     settings.units = 0
   }
 
-  // Except for last street settings -- if we've just signed in, local settings
-  // take priority.
-  const currentMode = getMode()
-  if (currentMode === MODES.JUST_SIGNED_IN) {
-    settings.lastStreetId = localSettings.lastStreetId
-    settings.lastStreetNamespacedId = localSettings.lastStreetNamespacedId
-    settings.lastStreetCreatorId = localSettings.lastStreetCreatorId
-  }
-
-  // This is a temporary value used only for the "fetch last street"
-  // functionality (this can happen either through the welcome panel)
-  // or the /copy-last convenience URL.
-
-  store.dispatch(
-    setAppFlags({
-      priorLastStreetId: settings.lastStreetId,
-    })
-  )
-
-  // Update our application state.
   store.dispatch(updateSettings(settings))
 }
 
 /**
  * Save settings to LocalStorage. This should only be called after the settings
  * reducer has updated. This is meant to mirror application state that
- * should persist across browser sessions and even different users.
- *
- * @param {Object} settings
+ * should persist across browser sessions.
  */
 function saveSettingsLocally(settings: UserSettings) {
   try {
@@ -81,25 +43,6 @@ function saveSettingsLocally(settings: UserSettings) {
   } catch (err) {
     // Ignore localstorage write errors.
   }
-}
-
-function saveSettingsToServer(settings: UserSettings) {
-  if (!isSignedIn() || store.getState().errors.abortEverything) {
-    return
-  }
-
-  const userId = getSignInData()?.userId
-  if (userId !== undefined) {
-    putUserSettings(userId, { data: settings })
-  }
-}
-
-function persistSettingsToBackends(settings: UserSettings) {
-  // Mirror the settings to local storage (so they persist across browser
-  // sessions) and also to the server (to a user account, if the user is
-  // signed in).
-  saveSettingsLocally(settings)
-  saveSettingsToServer(settings)
 }
 
 /**
@@ -115,7 +58,7 @@ function persistSettingsToBackends(settings: UserSettings) {
  */
 export function initSettingsStoreObserver() {
   const select = (state: RootState) => state.settings
-  const onChange = debounce(persistSettingsToBackends, SAVE_SETTINGS_DELAY)
+  const onChange = debounce(saveSettingsLocally, SAVE_SETTINGS_DELAY)
 
   // @ts-expect-error TS2345 vendored streetmix, fix during cleanup
   return observeStore<SettingsState>(select, onChange)

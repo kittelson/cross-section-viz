@@ -7,10 +7,6 @@ import { AnalyticsDialog } from './Analytics'
 import { GeotagDialog } from './Geotag'
 import { SaveAsImageDialog } from './SaveAsImage'
 import { SettingsDialog } from './Settings'
-import { SignInDialog } from './SignIn'
-import { WhatsNewDialog } from './WhatsNew'
-import { NewsletterDialog } from './Newsletter'
-import { UpgradeDialog } from './Upgrade'
 import { ErrorDialog } from './ErrorDialog.js'
 
 const DIALOG_COMPONENTS = {
@@ -19,10 +15,6 @@ const DIALOG_COMPONENTS = {
   GEOTAG: GeotagDialog,
   SAVE_AS_IMAGE: SaveAsImageDialog,
   SETTINGS: SettingsDialog,
-  SIGN_IN: SignInDialog,
-  WHATS_NEW: WhatsNewDialog,
-  NEWSLETTER: NewsletterDialog,
-  UPGRADE: UpgradeDialog,
 }
 
 export function DialogRoot() {

@@ -1,5 +1,5 @@
 import { debug } from '../preinit/debug_settings.js'
-import { saveStreetToServerIfNecessary } from '../streets/data_model.js'
+import { recordStreetChanges } from '../streets/data_model.js'
 import store from '../store'
 import { setUnits } from '../store/slices/street.js'
 import { setUserUnits } from '../store/slices/settings.js'
@@ -129,5 +129,5 @@ export function updateUnits(newUnits: UnitsSetting) {
 
   store.dispatch(setUnits(newUnits))
 
-  saveStreetToServerIfNecessary()
+  recordStreetChanges()
 }

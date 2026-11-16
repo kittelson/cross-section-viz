@@ -65,10 +65,6 @@ export interface StreetBoundary {
   elevation: number
 }
 
-export interface GeolocationData {
-  countryCode: string | null
-}
-
 // Subset of @types/leaflet's `LatLngExpression` type, which is not
 // serializable. Don't use that one.
 export interface LatLngObject {
@@ -88,25 +84,6 @@ export interface StreetLocation {
     street?: string
   }
 }
-
-// This should match the object returned by /api/v1/streets
-export interface StreetAPIResponse {
-  id: string
-  namespacedId: number
-  name: string | null
-  clientUpdatedAt: string // ISO date string
-  data: StreetData
-  createdAt: string // ISO date string
-  updatedAt: string // ISO date string
-  originalStreetId: string | null
-  creatorId: string | null
-}
-
-// Used in POST or PUT to /api/v1/streets
-export type StreetAPIPayload = Pick<
-  StreetAPIResponse,
-  'name' | 'originalStreetId' | 'data' | 'clientUpdatedAt'
->
 
 // StreetJson is not a great name, it's just that this is the part that's
 // stored as a JSON blob in the database.
@@ -138,12 +115,6 @@ export interface StreetJson {
 export interface StreetJsonExtra extends StreetJson {
   occupiedWidth: number
   remainingWidth: number
-}
-
-export interface StreetData {
-  street: StreetJson
-  history?: HistoryState // Experimental / unused
-  plugins: StreetPluginData
 }
 
 // TODO: many of these values were "optional" but it might be worthwhile to
@@ -178,8 +149,6 @@ export interface StreetState extends StreetJsonExtra {
   editCount: number
 }
 
-export type StreetPluginData = Record<string, unknown>
-
 export interface HistoryState {
   stack: Delta[]
   // Position is a 0-index of the current state. `null` is used when the
@@ -190,8 +159,6 @@ export interface HistoryState {
 export type WeatherEffect = 'rain' | 'snow'
 
 export type SlopeConstraints = 'off' | 'path' | 'berm'
-
-export type UnlockCondition = 'SIGN_IN' | 'SUBSCRIBE'
 
 export interface SliceVariantComponentDefinition {
   id: string
@@ -228,7 +195,6 @@ export interface SegmentLookup {
   defaultElevation?: number | MeasurementValues
   defaultSlope?: Array<number | MeasurementValues>
   enableElevation?: boolean
-  unlockCondition?: UnlockCondition
   rules?: {
     minWidth?: MeasurementValues
     maxWidth?: MeasurementValues
@@ -420,24 +386,6 @@ interface BoundaryDefinitionWithFloors extends BoundaryDefinitionBase {
 export type BoundaryDefinition =
   BoundaryDefinitionWithoutFloors | BoundaryDefinitionWithFloors
 
-export interface GalleryPagination {
-  page: number
-  limit: number
-  total: number
-  totalPages: number
-  hasNextPage: boolean
-  hasPreviousPage: boolean
-}
-
-export interface GalleryAPIResponse {
-  streets: StreetAPIResponse[]
-  pagination: GalleryPagination
-}
-
 export type TranslationRecord = {
   [k: string]: string | TranslationRecord
 }
-
-export type TranslationAPIResponse = TranslationRecord
-
-export type GeoIpAPIResponse = GeolocationData

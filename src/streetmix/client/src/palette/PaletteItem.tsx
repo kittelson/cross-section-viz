@@ -1,9 +1,7 @@
 import { useIntl } from 'react-intl'
 import { useDrag } from 'react-dnd'
 
-import { useSelector } from '../store/hooks.js'
 import { images } from '../app/load_resources.js'
-import { Icon } from '../ui/Icon.js'
 import { Tooltip } from '../ui/Tooltip.js'
 import { EmptyDragPreview } from '../ui/dnd/EmptyDragPreview.js'
 import { createPaletteItemDragSpec } from '../segments/drag_and_drop.js'
@@ -16,8 +14,6 @@ interface PaletteItemProps {
 }
 
 export function PaletteItem({ item }: PaletteItemProps) {
-  const isSignedIn = useSelector((state) => state.user.signedIn)
-  const isSubscriber = useSelector((state) => state.user.isSubscriber)
   const intl = useIntl()
   const [, drag, dragPreview] = useDrag(() => createPaletteItemDragSpec(item))
 
@@ -33,51 +29,14 @@ export function PaletteItem({ item }: PaletteItemProps) {
 
   const label = getLabel(item)
 
-  const { unlockCondition } = item
-  const classNames = ['palette-item']
-  let isLocked = false
-  let sublabel
-
-  if (unlockCondition) {
-    switch (unlockCondition) {
-      case 'SUBSCRIBE':
-        if (!isSubscriber) {
-          classNames.push('palette-item-disabled')
-          isLocked = true
-          sublabel = intl.formatMessage({
-            id: 'plus.locked.sub',
-            // Default message ends with a Unicode-only left-right order mark
-            // to allow for proper punctuation in `rtl` text direction
-            // This character is hidden from editors by default!
-            defaultMessage: 'Upgrade to Streetmix+ to use!‎',
-          })
-        }
-        break
-      case 'SIGN_IN':
-      default:
-        if (!isSignedIn) {
-          classNames.push('palette-item-disabled')
-          isLocked = true
-          sublabel = intl.formatMessage({
-            id: 'plus.locked.user',
-            // Default message ends with a Unicode-only left-right order mark
-            // to allow for proper punctuation in `rtl` text direction
-            // This character is hidden from editors by default!
-            defaultMessage: 'Sign in to use!‎',
-          })
-        }
-        break
-    }
-  }
-
   const thumbnail =
     images.get(`thumbnails--${item.id}`)?.src ??
     images.get('thumbnails--missing')?.src
 
   return (
     // @ts-expect-error TS2322 vendored streetmix, fix during cleanup
-    <li className={classNames.join(' ')} ref={isLocked ? null : drag}>
-      <Tooltip label={label} sublabel={sublabel}>
+    <li className="palette-item" ref={drag}>
+      <Tooltip label={label}>
         <button>
           <img
             className="palette-item-image"
@@ -87,7 +46,6 @@ export function PaletteItem({ item }: PaletteItemProps) {
           />
         </button>
       </Tooltip>
-      {isLocked && <Icon name="lock" />}
       <EmptyDragPreview dragPreview={dragPreview} />
     </li>
   )

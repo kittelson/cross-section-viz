@@ -8,9 +8,6 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import type { UnitsSetting } from '@/streetmix/packages/types/src'
 
 export interface SettingsState {
-  lastStreetId: string | null
-  lastStreetNamespacedId: number | null
-  lastStreetCreatorId: string | null
   newStreetPreference: number // Deprecated
   saveAsImageTransparentSky: boolean
   saveAsImageSegmentNamesAndWidths: boolean
@@ -21,9 +18,6 @@ export interface SettingsState {
 }
 
 const initialState: SettingsState = {
-  lastStreetId: null,
-  lastStreetNamespacedId: null,
-  lastStreetCreatorId: null,
   newStreetPreference: 1,
   saveAsImageTransparentSky: false,
   saveAsImageSegmentNamesAndWidths: false,

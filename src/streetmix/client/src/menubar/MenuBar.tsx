@@ -95,12 +95,6 @@ export function MenuBar({ onMenuDropdownClick }: MenuBarProps) {
         </MenuBarItem>
       </ul>
       <ul className="menu-bar-right" ref={menuBarRightEl}>
-        <MenuBarItem id="menubar-new" onClick={handleClick('new')}>
-          <FormattedMessage
-            id="menu.item.new-street"
-            defaultMessage="New street"
-          />
-        </MenuBarItem>
         <MenuBarItem id="menubar-share" onClick={handleClick('share')}>
           <FormattedMessage id="menu.item.share" defaultMessage="Share" />
         </MenuBarItem>

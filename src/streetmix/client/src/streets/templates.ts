@@ -14,13 +14,11 @@ import {
 } from '../segments/resizing.js'
 import { getElevationValue } from '../segments/elevation.js'
 import { getVariantString } from '../segments/variant_utils.js'
-import { getSignInData, isSignedIn } from '../users/authentication.js'
 import { SETTINGS_UNITS_IMPERIAL } from '../users/constants.js'
 import { getLeftHandTraffic } from '../users/localization.js'
 import { updateStreetData } from '../store/slices/street.js'
 import store from '../store'
 import { DEFAULT_SKYBOX } from '../sky/constants.js'
-import { updateLastStreetInfo } from './xhr.js'
 
 import type {
   MeasurementValues,
@@ -206,7 +204,6 @@ function createStreetData(data: StreetTemplate, units: UnitsSetting) {
   const currentDate = new Date().toISOString()
   const slices = processTemplateSlices(data.slices, units)
   const boundary = processTemplateBoundaries(data.boundary, units)
-  const creatorId = (isSignedIn() && getSignInData()?.userId) || null
 
   // Remove `slices` from the existing data because it is being stored
   // as `segments` for backwards compatibility
@@ -256,7 +253,7 @@ function createStreetData(data: StreetTemplate, units: UnitsSetting) {
     segments: slices,
     updatedAt: currentDate,
     clientUpdatedAt: currentDate,
-    creatorId,
+    creatorId: null,
     width: widthValue,
     ...restData,
     boundary,
@@ -346,8 +343,4 @@ export async function prepareStreet(type: string, testUnits?: UnitsSetting) {
   const street = createStreetData(streetTemplate, units)
 
   store.dispatch(updateStreetData(street))
-
-  if (isSignedIn()) {
-    updateLastStreetInfo()
-  }
 }

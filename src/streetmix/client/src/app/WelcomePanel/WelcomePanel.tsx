@@ -5,12 +5,9 @@ import {
   setWelcomePanelVisible,
   setWelcomePanelDismissed,
 } from '@/streetmix/client/src/store/slices/ui.js'
-import { isSignedIn } from '@/streetmix/client/src/users/authentication.js'
 import { CloseButton } from '@/streetmix/client/src/ui/CloseButton.js'
 import { registerKeypress, deregisterKeypress } from '../keypress.js'
-import { MODES, getMode } from '../mode.js'
 import { getIsReturningUser, setIsReturningUser } from './localstorage.js'
-import { FirstTimeExistingStreet } from './FirstTimeExistingStreet.js'
 import { FirstTimeNewStreet } from './FirstTimeNewStreet.js'
 import { WelcomeNewStreet } from './WelcomeNewStreet.js'
 import './WelcomePanel.css'
@@ -18,26 +15,11 @@ import './WelcomePanel.css'
 const WELCOME_NONE = 0
 const WELCOME_NEW_STREET = 1
 const WELCOME_FIRST_TIME_NEW_STREET = 2
-const WELCOME_FIRST_TIME_EXISTING_STREET = 3
 
 function determineWelcomeType(): number {
-  let type = WELCOME_NONE
-  const mode = getMode()
-  const isReturningUser = getIsReturningUser()
-
-  if (mode === MODES.NEW_STREET || mode === MODES.NEW_STREET_COPY_LAST) {
-    if (isSignedIn() || isReturningUser) {
-      type = WELCOME_NEW_STREET
-    } else {
-      type = WELCOME_FIRST_TIME_NEW_STREET
-    }
-  } else {
-    if (!isReturningUser) {
-      type = WELCOME_FIRST_TIME_EXISTING_STREET
-    }
-  }
-
-  return type
+  return getIsReturningUser()
+    ? WELCOME_NEW_STREET
+    : WELCOME_FIRST_TIME_NEW_STREET
 }
 
 export function WelcomePanel() {
@@ -60,9 +42,6 @@ export function WelcomePanel() {
   switch (type) {
     case WELCOME_FIRST_TIME_NEW_STREET:
       content = <FirstTimeNewStreet />
-      break
-    case WELCOME_FIRST_TIME_EXISTING_STREET:
-      content = <FirstTimeExistingStreet />
       break
     case WELCOME_NEW_STREET:
       content = <WelcomeNewStreet handleDismiss={handleDismissed} />
@@ -99,7 +78,6 @@ export function WelcomePanel() {
 
     // Hide welcome panel on certain events
     // TODO: Consider dispatching from elsewhere, and not via event listeners
-    window.addEventListener('stmx:receive_gallery_street', handleDismissed)
     window.addEventListener('stmx:save_street', handleDismissed)
 
     // Hide welcome panel when someone presses Escape
@@ -107,7 +85,6 @@ export function WelcomePanel() {
 
     return () => {
       // Clean up event listeners
-      window.removeEventListener('stmx:receive_gallery_street', handleDismissed)
       window.removeEventListener('stmx:save_street', handleDismissed)
       deregisterKeypress('esc', handleDismissed)
     }

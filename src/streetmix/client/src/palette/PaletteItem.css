@@ -28,12 +28,12 @@
     text-align: center;
   }
 
-  &:not(.palette-item-disabled) > button {
+  > button {
     cursor: grab;
   }
 
-  &:not(.palette-item-disabled):hover,
-  &:not(.palette-item-disabled) > div:focus {
+  &:hover,
+  > div:focus {
     /* See note above re: mixing in srgb over oklch here. */
     background-color: color-mix(in srgb, var(--sky-color), transparent 5%);
     z-index: 1;
@@ -50,34 +50,5 @@
 
   @media (prefers-reduced-motion) {
     transition: none;
-  }
-}
-
-.palette-item-disabled {
-  /* This complicated color-mix replaces this previous SCSS statement:
-        color.adjust(fade-out($sky-colour, 0.3), $saturation: -100%);
-     The CSS postprocesser will squash hsl(none 0% none) to #000000, which
-     is wrong. `none` is meant as "absence of change", not "value equals zero".
-     Workaround is to store the saturation value as a separate variable and
-     bring it into the hsl() function. */
-  --palette-item-disabled-saturation: 0%;
-
-  background-color: color-mix(
-    in hsl,
-    var(--sky-color),
-    hsl(none var(--palette-item-disabled-saturation) none / 70%) 100%
-  );
-
-  .palette-item-image {
-    filter: grayscale(0.8);
-    opacity: 0.5;
-  }
-
-  [data-icon="lock"] {
-    position: absolute;
-    inset-inline-end: 4px;
-    inset-block-start: 4px;
-    z-index: 2;
-    color: var(--color-copper-800);
   }
 }

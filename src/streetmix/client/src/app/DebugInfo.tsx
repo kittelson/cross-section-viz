@@ -12,7 +12,6 @@ export function DebugInfo() {
   const settings = useSelector((state) => state.settings)
   const street = useSelector((state) => state.street)
   const history = useSelector((state) => state.history)
-  const user = useSelector((state) => state.user)
 
   // Register keyboard input for show (shift-D)
   useEffect(() => {
@@ -46,7 +45,7 @@ export function DebugInfo() {
 
     if (isVisible) {
       textareaEl.current.value = JSON.stringify(
-        { street, user, settings, history },
+        { street, settings, history },
         null,
         2
       )
@@ -60,7 +59,7 @@ export function DebugInfo() {
         }
       }, 0)
     }
-  }, [isVisible, settings, street, history, user])
+  }, [isVisible, settings, street, history])
 
   // This should only be called when the debug window becomes invisible.
   // This will also be called once during component initialization, that

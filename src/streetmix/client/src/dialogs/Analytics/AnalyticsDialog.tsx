@@ -8,8 +8,6 @@ import { Terms } from '@/streetmix/client/src/app/Terms.js'
 import { Button } from '@/streetmix/client/src/ui/Button.js'
 import { Checkbox } from '@/streetmix/client/src/ui/Checkbox.js'
 import { ExternalLink } from '@/streetmix/client/src/ui/ExternalLink.js'
-import { Icon } from '@/streetmix/client/src/ui/Icon.js'
-import { isOwnedByCurrentUser } from '@/streetmix/client/src/streets/owner.js'
 import {
   getCapacityData,
   getStreetCapacity,
@@ -151,25 +149,12 @@ export function AnalyticsDialog() {
             <hr />
             <div className="dialog-actions">
               <CapacitySources />
-              <Checkbox
-                checked={isVisible}
-                onChange={toggleVisible}
-                disabled={!isOwnedByCurrentUser()}
-              >
+              <Checkbox checked={isVisible} onChange={toggleVisible}>
                 <FormattedMessage
                   id="dialogs.analytics.toggle-visible"
                   defaultMessage="Show capacity counts in segment labels"
                 />
               </Checkbox>
-              {!isOwnedByCurrentUser() && (
-                <p className="analytics-settings-notice">
-                  <Icon name="help" />
-                  <FormattedMessage
-                    id="dialogs.analytics.settings-notice"
-                    defaultMessage="Street owners can change these settings."
-                  />
-                </p>
-              )}
               <br />
               <Button primary onClick={exportCSV}>
                 <FormattedMessage

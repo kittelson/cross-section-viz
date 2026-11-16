@@ -5,7 +5,6 @@ import { Icon } from '@/streetmix/client/src/ui/Icon.js'
 import { Dialog } from '../Dialog.js'
 import { GeneralSettings } from './GeneralSettings.js'
 import { LanguageSettings } from './LanguageSettings.js'
-import { ProfileSettings } from './ProfileSettings.js'
 import { UnitSettings } from './UnitSettings.js'
 import './SettingsDialog.css'
 
@@ -14,11 +13,10 @@ interface SettingsDialogProps {
 }
 
 /**
- * Settings shown/modified in this dialog should apply at user-level.
- * Users that are not signed in (anonymous) are applied for the browser
- * session. Don't use this for street-level settings.
+ * Settings shown/modified in this dialog apply to the browser session.
+ * Don't use this for street-level settings.
  */
-export function SettingsDialog({ category = 'profile' }: SettingsDialogProps) {
+export function SettingsDialog({ category = 'general' }: SettingsDialogProps) {
   const [activeCategory, setActiveCategory] = useState(category)
 
   function handleSelectCategory(category: string): void {
@@ -32,9 +30,6 @@ export function SettingsDialog({ category = 'profile' }: SettingsDialogProps) {
       break
     case 'language':
       SettingsPanel = <LanguageSettings />
-      break
-    case 'profile':
-      SettingsPanel = <ProfileSettings />
       break
     case 'units':
       SettingsPanel = <UnitSettings />
@@ -60,25 +55,6 @@ export function SettingsDialog({ category = 'profile' }: SettingsDialogProps) {
             <div className="settings-dialog-content">
               <div className="settings-dialog-left">
                 <ul>
-                  <li
-                    onClick={() => {
-                      handleSelectCategory('profile')
-                    }}
-                    className={
-                      activeCategory === 'profile' ? 'settings-menu-active' : ''
-                    }
-                  >
-                    <Icon
-                      name="user"
-                      size="18"
-                      className="settings-menu-icon"
-                    />
-                    <FormattedMessage
-                      id="settings.profile.label"
-                      defaultMessage="Profile"
-                    />
-                  </li>
-
                   <li
                     onClick={() => {
                       handleSelectCategory('general')

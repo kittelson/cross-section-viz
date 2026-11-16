@@ -26,7 +26,6 @@ boundary:
   compound-wall:
     id: compound-wall
     title: Compound wall
-    unlockCondition: SIGN_IN
 ground:
   concrete:
     id: concrete
@@ -53,11 +52,9 @@ bike-direction:
   twoway-left:
     id: direction-twoway-left
     title: Two-way (left-hand)
-    unlockCondition: SIGN_IN
   twoway-right:
     id: direction-twoway-right
     title: Two-way (right-hand)
-    unlockCondition: SIGN_IN
 parking-lane-direction:
   inbound:
     id: direction-inbound
@@ -218,11 +215,9 @@ bus-type:
   double-decker:
     id: double-decker-bus
     title: Double decker bus
-    unlockCondition: SUBSCRIBE
   av-shuttle:
     id: av-shuttle
     title: Autonomous shuttle
-    unlockCondition: SUBSCRIBE
 brt-asphalt:
   regular:
     id: asphalt
@@ -291,19 +286,15 @@ car-type:
   microvan:
     id: microvan
     title: Microvan
-    unlockCondition: SUBSCRIBE
   av:
     id: rideshare
     title: Autonomous vehicle
-    unlockCondition: SIGN_IN
   motorcycle-sidecar:
     id: motorcycle-sidecar
     title: Motorcycle with sidecar
-    unlockCondition: SIGN_IN
   pedestrian:
     id: sidewalk-density-normal
     title: Pedestrian
-    unlockCondition: SIGN_IN
 sidewalk-density:
   dense:
     id: sidewalk-density-dense

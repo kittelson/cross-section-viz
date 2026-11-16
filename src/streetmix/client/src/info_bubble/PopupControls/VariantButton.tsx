@@ -1,6 +1,5 @@
 import { useIntl } from 'react-intl'
 
-import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 import VARIANT_ICONS from '@/streetmix/client/src/segments/variant_icons.yaml'
 import { Button } from '@/streetmix/client/src/ui/Button.js'
 import { Icon, type IconNames } from '@/streetmix/client/src/ui/Icon.js'
@@ -26,15 +25,12 @@ type VariantIconDefinition = (
 ) & {
   title: string
   color?: string // CSS colors
-  unlockCondition?: string // todo enums
 }
 
 type VariantIcons = Record<string, Record<string, VariantIconDefinition>>
 
 export function VariantButton(props: VariantButtonProps) {
   const { set, selection, isSelected, onClick } = props
-  const isSignedIn = useSelector((state) => state.user.signedIn)
-  const isSubscriber = useSelector((state) => state.user.isSubscriber)
   const intl = useIntl()
 
   const icon = (VARIANT_ICONS as VariantIcons)[set][selection]
@@ -46,47 +42,11 @@ export function VariantButton(props: VariantButtonProps) {
     defaultMessage: icon.title,
   })
 
-  let isLocked = false
-  let sublabel
-
-  // If there is an enable condition, add a note to the tooltip if it
-  // is locked for a reason (e.g. must sign in, must be a subscriber)
-  if (icon.unlockCondition !== undefined) {
-    switch (icon.unlockCondition) {
-      case 'SUBSCRIBE':
-        if (!isSubscriber) {
-          isLocked = true
-          sublabel = intl.formatMessage({
-            id: 'plus.locked.sub',
-            // Default message ends with a Unicode-only left-right order mark
-            // to allow for proper punctuation in `rtl` text direction
-            // This character is hidden from editors by default!
-            defaultMessage: 'Upgrade to Streetmix+ to use!‎',
-          })
-        }
-        break
-      case 'SIGN_IN':
-      default:
-        if (!isSignedIn) {
-          isLocked = true
-          sublabel = intl.formatMessage({
-            id: 'plus.locked.user',
-            // Default message ends with a Unicode-only left-right order mark
-            // to allow for proper punctuation in `rtl` text direction
-            // This character is hidden from editors by default!
-            defaultMessage: 'Sign in to use!‎',
-          })
-        }
-        break
-    }
-  }
-
   return (
-    <Tooltip label={label} sublabel={sublabel} placement="bottom" role="label">
+    <Tooltip label={label} placement="bottom" role="label">
       <Button
         className={isSelected ? 'variant-selected' : undefined}
         aria-label={label}
-        disabled={isLocked}
         onClick={onClick}
       >
         {icon.iconSet === 'tabler' ? (
@@ -101,7 +61,6 @@ export function VariantButton(props: VariantButtonProps) {
             <use href={`#icon-${icon.id}`} />
           </svg>
         )}
-        {isLocked && <Icon name="lock" />}
       </Button>
     </Tooltip>
   )

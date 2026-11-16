@@ -1,5 +1,5 @@
 import { observeStore, type RootState } from '../store'
-import { saveStreetToServerIfNecessary } from './data_model.js'
+import { recordStreetChanges } from './data_model.js'
 
 /**
  * Initializes a subscriber to changes in the street name,
@@ -17,7 +17,7 @@ export function initStreetDataChangedListener() {
     })
 
   const onChange = () => {
-    saveStreetToServerIfNecessary()
+    recordStreetChanges()
   }
 
   return observeStore(select, onChange)

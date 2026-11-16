@@ -18,7 +18,6 @@ import {
   IconEdit,
   IconExternalLink,
   IconFlag,
-  IconGift,
   IconHelp,
   IconInfoCircle,
   IconKeyboard,
@@ -120,7 +119,6 @@ const ICONS = {
   trash: [IconTrash, 'tabler'],
   undo: [IconArrowBackUp, 'tabler'],
   user: [IconUser, 'tabler'],
-  'whats-new': [IconGift, 'tabler'],
 
   // Social icons
   // Google is not defined here, see special case

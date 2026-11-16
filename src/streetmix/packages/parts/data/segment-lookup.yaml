@@ -227,7 +227,6 @@ outdoor-dining:
     imperial: 8
   rules:
     slope: path
-  unlockCondition: SIGN_IN
   variants:
     - occupants
     - elevation
@@ -463,7 +462,6 @@ utilities:
     imperial: 4
   rules:
     slope: berm
-  unlockCondition: SIGN_IN
   variants:
     - orientation
   details:
@@ -540,7 +538,6 @@ street-vendor:
     metric: 0.15
     imperial: 0.5
   enableElevation: true
-  unlockCondition: SIGN_IN
   defaultVariant: table|concrete
   variants:
     - vendor-type
@@ -806,7 +803,6 @@ temporary:
     metric: 0.5
     imperial: 2
   defaultVariant: traffic-cone
-  unlockCondition: SIGN_IN
   variants:
     - temporary-barrier-type
   details:
@@ -3487,7 +3483,6 @@ brt-station:
   defaultWidth:
     metric: 4
     imperial: 13.5
-  unlockCondition: SIGN_IN
   defaultVariant: center
   rules:
     minWidth:
@@ -3546,7 +3541,6 @@ brt-lane:
   defaultWidth:
     metric: 3.5
     imperial: 11.667
-  unlockCondition: SIGN_IN
   rules:
     minWidth:
       metric: 3.4
@@ -3614,7 +3608,6 @@ magic-carpet:
     imperial: 10
   rules:
     slope: berm
-  unlockCondition: SIGN_IN
   defaultVariant: jasmine-aladdin
   variants:
     - magic-carpet-occupants

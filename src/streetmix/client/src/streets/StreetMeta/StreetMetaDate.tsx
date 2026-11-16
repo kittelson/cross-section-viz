@@ -1,7 +1,6 @@
 import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 import { DateTimeRelative } from '@/streetmix/client/src/app/DateTimeRelative.js'
 import { Icon } from '@/streetmix/client/src/ui/Icon.js'
-import { isOwnedByCurrentUser } from '../owner.js'
 import { StreetMetaItem } from './StreetMetaItem.js'
 
 // Milliseconds that must have elapsed before recent edits display timestamp
@@ -14,13 +13,11 @@ export function StreetMetaDate() {
 
   if (updatedAt === undefined) return null
 
-  // In the user has just edited the street, don't display the
+  // If the user has just edited the street, don't display the
   // "seconds ago" timestamp.
-  if (isOwnedByCurrentUser()) {
-    const now = new Date().getTime()
-    const updated = new Date(updatedAt).getTime()
-    if (now - updated < TIME_LIMIT) return null
-  }
+  const now = new Date().getTime()
+  const updated = new Date(updatedAt).getTime()
+  if (now - updated < TIME_LIMIT) return null
 
   return (
     <StreetMetaItem icon={<Icon name="time" />}>

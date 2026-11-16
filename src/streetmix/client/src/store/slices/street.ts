@@ -319,46 +319,10 @@ const streetSlice = createSlice({
       },
     },
 
-    saveCreatorId(state, action) {
-      state.creatorId = action.payload
-    },
-
-    saveStreetId: {
-      reducer(
-        state,
-        action: PayloadAction<{ id: string | null; namespacedId: number }>
-      ) {
-        const { id, namespacedId } = action.payload
-
-        // Why is this not always present?
-        if (id) {
-          state.id = id
-        }
-
-        state.namespacedId = namespacedId
-      },
-      prepare(id: string | null, namespacedId: number) {
-        return {
-          payload: { id, namespacedId },
-        }
-      },
-    },
-
-    updateStreetIdMetadata(state, action) {
-      const { creatorId, id, namespacedId } = action.payload
-      state.creatorId = creatorId
-      state.id = id
-      state.namespacedId = namespacedId
-    },
-
     // TODO: validate time (payload) is a string matching ISO string format
     setUpdateTime(state, action) {
       state.updatedAt = action.payload
       state.clientUpdatedAt = action.payload
-    },
-
-    saveOriginalStreetId(state, action) {
-      state.originalStreetId = action.payload
     },
 
     updateEditCount(state, action) {
@@ -560,11 +524,7 @@ export const {
   setSlopeValues,
   changeSegmentProperties,
   saveStreetName,
-  saveCreatorId,
-  saveStreetId,
-  updateStreetIdMetadata,
   setUpdateTime,
-  saveOriginalStreetId,
   updateEditCount,
   setUnits,
   updateStreetWidth,

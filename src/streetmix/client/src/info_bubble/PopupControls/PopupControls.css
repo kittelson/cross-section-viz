@@ -27,13 +27,6 @@
     opacity: 0.5;
   }
 
-  [data-icon="lock"] {
-    position: absolute;
-    inset-block-start: -2px;
-    inset-inline-end: -2px;
-    color: var(--color-copper-800);
-  }
-
   .variants,
   .non-variant {
     user-select: none;

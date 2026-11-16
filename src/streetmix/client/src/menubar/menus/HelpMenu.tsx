@@ -33,13 +33,6 @@ export function HelpMenu(props: MenuProps) {
           defaultMessage="About Streetmix…"
         />
       </MenuItem>
-      <MenuItem onClick={() => dispatch(showDialog('WHATS_NEW'))}>
-        <Icon name="whats-new" className="menu-item-icon" />
-        <FormattedMessage
-          id="menu.item.whatsnew"
-          defaultMessage="What’s new?&lrm;"
-        />
-      </MenuItem>
       <MenuSeparator />
       <KeyboardShortcuts />
     </Menu>

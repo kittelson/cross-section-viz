@@ -31,20 +31,3 @@
     white-space: nowrap;
   }
 }
-
-.analytics-settings-notice {
-  width: max-content;
-  padding: 0.5em 1em;
-  margin: 0.5em auto 0;
-  border-radius: var(--border-radius-pill);
-  background-color: var(--color-citrine-100);
-  color: var(--color-copper-900);
-
-  svg {
-    vertical-align: text-bottom;
-    margin-right: 0.5em;
-    width: 16px;
-    height: 16px;
-    color: var(--color-copper-700);
-  }
-}

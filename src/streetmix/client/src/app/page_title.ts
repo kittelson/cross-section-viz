@@ -1,7 +1,4 @@
-import { getSignInData, isSignedIn } from '../users/authentication.js'
 import { formatMessage } from '../locales/locale.js'
-
-import type { StreetState } from '@/streetmix/packages/types/src'
 
 const APP_TITLE = 'Streetmix'
 
@@ -10,41 +7,8 @@ const APP_TITLE = 'Streetmix'
  * This is called whenever the name of the street changes and it affects
  * the document title.
  */
-export function updatePageTitle(street: StreetState): void {
-  let title: string
+export function updatePageTitle(name: string | null): void {
+  const streetName = name ?? formatMessage('street.default-name', 'Unnamed St')
 
-  if (
-    street.creatorId !== null &&
-    (!isSignedIn() || getSignInData()?.userId !== street.creatorId)
-  ) {
-    title = getPageTitleWithAuthor(street)
-  } else {
-    title = getPageTitle(street)
-  }
-
-  document.title = title
-}
-
-/**
- * Gets page title without author name.
- * Displayed when a street has an anonymous creator, if the creator is the
- * current user, and for uses where displaying an author name is not needed,
- * e.g. Facebook sharing
- */
-export function getPageTitle(street: StreetState): string {
-  const streetName =
-    street.name ?? formatMessage('street.default-name', 'Unnamed St')
-
-  return `${streetName} – ${APP_TITLE}`
-}
-
-/**
- * Gets page title with author name.
- * Displayed when a street has an creator
- */
-export function getPageTitleWithAuthor(street: StreetState): string {
-  const streetName =
-    street.name ?? formatMessage('street.default-name', 'Unnamed St')
-
-  return `${streetName} (by ${street.creatorId}) – ${APP_TITLE}`
+  document.title = `${streetName} – ${APP_TITLE}`
 }

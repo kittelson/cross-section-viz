@@ -10,7 +10,6 @@ import {
   setUpdateTimeToNow,
   updateEverything,
 } from './data_model.js'
-import { isOwnedByCurrentUser } from './owner.js'
 
 import type { StreetState, HistoryState } from '@/streetmix/packages/types/src'
 
@@ -19,9 +18,7 @@ const historyDiffer = create()
 export function isUndoAvailable(state: RootState): boolean {
   const { position } = state.history
 
-  // This checks for ownership as well -- don't allow undo/redo unless you
-  // own the street
-  return position !== null && position >= 0 && isOwnedByCurrentUser(state)
+  return position !== null && position >= 0
 }
 
 export function isRedoAvailable(state: RootState): boolean {
@@ -30,8 +27,7 @@ export function isRedoAvailable(state: RootState): boolean {
   return (
     position !== null &&
     position >= -1 &&
-    position < stack.length - 1 &&
-    isOwnedByCurrentUser(state)
+    position < stack.length - 1
   )
 }
 
@@ -85,7 +81,7 @@ export async function finishUndoOrRedo(
     await store.dispatch(updateStreetDataAction(finalStreet))
     cancelSegmentResizeTransitions()
     setUpdateTimeToNow()
-    updateEverything(true)
+    updateEverything()
   } finally {
     setIgnoreStreetChanges(false)
   }

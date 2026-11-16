@@ -10,7 +10,6 @@ interface AppState {
   printing: boolean
   everythingLoaded: boolean
   contentDirection: ContentDirection
-  priorLastStreetId: string | null
 }
 
 const initialState: AppState = {
@@ -18,11 +17,6 @@ const initialState: AppState = {
   printing: false,
   everythingLoaded: false,
   contentDirection: 'ltr',
-
-  // Used to remember the "last street" ID when making a copy of a street
-  // looked at in a previous tab. Its value is copied from the `lastStreetId`
-  // value from the `settings` reducer, so that it can be remembered
-  priorLastStreetId: null,
 }
 
 const appSlice = createSlice({

@@ -22,7 +22,6 @@ import {
   clearLocation,
   saveStreetName,
 } from '@/streetmix/client/src/store/slices/street.js'
-import { isOwnedByCurrentUser } from '@/streetmix/client/src/streets/owner.js'
 import { Dialog } from '../Dialog.js'
 import { ErrorBanner } from './ErrorBanner.js'
 import { GeoSearch } from './GeoSearch.js'
@@ -275,20 +274,8 @@ export function GeotagDialog() {
   }
 
   /**
-   * Determines if the street location can be saved or edited.
-   */
-  const canEditLocation = () => {
-    // The street is editable if either of the following conditions are true:
-    //  - If there is a street owner, and it's equal to the current user
-    //  - If there is no street owner
-    //  - If there is no street location saved.
-    return isOwnedByCurrentUser() || !street.creatorId || !street.location
-  }
-
-  /**
    * Location can be cleared from a street that has a saved location, and
-   * if that location is equal to the current marker position. This
-   * does not check for street ownership. See `canEditLocation()` for that.
+   * if that location is equal to the current marker position.
    */
   const canClearLocation = () => {
     const latlng = street.location?.latlng
@@ -335,7 +322,7 @@ export function GeotagDialog() {
               <LocationPopup
                 position={marker}
                 label={label}
-                isEditable={geocodeAvailable && canEditLocation()}
+                isEditable={geocodeAvailable}
                 isClearable={geocodeAvailable && canClearLocation()}
                 handleConfirm={(e: React.MouseEvent) => {
                   handleConfirmLocation(e)

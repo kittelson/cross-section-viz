@@ -4,11 +4,8 @@ import { registerKeypress, deregisterKeypress } from '../app/keypress.js'
 import { showMenu, clearMenus } from '../store/slices/menus.js'
 import { useSelector, useDispatch } from '../store/hooks.js'
 import {
-  ContactMenu,
   HelpMenu,
-  IdentityMenu,
   LocaleMenu,
-  NewStreetMenu,
   ShareMenu,
 } from './menus/index.js'
 import { MenuBar } from './MenuBar.js'
@@ -107,16 +104,6 @@ export function MenusContainer() {
           menuItemNode={activeMenuItemNode}
           aria-labelledby="menubar-help"
         />
-        <ContactMenu
-          isActive={activeMenu === 'contact'}
-          menuItemNode={activeMenuItemNode}
-          aria-labelledby="menubar-contact"
-        />
-        <NewStreetMenu
-          isActive={activeMenu === 'new'}
-          menuItemNode={activeMenuItemNode}
-          aria-labelledby="menubar-new"
-        />
         <ShareMenu
           isActive={activeMenu === 'share'}
           menuItemNode={activeMenuItemNode}
@@ -126,12 +113,6 @@ export function MenusContainer() {
           isActive={activeMenu === 'locale'}
           menuItemNode={activeMenuItemNode}
           aria-labelledby="menubar-locale"
-        />
-        <IdentityMenu
-          isActive={activeMenu === 'identity'}
-          menuItemNode={activeMenuItemNode}
-          alignOpposite
-          aria-labelledby="menubar-identity"
         />
       </div>
     </>

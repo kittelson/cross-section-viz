@@ -1,6 +1,3 @@
-import clone from 'just-clone'
-
-import { ERRORS } from '@/streetmix/client/src/app/errors.js'
 import { formatMessage } from '@/streetmix/client/src/locales/locale.js'
 import {
   RESIZE_TYPE_INCREMENT,
@@ -10,18 +7,9 @@ import {
   cancelSegmentResizeTransitions,
 } from '@/streetmix/client/src/segments/resizing.js'
 import { getSlopeValues } from '@/streetmix/client/src/segments/slope.js'
-import { getVariantInfo } from '@/streetmix/client/src/segments/variant_utils.js'
-import {
-  setIgnoreStreetChanges,
-  setLastStreet,
-  saveStreetToServerIfNecessary,
-} from '@/streetmix/client/src/streets/data_model.js'
+import { recordStreetChanges } from '@/streetmix/client/src/streets/data_model.js'
 import { applyWarningsToSlices } from '@/streetmix/client/src/streets/warnings.js'
 import { recalculateWidth } from '@/streetmix/client/src/streets/width.js'
-import { saveStreetToServer } from '@/streetmix/client/src/streets/xhr.js'
-import apiClient from '@/streetmix/client/src/util/api.js'
-import { showError } from '../slices/errors.js'
-import { updateSettings } from '../slices/settings.js'
 import { addToast } from '../slices/toasts.js'
 import {
   updateStreetWidth,
@@ -32,19 +20,13 @@ import {
   updateStreetData,
   updateShowAnalytics,
   updateCapacitySource,
-  saveStreetId,
-  saveOriginalStreetId,
 } from '../slices/street.js'
 import { setInfoBubbleMouseInside } from '../slices/infoBubble.js'
 import { setActiveSegment, setImmediateRemoval } from '../slices/ui.js'
 import { setSliceWarnings } from '../slices/warnings.js'
 
 import type { Dispatch, RootState } from '../index.js'
-import type {
-  SliceItem,
-  StreetAPIResponse,
-  StreetState,
-} from '@/streetmix/packages/types/src'
+import type { SliceItem, StreetState } from '@/streetmix/packages/types/src'
 
 /**
  * `updateStreetWidth` as a thunk action that automatically
@@ -113,10 +95,7 @@ export const segmentsChanged = (force = false) => {
     )
     await dispatch(setSliceWarnings(sliceWarnings))
 
-    // ToDo: Refactor this out to be dispatched as well
-    // Forcing a save is necessary when the data to be saved is not in the
-    // street data blob (e.g. plugins data)
-    saveStreetToServerIfNecessary(force)
+    recordStreetChanges(force)
   }
 }
 
@@ -223,60 +202,5 @@ export const incrementSegmentWidth = (
     cancelSegmentResizeTransitions()
     await dispatch(changeSegmentWidth(sliceIndex, width))
     await dispatch(segmentsChanged())
-  }
-}
-
-const createStreetFromResponse = (response: StreetAPIResponse): StreetState => {
-  // This is where the response format gets flattened for Redux state
-  // Not sure if we have to do all this, tbh...
-  const street = clone(response.data.street) as StreetState
-  street.creatorId = response.creatorId || null
-  street.originalStreetId = response.originalStreetId || null
-  street.updatedAt = response.updatedAt || undefined
-  street.name = response.name || null
-  street.location = response.data.street.location || null
-  street.editCount = response.data.street.editCount || 0
-  street.segments = street.segments.map((segment) => {
-    segment.variant = getVariantInfo(segment.type, segment.variantString)
-    return segment
-  })
-
-  return street
-}
-
-// Currently not being used but could replace fetchLastStreet in xhr.js
-export const getLastStreet = () => {
-  return async (dispatch: Dispatch, getState: () => RootState) => {
-    const lastStreetId = getState().app.priorLastStreetId
-    const { id, namespacedId } = getState().street
-
-    if (!lastStreetId) return
-
-    try {
-      const response = await apiClient.getStreet(lastStreetId)
-      const data = response.data
-      const street = createStreetFromResponse(data)
-      setIgnoreStreetChanges(true)
-      await dispatch(
-        updateSettings({
-          lastStreetId: data.id,
-          lastStreetNamespacedId: data.namespacedId,
-          lastStreetCreatorId: street.creatorId,
-        })
-      )
-      dispatch(updateStreetData(street))
-      if (id) {
-        dispatch(saveStreetId(id, namespacedId))
-      } else {
-        dispatch(saveStreetId(data.id, data.namespacedId))
-      }
-      dispatch(saveOriginalStreetId(lastStreetId))
-      await dispatch(segmentsChanged())
-      setIgnoreStreetChanges(false)
-      setLastStreet()
-      saveStreetToServer(false)
-    } catch (error) {
-      dispatch(showError(ERRORS.NEW_STREET_SERVER_FAILURE, true))
-    }
   }
 }

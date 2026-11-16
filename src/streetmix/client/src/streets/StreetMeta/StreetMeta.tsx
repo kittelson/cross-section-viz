@@ -1,5 +1,4 @@
 import { StreetMetaWidth } from './StreetMetaWidth.js'
-import { StreetMetaAuthor } from './StreetMetaAuthor.js'
 import { StreetMetaDate } from './StreetMetaDate.js'
 import { StreetMetaGeotag } from './StreetMetaGeotag.js'
 import { StreetMetaAnalytics } from './StreetMetaAnalytics.js'
@@ -11,7 +10,6 @@ export function StreetMeta() {
       <StreetMetaWidth />
       <StreetMetaAnalytics />
       <StreetMetaGeotag />
-      <StreetMetaAuthor />
       <StreetMetaDate />
     </div>
   )

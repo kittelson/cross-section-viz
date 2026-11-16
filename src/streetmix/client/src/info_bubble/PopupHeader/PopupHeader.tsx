@@ -9,7 +9,6 @@ import type { SectionElementTypeAndPosition } from '@/streetmix/packages/types/s
 export function PopupHeader(props: SectionElementTypeAndPosition) {
   const { type, position } = props
   const street = useSelector((state) => state.street)
-  const isSubscriber = useSelector((state) => state.user.isSubscriber)
 
   const label = getLabel(street, type, position)
 
@@ -26,7 +25,6 @@ export function PopupHeader(props: SectionElementTypeAndPosition) {
         label={label}
         type={type}
         handleClickEdit={handleClickEdit}
-        isEditUnlocked={isSubscriber}
       />
       {type === 'slice' && <RemoveButton slice={position} />}
     </header>

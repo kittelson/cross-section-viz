@@ -26,9 +26,6 @@ const menusSlice = createSlice({
   // Certain other actions in the app will also hide menus.
   extraReducers: (builder) => {
     builder
-      .addCase('gallery/openGallery/pending', (state) => {
-        state.id = null
-      })
       .addCase('dialogs/showDialog', (state) => {
         state.id = null
       })

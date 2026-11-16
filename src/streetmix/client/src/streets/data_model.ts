@@ -1,13 +1,7 @@
-import { getVariantInfo } from '../segments/variant_utils.js'
 import { segmentsChanged } from '../segments/view.js'
 import store from '../store'
-import {
-  saveCreatorId,
-  setUpdateTime,
-  updateEditCount,
-} from '../store/slices/street.js'
+import { setUpdateTime, updateEditCount } from '../store/slices/street.js'
 import { createNewUndoIfNecessary } from './undo_stack.js'
-import { scheduleSavingStreetToServer, updateLastStreetInfo } from './xhr.js'
 
 import type {
   SliceItemForServerTransmission,
@@ -18,24 +12,6 @@ let _lastStreet: Partial<StreetState>
 
 export function setLastStreet() {
   _lastStreet = trimStreetData(store.getState().street)
-}
-
-// Do some work to update segment data, although they're not technically
-// part of the schema (yet?) -- carried over after moving bulk of
-// `updateToLatestSchemaVersion` to the server side.
-export function addAltVariantObject(street: StreetState) {
-  street.segments = street.segments.map((segment) => {
-    // Alternate method of storing variants as object key-value pairs,
-    // instead of a string. We might gradually migrate toward this.
-    segment.variant = getVariantInfo(segment.type, segment.variantString)
-    return segment
-  })
-}
-
-export function setStreetCreatorId(newId: string | null) {
-  store.dispatch(saveCreatorId(newId))
-
-  updateLastStreetInfo()
 }
 
 export function setUpdateTimeToNow() {
@@ -49,8 +25,8 @@ export function setIgnoreStreetChanges(value: boolean) {
   ignoreStreetChanges = value
 }
 
-export function saveStreetToServerIfNecessary(force = false) {
-  if (ignoreStreetChanges || store.getState().errors.abortEverything) {
+export function recordStreetChanges(force = false) {
+  if (ignoreStreetChanges) {
     return
   }
 
@@ -71,8 +47,6 @@ export function saveStreetToServerIfNecessary(force = false) {
     window.dispatchEvent(new window.CustomEvent('stmx:save_street'))
 
     createNewUndoIfNecessary(_lastStreet, currentData)
-
-    scheduleSavingStreetToServer()
 
     _lastStreet = currentData
   }
@@ -125,16 +99,10 @@ export function trimStreetData(street: StreetState): Partial<StreetState> {
   return newData
 }
 
-export function updateEverything(save = true) {
+export function updateEverything() {
   setIgnoreStreetChanges(true)
   segmentsChanged()
   setIgnoreStreetChanges(false)
 
   setLastStreet()
-
-  // If `save` is `false`, this will not re-save the street to the server
-  // (e.g. in the case of live update feature)
-  if (save === true) {
-    scheduleSavingStreetToServer()
-  }
 }
