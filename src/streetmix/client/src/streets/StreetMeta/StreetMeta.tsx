@@ -1,5 +1,4 @@
 import { StreetMetaWidth } from './StreetMetaWidth.js'
-import { StreetMetaDate } from './StreetMetaDate.js'
 import { StreetMetaAnalytics } from './StreetMetaAnalytics.js'
 import './StreetMeta.css'
 
@@ -8,7 +7,6 @@ export function StreetMeta() {
     <div className="street-meta">
       <StreetMetaWidth />
       <StreetMetaAnalytics />
-      <StreetMetaDate />
     </div>
   )
 }
