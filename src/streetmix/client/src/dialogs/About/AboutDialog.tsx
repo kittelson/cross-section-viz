@@ -191,33 +191,6 @@ export function AboutDialog() {
                           }}
                         />
                       </li>
-                      <li>
-                        <FormattedMessage
-                          id="dialogs.about.emoji-by"
-                          defaultMessage="Emoji by {author}."
-                          values={{
-                            author: (
-                              <ExternalLink href="https://openmoji.org/">
-                                OpenMoji
-                              </ExternalLink>
-                            ),
-                          }}
-                        />{' '}
-                        <FormattedMessage
-                          id="dialogs.about.license-label"
-                          defaultMessage="(<a>License</a>)"
-                          values={{
-                            a: (chunks) => (
-                              <ExternalLink
-                                href="https://creativecommons.org/licenses/by-sa/4.0/#"
-                                title="Creative Commons Share Alike License 4.0 (CC BY-SA 4.0)"
-                              >
-                                {chunks}
-                              </ExternalLink>
-                            ),
-                          }}
-                        />
-                      </li>
                     </ul>
                   </div>
                 </div>

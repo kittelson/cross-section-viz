@@ -19,7 +19,6 @@ import { StreetView } from './StreetView.js'
 import { MainScreen } from './MainScreen.js'
 import { PrintContainer } from './PrintContainer.js'
 import { WelcomePanel } from './WelcomePanel'
-import { NotificationBar } from './NotificationBar'
 import { Loading } from './Loading.js'
 
 export function App() {
@@ -55,7 +54,6 @@ export function App() {
               {/* The prop context={window} prevents crash errors with hot-module reloading */}
               <DndProvider options={HTML5toTouch} context={window}>
                 {/* DndProvider allows multiple children; IntlProvider does not */}
-                <NotificationBar />
                 <DialogRoot />
                 <DebugInfo />
                 <PrintContainer />
