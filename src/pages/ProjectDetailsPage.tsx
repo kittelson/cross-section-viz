@@ -21,6 +21,7 @@ import {
   roadwayFunctionOptions,
   type ProjectDetailsFormValues,
 } from '@/projectDetails';
+import { InfoTooltip } from '@/components/InfoTooltip';
 
 export function ProjectDetailsPage() {
   const [projectDetails, setProjectDetails] = useAtom(projectDetailsAtom);
@@ -304,7 +305,16 @@ export function ProjectDetailsPage() {
             </FieldSet>
 
             <FieldSet>
-              <FieldLegend>Project Goals</FieldLegend>
+              <div className="flex items-center gap-2">
+                <FieldLegend className="mb-0">Project Goals</FieldLegend>
+                <InfoTooltip label="Project Goals">
+                  The tool uses your project goals to suggest helpful cross
+                  section changes in later steps.
+                </InfoTooltip>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Do project goals include any of the following outcomes?
+              </p>
               <div className="grid gap-3">
                 {projectGoalOptions.map((goal) => (
                   <Controller
@@ -345,10 +355,7 @@ export function ProjectDetailsPage() {
             Reset
           </Button>
         </div>
-        <BottomNavButtons
-          backTo={paths.existingCrossSection}
-          continueSubmit
-        />
+        <BottomNavButtons backTo={paths.existingCrossSection} continueSubmit />
       </form>
     </div>
   );
