@@ -1,18 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { type SliceDescription } from '@/streetmix/packages/types/src'
 
 import { startPrinting } from './app.js'
 
 interface InfoBubbleState {
   mouseInside: boolean
-  descriptionVisible: boolean
-  descriptionData: SliceDescription | null
 }
 
 const initialState: InfoBubbleState = {
   mouseInside: false,
-  descriptionVisible: false,
-  descriptionData: null,
 }
 
 const infoBubbleSlice = createSlice({
@@ -23,28 +18,15 @@ const infoBubbleSlice = createSlice({
     setInfoBubbleMouseInside(state, action) {
       state.mouseInside = action.payload
     },
-
-    showDescription(state, action) {
-      state.descriptionVisible = true
-      state.descriptionData = action.payload
-    },
-
-    hideDescription(state) {
-      state.descriptionVisible = false
-      // Keep data around for exit animation
-      // state.descriptionData = null
-    },
   },
 
   extraReducers: (builder) => {
     builder.addCase(startPrinting, (state) => {
-      state.descriptionVisible = false
       state.mouseInside = false
     })
   },
 })
 
-export const { setInfoBubbleMouseInside, showDescription, hideDescription } =
-  infoBubbleSlice.actions
+export const { setInfoBubbleMouseInside } = infoBubbleSlice.actions
 
 export default infoBubbleSlice.reducer

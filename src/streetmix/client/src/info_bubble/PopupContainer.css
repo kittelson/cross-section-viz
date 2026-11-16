@@ -31,9 +31,3 @@ body.safari .floating-ui-wrapper {
   /* Somehow this is important on animating a popup in */
   opacity: 1;
 }
-
-.popup-arrow.highlight {
-  &.highlight {
-    fill: var(--color-turquoise-100);
-  }
-}

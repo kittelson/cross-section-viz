@@ -286,9 +286,6 @@ sidewalk-wayfinding:
   defaultWidth:
     metric: 1.2
     imperial: 4
-  description:
-    key: wayfinding-sign
-    image: wayfinding-02.jpg
   rules:
     slope: path
   variants:
@@ -498,10 +495,6 @@ parklet:
   defaultWidth:
     metric: 2.4
     imperial: 8
-  description:
-    key: parklet
-    image: parklets-01.jpg
-    imageCredit: San Francisco Planning Department
   rules:
     minWidth:
       metric: 2.4
@@ -1138,9 +1131,6 @@ bike-lane:
   defaultWidth:
     metric: 1.8
     imperial: 6
-  description:
-    key: bike-lane
-    image: bike-lane-02.jpg
   rules:
     minWidth:
       metric: 1.5
@@ -1234,9 +1224,6 @@ bike-lane:
                 - outbound
             offsetX: -50%
     inbound|green|road:
-      description:
-        key: colored-bike-lane
-        image: bike-lane-colored-01.jpg
       components:
         lanes:
           - id: asphalt
@@ -1251,9 +1238,6 @@ bike-lane:
                 - biker-01
                 - inbound
     outbound|green|road:
-      description:
-        key: colored-bike-lane
-        image: bike-lane-colored-01.jpg
       components:
         lanes:
           - id: asphalt
@@ -1274,9 +1258,6 @@ bike-lane:
         minWidth:
           metric: 3
           imperial: 10
-      description:
-        key: colored-bike-lane
-        image: bike-lane-colored-01.jpg
       components:
         lanes:
           - id: asphalt
@@ -1304,9 +1285,6 @@ bike-lane:
         minWidth:
           metric: 3
           imperial: 10
-      description:
-        key: colored-bike-lane
-        image: bike-lane-colored-01.jpg
       components:
         lanes:
           - id: asphalt
@@ -1328,9 +1306,6 @@ bike-lane:
                 - outbound
             offsetX: -50%
     inbound|red|road:
-      description:
-        key: colored-bike-lane
-        image: bike-lane-colored-01.jpg
       components:
         lanes:
           - id: asphalt
@@ -1345,9 +1320,6 @@ bike-lane:
                 - biker-01
                 - inbound
     outbound|red|road:
-      description:
-        key: colored-bike-lane
-        image: bike-lane-colored-01.jpg
       components:
         lanes:
           - id: asphalt
@@ -1368,9 +1340,6 @@ bike-lane:
         minWidth:
           metric: 3
           imperial: 10
-      description:
-        key: colored-bike-lane
-        image: bike-lane-colored-01.jpg
       components:
         lanes:
           - id: asphalt
@@ -1398,9 +1367,6 @@ bike-lane:
         minWidth:
           metric: 3
           imperial: 10
-      description:
-        key: colored-bike-lane
-        image: bike-lane-colored-01.jpg
       components:
         lanes:
           - id: asphalt
@@ -1504,9 +1470,6 @@ bike-lane:
                 - outbound
             offsetX: -50%
     inbound|green|sidewalk:
-      description:
-        key: colored-bike-lane
-        image: bike-lane-colored-01.jpg
       components:
         lanes:
           - id: sidewalk
@@ -1521,9 +1484,6 @@ bike-lane:
                 - biker-01
                 - inbound
     outbound|green|sidewalk:
-      description:
-        key: colored-bike-lane
-        image: bike-lane-colored-01.jpg
       components:
         lanes:
           - id: sidewalk
@@ -1544,9 +1504,6 @@ bike-lane:
         minWidth:
           metric: 3
           imperial: 10
-      description:
-        key: colored-bike-lane
-        image: bike-lane-colored-01.jpg
       components:
         lanes:
           - id: sidewalk
@@ -1574,9 +1531,6 @@ bike-lane:
         minWidth:
           metric: 3
           imperial: 10
-      description:
-        key: colored-bike-lane
-        image: bike-lane-colored-01.jpg
       components:
         lanes:
           - id: sidewalk
@@ -1598,9 +1552,6 @@ bike-lane:
                 - outbound
             offsetX: -50%
     inbound|red|sidewalk:
-      description:
-        key: colored-bike-lane
-        image: bike-lane-colored-01.jpg
       components:
         lanes:
           - id: sidewalk
@@ -1615,9 +1566,6 @@ bike-lane:
                 - biker-01
                 - inbound
     outbound|red|sidewalk:
-      description:
-        key: colored-bike-lane
-        image: bike-lane-colored-01.jpg
       components:
         lanes:
           - id: sidewalk
@@ -1638,9 +1586,6 @@ bike-lane:
         minWidth:
           metric: 3
           imperial: 10
-      description:
-        key: colored-bike-lane
-        image: bike-lane-colored-01.jpg
       components:
         lanes:
           - id: sidewalk
@@ -1668,9 +1613,6 @@ bike-lane:
         minWidth:
           metric: 3
           imperial: 10
-      description:
-        key: colored-bike-lane
-        image: bike-lane-colored-01.jpg
       components:
         lanes:
           - id: sidewalk
@@ -2435,9 +2377,6 @@ drive-lane:
       defaultWidth:
         metric: 4.2
         imperial: 14
-      description:
-        key: sharrow
-        image: sharrow-01.jpg
       components:
         lanes:
           - id: asphalt
@@ -2467,9 +2406,6 @@ drive-lane:
       defaultWidth:
         metric: 4.2
         imperial: 14
-      description:
-        key: sharrow
-        image: sharrow-01.jpg
       components:
         lanes:
           - id: asphalt
@@ -3512,9 +3448,6 @@ transit-shelter:
                 - transit-shelter-01
                 - right
     left|light-rail:
-      description:
-        key: transit-shelter-elevated
-        image: transit-station-elevated.jpg
       rules:
         minWidth:
           metric: 2.4
@@ -3531,9 +3464,6 @@ transit-shelter:
                 - transit-shelter-02
                 - left
     right|light-rail:
-      description:
-        key: transit-shelter-elevated
-        image: transit-station-elevated.jpg
       rules:
         minWidth:
           metric: 2.4

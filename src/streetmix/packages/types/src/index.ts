@@ -193,12 +193,6 @@ export type SlopeConstraints = 'off' | 'path' | 'berm'
 
 export type UnlockCondition = 'SIGN_IN' | 'SUBSCRIBE'
 
-export interface SliceDescription {
-  key: string
-  image?: string
-  imageCredit?: string
-}
-
 export interface SliceVariantComponentDefinition {
   id: string
   variants?: Record<string, string | string[]>
@@ -216,7 +210,6 @@ export interface SliceVariantDetails {
     slope?: SlopeConstraints
   }
   defaultWidth?: MeasurementValues
-  description?: SliceDescription
   components: {
     lanes?: SliceVariantComponentDefinition[]
     markings?: SliceVariantComponentDefinition[]
@@ -236,7 +229,6 @@ export interface SegmentLookup {
   defaultSlope?: Array<number | MeasurementValues>
   enableElevation?: boolean
   unlockCondition?: UnlockCondition
-  description?: SliceDescription
   rules?: {
     minWidth?: MeasurementValues
     maxWidth?: MeasurementValues
@@ -258,7 +250,6 @@ export interface UnknownSegmentDefinition extends Partial<SegmentDefinition> {
 export interface VariantInfo {
   name?: string
   nameKey?: string
-  description?: SliceDescription
   defaultWidth?: MeasurementValues
   minWidth?: MeasurementValues
   maxWidth?: MeasurementValues

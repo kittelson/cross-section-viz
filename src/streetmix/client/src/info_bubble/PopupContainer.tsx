@@ -65,7 +65,6 @@ export function PopupContainer({
     }
   })
   const [isOpen, setIsOpen] = useState(false)
-  const [isArrowHighlighted, setArrowHighlighted] = useState(false)
   const arrowRef = useRef(null)
   const nodeId = useFloatingNodeId()
 
@@ -192,11 +191,6 @@ export function PopupContainer({
     })
   )
 
-  const arrowClassNames = ['popup-arrow']
-  if (isArrowHighlighted) {
-    arrowClassNames.push('highlight')
-  }
-
   return (
     <>
       {tooltipTriggerElement}
@@ -216,12 +210,9 @@ export function PopupContainer({
                   out (using a snapshot of deleted state) */}
               {element && (
                 <div className="popup-container" style={styles}>
-                  <PopupContent
-                    setArrowHighlighted={setArrowHighlighted}
-                    {...props}
-                  />
+                  <PopupContent {...props} />
                   <FloatingArrow
-                    className={arrowClassNames.join(' ')}
+                    className="popup-arrow"
                     width={ARROW_WIDTH}
                     height={ARROW_HEIGHT}
                     ref={arrowRef}

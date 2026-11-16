@@ -8,7 +8,6 @@ import { FloatingTree } from '@floating-ui/react'
 
 import { MenusContainer } from '../menubar/MenusContainer.js'
 import { StreetNameplateContainer } from '../streets/StreetNameplateContainer.js'
-import { DescriptionPanel } from '../info_bubble/DescriptionPanel.js'
 import { PaletteContainer } from '../palette/PaletteContainer.js'
 import { DialogRoot } from '../dialogs/DialogRoot.js'
 import { SkyPicker } from '../sky/SkyPicker'
@@ -85,7 +84,6 @@ export function App() {
                 <MainScreen>
                   <MenusContainer />
                   <StreetNameplateContainer />
-                  <DescriptionPanel />
                   <WelcomePanel />
                   <PaletteContainer />
                   <SkyPicker />

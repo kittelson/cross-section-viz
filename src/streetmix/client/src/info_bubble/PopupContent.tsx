@@ -6,20 +6,11 @@ import { PopupControls } from './PopupControls'
 import { PopupHeader } from './PopupHeader'
 import { PopupLower } from './PopupLower'
 
-import type { SectionElementTypeAndPosition, Prettify } from '@/streetmix/packages/types/src'
-
-type PopupContentProps = Prettify<
-  SectionElementTypeAndPosition & {
-    setArrowHighlighted: (v: boolean) => void
-  }
->
+import type { SectionElementTypeAndPosition } from '@/streetmix/packages/types/src'
 
 // `...props` is a discriminated union of `SectionElementTypeAndPosition`,
 // do not destructure it or it will lose type safety!
-export function PopupContent({
-  setArrowHighlighted,
-  ...props
-}: PopupContentProps) {
+export function PopupContent(props: SectionElementTypeAndPosition) {
   const dispatch = useDispatch()
 
   const classNames = ['popup-content']
@@ -51,7 +42,7 @@ export function PopupContent({
       <TooltipGroup>
         <PopupHeader {...props} />
         <PopupControls {...props} />
-        <PopupLower setArrowHighlighted={setArrowHighlighted} {...props} />
+        <PopupLower {...props} />
       </TooltipGroup>
     </div>
   )
