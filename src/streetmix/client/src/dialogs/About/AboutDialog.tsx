@@ -1,32 +1,19 @@
 import { FormattedMessage } from 'react-intl'
 
 import logo from '@/streetmix/client/images/logo_horizontal.svg?url'
-import numoLogo from '@/streetmix/client/images/sponsors/numo.svg?url'
-import biflogo from '@/streetmix/client/images/sponsors/bif.svg?url'
-import cfalogo from '@/streetmix/client/images/sponsors/codeforamerica.png?url'
-import mozlogo from '@/streetmix/client/images/sponsors/mozilla.svg?url'
-import { useSelector } from '@/streetmix/client/src/store/hooks.js'
-import { AboutCoastmix } from '@/streetmix/client/src/plugins/coastmix/AboutCoastmix.js'
 import { ExternalLink } from '@/streetmix/client/src/ui/ExternalLink.js'
 import { Dialog } from '../Dialog.js'
-import { Credits } from './Credits.js'
-import { SocialLinks } from './SocialLinks.js'
 import './AboutDialog.css'
 
 /* Too many false positives in this module. Check all strings manually. */
 /* eslint-disable formatjs/no-literal-string-in-jsx */
 
 export function AboutDialog() {
-  const coastmixMode = useSelector(
-    (state) => state.flags.COASTMIX_MODE?.value ?? false
-  )
-
   return (
     <Dialog>
       {(closeDialog) => (
         <div className="about-dialog">
           <div className="dialog-content dialog-content-bleed">
-            {coastmixMode && <AboutCoastmix />}
             <header>
               <img
                 src={logo}
@@ -49,71 +36,24 @@ export function AboutDialog() {
                     defaultMessage="Design, remix, and share your street. Add bike paths, widen sidewalks or traffic lanes, learn how all of this can impact your community."
                   />
                 </p>
-                <SocialLinks />
-                <h3>
-                  <FormattedMessage
-                    id="dialogs.about.stewards"
-                    defaultMessage="Stewards"
-                  />
-                </h3>
-                <ul className="about-dialog-sponsors">
-                  <li>
-                    <ExternalLink href="https://biffud.com/">
-                      <img
-                        src={biflogo}
-                        alt="Bad Idea Factory"
-                        draggable={false}
-                      />
-                    </ExternalLink>
-                  </li>
-                  <li>
-                    <ExternalLink href="https://codeforamerica.org/">
-                      <img
-                        src={cfalogo}
-                        alt="Code for America"
-                        draggable={false}
-                      />
-                    </ExternalLink>
-                  </li>
-                </ul>
-                <h3>
-                  <FormattedMessage
-                    id="dialogs.about.partners"
-                    defaultMessage="Partners"
-                  />
-                </h3>
-                <ul className="about-dialog-sponsors">
-                  <li>
-                    <ExternalLink href="https://numo.global/">
-                      <img
-                        src={numoLogo}
-                        alt="New Urban Mobility Alliance"
-                        draggable={false}
-                      />
-                    </ExternalLink>
-                  </li>
-                </ul>
-                <h3>
-                  <FormattedMessage
-                    id="dialogs.about.sponsors"
-                    defaultMessage="Sponsors"
-                  />
-                </h3>
-                <ul className="about-dialog-sponsors">
-                  <li>
-                    <ExternalLink href="https://www.mozilla.org/en-US/moss/">
-                      <img
-                        src={mozlogo}
-                        alt="Mozilla Open Source Support"
-                        draggable={false}
-                      />
-                    </ExternalLink>
-                  </li>
-                </ul>
+                <p>
+                  This editor is based on{' '}
+                  <ExternalLink href="https://github.com/streetmix/streetmix">
+                    Streetmix
+                  </ExternalLink>
+                  , © Streetmix contributors, and is distributed under the{' '}
+                  <ExternalLink href="https://www.gnu.org/licenses/agpl-3.0.html">
+                    GNU Affero General Public License v3.0
+                  </ExternalLink>
+                  .
+                </p>
+                <p>
+                  It is provided without any warranty, to the extent permitted
+                  by law. See the license for details.
+                </p>
               </div>
               <div className="about-dialog-right">
-                <Credits />
-                <div className="credits-container">
+                <div>
                   <div>
                     <h3>
                       <FormattedMessage

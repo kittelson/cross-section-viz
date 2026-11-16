@@ -87,22 +87,4 @@
     width: 100%;
     border: 0;
   }
-
-  .credits-team {
-    max-width: 500px;
-  }
-}
-
-.about-dialog-sponsors {
-  margin-top: -1em !important;
-
-  img {
-    height: 40px;
-  }
-}
-
-.about-dialog-sponsors li {
-  display: inline-block;
-  margin-block-start: 1em;
-  margin-inline-end: 1.5em;
 }
