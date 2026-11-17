@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
+import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { projectDetailsAtom } from '@/atoms';
 import {
@@ -7,21 +8,29 @@ import {
   type AlternativeConfigFormValues,
 } from '@/alternativeConfig';
 import { NumberField } from '@/components/ui/number-field';
+import { TextField } from '@/components/ui/text-field';
 import { YesNoField } from '@/components/ui/yes-no-field';
-import { TextField } from './ui/text-field';
 
-export function AlternativeConfigForm() {
-  const [projectDetails] = useAtom(projectDetailsAtom);
+export function AlternativeConfigForm({
+  value,
+  onChange,
+}: {
+  value: AlternativeConfigFormValues;
+  onChange: (value: AlternativeConfigFormValues) => void;
+}) {
+  const projectDetails = useAtomValue(projectDetailsAtom);
   const form = useForm<AlternativeConfigFormValues>({
     resolver: zodResolver(alternativeConfigSchema),
     mode: 'onBlur',
-    defaultValues: {
-      alternativeName: 'Alternative 1',
-      postedSpeedLimitMph: projectDetails.postedSpeedLimitMph,
-      hasParallelBikeFacility: false,
-      averageDailyTraffic: projectDetails.averageDailyTraffic || 6000,
-    },
+    defaultValues: value,
   });
+
+  useEffect(() => {
+    const subscription = form.watch(() => {
+      onChange(form.getValues());
+    });
+    return () => subscription.unsubscribe();
+  }, [form, onChange]);
 
   return (
     <form className="flex flex-col gap-4" noValidate>
@@ -58,8 +67,7 @@ export function AlternativeConfigForm() {
           />
         )}
       />
-      {/* if the user entered 85th percentile speed on the project details page, show this field */}
-      {projectDetails.percentileSpeed85Mph && (
+      {projectDetails.percentileSpeed85Mph != null ? (
         <Controller
           name="eightyFifthPctSpeedMph"
           control={form.control}
@@ -67,6 +75,7 @@ export function AlternativeConfigForm() {
             <NumberField
               name={field.name}
               label="Target 85th percentile speed"
+              endAdornment="mph"
               value={field.value}
               invalid={fieldState.invalid}
               error={fieldState.error}
@@ -75,7 +84,7 @@ export function AlternativeConfigForm() {
             />
           )}
         />
-      )}
+      ) : null}
       <Controller
         name="hasParallelBikeFacility"
         control={form.control}
@@ -97,6 +106,7 @@ export function AlternativeConfigForm() {
           <NumberField
             name={field.name}
             label="What is the average daily traffic?"
+            endAdornment="vehicles per day"
             value={field.value}
             invalid={fieldState.invalid}
             error={fieldState.error}

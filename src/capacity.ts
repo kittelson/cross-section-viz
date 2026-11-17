@@ -1,5 +1,9 @@
+import type { AlternativeConfigFormValues } from '@/alternativeConfig';
+import {
+  intersectionTypeValues,
+  type ProjectDetailsFormValues,
+} from '@/projectDetails';
 import { z } from 'zod';
-import { intersectionTypeValues } from '@/projectDetails';
 
 export const capacityScenarioSchema = z.object({
   id: z.string(),
@@ -30,20 +34,15 @@ export type CapacityResults = {
   hoursBelowCapacity: number;
 };
 
+const defaultIntersectionType =
+  intersectionTypeValues[1] satisfies CapacityScenario['downstreamIntersectionType'];
+
 export const defaultCapacityScenarios: CapacityScenario[] = [
   {
     id: 'existing',
     label: 'Existing Cross Section',
     averageDailyTraffic: 6000,
     downstreamIntersectionType: 'signalFourLane',
-    dFactor: 0.5,
-    gcRatio: 0.1,
-  },
-  {
-    id: 'alternative1',
-    label: 'Alternative 1',
-    averageDailyTraffic: 6000,
-    downstreamIntersectionType: 'signalTwoLane',
     dFactor: 0.5,
     gcRatio: 0.1,
   },
@@ -56,10 +55,56 @@ export const capacityResultsById: Record<string, CapacityResults> = {
     sixteenHourExcessCapacity: 28.3,
     hoursBelowCapacity: 24,
   },
-  alternative1: {
-    peakHourDcRatio: 0.31,
-    sixteenHourEfficiency: 0,
-    sixteenHourExcessCapacity: 12.3,
-    hoursBelowCapacity: 24,
-  },
 };
+
+const placeholderAlternativeResults: CapacityResults = {
+  peakHourDcRatio: 0.31,
+  sixteenHourEfficiency: 0,
+  sixteenHourExcessCapacity: 12.3,
+  hoursBelowCapacity: 24,
+};
+
+export function getCapacityResults(id: string): CapacityResults {
+  return capacityResultsById[id] ?? placeholderAlternativeResults;
+}
+
+export function buildCapacityScenarios(
+  alternatives: AlternativeConfigFormValues[],
+  projectDetails: ProjectDetailsFormValues,
+  previous: CapacityScenario[] = [],
+): CapacityScenario[] {
+  const previousById = new Map(
+    previous.map((scenario) => [scenario.id, scenario]),
+  );
+  const existingPrevious = previousById.get('existing');
+  const projectIntersection =
+    projectDetails.downstreamIntersectionType || defaultIntersectionType;
+
+  return [
+    {
+      id: 'existing',
+      label: 'Existing Cross Section',
+      averageDailyTraffic:
+        existingPrevious?.averageDailyTraffic ??
+        projectDetails.averageDailyTraffic,
+      downstreamIntersectionType:
+        existingPrevious?.downstreamIntersectionType ?? projectIntersection,
+      dFactor: existingPrevious?.dFactor ?? 0.5,
+      gcRatio: existingPrevious?.gcRatio ?? 0.1,
+    },
+    ...alternatives.map((alternative) => {
+      const previousScenario = previousById.get(alternative.id);
+      return {
+        id: alternative.id,
+        label: alternative.alternativeName,
+        averageDailyTraffic:
+          previousScenario?.averageDailyTraffic ??
+          alternative.averageDailyTraffic,
+        downstreamIntersectionType:
+          previousScenario?.downstreamIntersectionType ?? projectIntersection,
+        dFactor: previousScenario?.dFactor ?? 0.5,
+        gcRatio: previousScenario?.gcRatio ?? 0.1,
+      };
+    }),
+  ];
+}
