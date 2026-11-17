@@ -69,8 +69,8 @@ export function EditCrossSectionPage() {
         </div>
 
         <aside className="space-y-4 lg:sticky lg:top-6 lg:self-start">
-          <SuggestedEditsDialog />
           <AlternativeConfigForm />
+          <SuggestedEditsDialog />
         </aside>
       </div>
       <BottomNavButtons

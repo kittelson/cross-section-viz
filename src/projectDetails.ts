@@ -78,7 +78,6 @@ export const projectDetailsSchema = z.object({
     .number({ error: 'Enter the project corridor length.' })
     .min(0)
     .optional(),
-  alternativeName: z.string(),
   canMoveCurbLines: z.boolean(),
   isFreightCorridor: z.boolean(),
   isBusCorridor: z.boolean(),
@@ -137,7 +136,6 @@ export const defaultProjectDetails: ProjectDetailsFormValues = {
   roadwayName: '',
   projectExtents: '',
   corridorLengthMiles: undefined,
-  alternativeName: '',
   canMoveCurbLines: false,
   isFreightCorridor: false,
   isBusCorridor: false,

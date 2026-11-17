@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { LabelWithTooltip } from '@/components/LabelWithTooltip';
 import { Field, FieldError } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 
-function toDraft(value: number | undefined) {
+function toDraft(value: number | null | undefined) {
   return value == null || Number.isNaN(value) ? '' : String(value);
 }
 
@@ -21,20 +21,24 @@ export function NumberField({
   step,
   inputMode = 'numeric',
   placeholder,
+  startAdornment,
+  endAdornment,
 }: {
   name: string;
   label?: string;
   tooltip?: string;
-  value?: number;
+  value?: number | null;
   invalid?: boolean;
   error?: { message?: string };
-  onChange: (value: number | undefined) => void;
+  onChange: (value: number | null) => void;
   onBlur?: () => void;
   min?: number;
   max?: number;
   step?: number | string;
   inputMode?: 'numeric' | 'decimal';
   placeholder?: string;
+  startAdornment?: ReactNode;
+  endAdornment?: ReactNode;
 }) {
   const [draft, setDraft] = useState(() => toDraft(value));
 
@@ -62,12 +66,15 @@ export function NumberField({
         max={max}
         step={step}
         placeholder={placeholder}
+        startAdornment={startAdornment}
+        endAdornment={endAdornment}
         value={draft}
         onChange={(event) => {
           const nextDraft = event.target.value;
           setDraft(nextDraft);
           if (nextDraft === '') {
-            onChange(undefined);
+            // Use null, not undefined — RHF treats undefined as "reset to defaultValues".
+            onChange(null);
             return;
           }
           const parsed = Number(nextDraft);

@@ -103,24 +103,10 @@ export function ProjectDetailsPage() {
                   <NumberField
                     name={field.name}
                     label="Project Corridor Length"
+                    endAdornment="miles"
                     placeholder="0.5"
                     inputMode="decimal"
                     step="any"
-                    value={field.value}
-                    invalid={fieldState.invalid}
-                    error={fieldState.error}
-                    onChange={field.onChange}
-                  />
-                )}
-              />
-              <Controller
-                name="alternativeName"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    name={field.name}
-                    label="Alternative Name"
-                    placeholder="Alternative 1"
                     value={field.value}
                     invalid={fieldState.invalid}
                     error={fieldState.error}
@@ -262,6 +248,7 @@ export function ProjectDetailsPage() {
                     <NumberField
                       name={field.name}
                       label="What is the posted speed limit?"
+                      endAdornment="mph"
                       placeholder="30"
                       value={field.value}
                       invalid={fieldState.invalid}
@@ -277,6 +264,7 @@ export function ProjectDetailsPage() {
                     <NumberField
                       name={field.name}
                       label="What is the 85th percentile speed (if known)?"
+                      endAdornment="mph"
                       placeholder="32"
                       inputMode="decimal"
                       value={field.value}
@@ -293,6 +281,7 @@ export function ProjectDetailsPage() {
                     <NumberField
                       name={field.name}
                       label="What is the average daily traffic?"
+                      endAdornment="vehicles per day"
                       placeholder="6000"
                       value={field.value}
                       invalid={fieldState.invalid}
