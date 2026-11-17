@@ -5,6 +5,10 @@ import {
 } from '@/alternativeConfig';
 import { defaultCapacityScenarios, type CapacityScenario } from '@/capacity';
 import {
+  defaultMinSafeDimension,
+  type MinSafeDimensionState,
+} from '@/minSafeDimension';
+import {
   defaultProjectDetails,
   type ProjectDetailsFormValues,
 } from '@/projectDetails';
@@ -15,6 +19,10 @@ export const projectDetailsAtom = atom<ProjectDetailsFormValues>({
 });
 
 export const roadwayRightOfWayFtAtom = atom<number | null>(82);
+
+export const minSafeDimensionAtom = atom<MinSafeDimensionState>({
+  ...defaultMinSafeDimension,
+});
 
 export const capacityScenariosAtom = atom<CapacityScenario[]>(
   defaultCapacityScenarios.map((scenario) => ({ ...scenario })),
