@@ -28,8 +28,9 @@ export function EditCrossSectionPage() {
     activeAlternativeIdAtom,
   );
   const activeAlternative =
-    alternatives.find((alternative) => alternative.id === activeAlternativeId) ??
-    alternatives[0];
+    alternatives.find(
+      (alternative) => alternative.id === activeAlternativeId,
+    ) ?? alternatives[0];
 
   const updateAlternative = useCallback(
     (next: AlternativeConfigFormValues) => {

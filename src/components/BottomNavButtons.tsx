@@ -38,11 +38,7 @@ export function BottomNavButtons({
           </Button>
         )
       ) : continueSubmit ? (
-        <Button
-          type="submit"
-          disabled={continueDisabled}
-          onClick={scrollToTop}
-        >
+        <Button type="submit" disabled={continueDisabled} onClick={scrollToTop}>
           Continue
         </Button>
       ) : null}
