@@ -30,6 +30,10 @@ export function MinSafeDimensionFits({
         alt="Minimum safe dimension cross section"
         className="mt-6 w-full"
       />
+      <p className="mt-4 text-muted-foreground">
+        Next, let's edit our cross section to fill in the remaining space and
+        achieve our project goals.
+      </p>
     </div>
   );
 }

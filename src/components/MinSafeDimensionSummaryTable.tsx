@@ -16,6 +16,7 @@ export function MinSafeDimensionSummaryTable({
   remainingRightOfWayFt: number;
   className?: string;
 }) {
+  const minSafeDimensionFits = remainingRightOfWayFt >= 0;
   return (
     <Table className={className}>
       <TableBody>
@@ -50,12 +51,29 @@ export function MinSafeDimensionSummaryTable({
           <TableCell
             className={cn(
               'border text-center whitespace-normal',
-              remainingRightOfWayFt >= 0 ? 'bg-green-500/10' : 'bg-red-500/10',
+              minSafeDimensionFits ? 'bg-green-500/10' : 'bg-red-500/10',
             )}
           >
-            {remainingRightOfWayFt >= 0
-              ? `Yes, the minimum safe dimension fits within the ROW. There are ${formatFeet(remainingRightOfWayFt)} feet remaining.`
-              : `No, the minimum safe dimension does not fit within the ROW. There is ${formatFeet(Math.abs(remainingRightOfWayFt))} feet missing.`}
+            {minSafeDimensionFits ? (
+              <>
+                Yes, the minimum safe dimension fits within the right-of-way.
+                There {remainingRightOfWayFt === 1 ? 'is' : 'are'}{' '}
+                <span className="font-semibold">
+                  {formatFeet(remainingRightOfWayFt)}'
+                </span>{' '}
+                remaining.
+              </>
+            ) : (
+              <>
+                No, the minimum safe dimension does not fit within the
+                right-of-way. There{' '}
+                {Math.abs(remainingRightOfWayFt) === 1 ? 'is' : 'are'}{' '}
+                <span className="font-semibold">
+                  {formatFeet(Math.abs(remainingRightOfWayFt))}
+                </span>
+                ' missing.
+              </>
+            )}
           </TableCell>
         </TableRow>
       </TableBody>
