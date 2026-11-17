@@ -12,7 +12,6 @@ import store, { observeStore } from '../store'
 import { segmentsChanged } from '../store/actions/street'
 import { everythingLoaded } from '../store/slices/app'
 import { addEventListeners } from './event_listeners'
-import { STREET_TEMPLATES } from './constants'
 import { startListening } from './keypress'
 import { registerKeypresses } from './keyboard_commands'
 import { loadImages } from './load_resources'
@@ -42,7 +41,7 @@ export async function initialize() {
 
   loadSettings()
   await Promise.all([loadImages(), initLocale()])
-  await prepareStreet(STREET_TEMPLATES.DEFAULT)
+  prepareStreet()
 
   onEverythingLoaded()
 }

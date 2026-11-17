@@ -208,8 +208,8 @@ function drawClouds(
   ctx.globalAlpha = sky.cloudOpacity ?? 1
 
   // Grab images
-  const skyFrontImg = images.get('/images/sky-front.svg')
-  const skyRearImg = images.get('/images/sky-rear.svg')
+  const skyFrontImg = images.get('sky-front')
+  const skyRearImg = images.get('sky-rear')
 
   // dy1 = top edge of sky-front image
   const dy1 = height - skyFrontImg.height

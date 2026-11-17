@@ -4,22 +4,28 @@
  * Loads images, etc and tracks progress. (WIP)
  */
 
+import iconsUrl from '../../images/icons.svg?url'
+import illustrationsUrl from '../../images/images.svg?url'
+import skyFrontUrl from '../sky/SkyBox/sky-front.svg?url'
+import skyRearUrl from '../sky/SkyBox/sky-rear.svg?url'
+
 export const images = new Map()
 
-// Image tileset loading
+// Image tileset loading. `key` is the id used to look up standalone SVGs
+// (those that are not <symbol>s in a sprite sheet) in `images`.
 const IMAGES_TO_BE_LOADED = [
-  '/assets/icons.svg',
-  '/assets/images.svg',
-  '/images/sky-front.svg',
-  '/images/sky-rear.svg',
+  { key: 'icons', url: iconsUrl },
+  { key: 'illustrations', url: illustrationsUrl },
+  { key: 'sky-front', url: skyFrontUrl },
+  { key: 'sky-rear', url: skyRearUrl },
 ]
 
 export async function loadImages(): Promise<string[]> {
   const loading: Promise<string | undefined>[] = []
 
-  for (const url of IMAGES_TO_BE_LOADED) {
+  for (const { key, url } of IMAGES_TO_BE_LOADED) {
     loading.push(
-      loadImage(url).catch((error) => {
+      loadImage(key, url).catch((error) => {
         console.error('loading svg error', error)
         return undefined
       })
@@ -33,7 +39,7 @@ export async function loadImages(): Promise<string[]> {
   return results.filter((result): result is string => result !== undefined)
 }
 
-async function loadImage(url: string) {
+async function loadImage(key: string, url: string) {
   const SVGStagingEl = document.getElementById('svg')
   if (!SVGStagingEl) throw new Error('element not found')
 
@@ -75,8 +81,7 @@ async function loadImage(url: string) {
     // selected elements are typed correctly
     if (!(svg instanceof SVGSVGElement)) continue
 
-    // Right now none of these have ids, use the url
-    const id = url
+    const id = key
 
     // Get a string representation of symbol so we can reconstruct an image
     // element

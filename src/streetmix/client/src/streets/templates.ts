@@ -1,7 +1,5 @@
 import { nanoid } from 'nanoid'
 import clone from 'just-clone'
-// @ts-expect-error TS7016 vendored streetmix, fix during cleanup
-import { load, JSON_SCHEMA } from 'js-yaml'
 import * as z from 'zod'
 import { getSegmentVariantInfo } from '@/streetmix/packages/parts/src'
 import { getWidthInMetric } from '@/streetmix/packages/utils/src'
@@ -19,6 +17,7 @@ import { getLeftHandTraffic } from '../users/localization.js'
 import { updateStreetData } from '../store/slices/street.js'
 import store from '../store'
 import { DEFAULT_SKYBOX } from '../sky/constants.js'
+import DEFAULT_TEMPLATE from './default_template.yaml'
 
 import type {
   MeasurementValues,
@@ -316,26 +315,13 @@ export const StreetTemplate = z.strictObject({
 
 type StreetTemplate = z.infer<typeof StreetTemplate>
 
-async function getTemplateData(id: string): Promise<StreetTemplate> {
-  const response = await window.fetch(`/assets/data/templates/${id}.yaml`)
-  const yaml = await response.text()
-  const json = load(yaml, {
-    schema: JSON_SCHEMA,
-  })
-  return StreetTemplate.parse(json)
-}
-
 // `testUnits` can be passed in to force units apart from Redux store.
 // Currently we only use this in tests
-export async function prepareStreet(type: string, testUnits?: UnitsSetting) {
+export function prepareStreet(testUnits?: UnitsSetting) {
   const units = testUnits ?? store.getState().settings.units
 
-  // TODO: handle errors
-  // Possible throws:
-  // -- file not returned errors (server errors, HTTP errors)
-  // -- unparseable as YAML
-  // -- unvalidated by Zod
-  const streetTemplate = await getTemplateData(type)
+  // Throws if the template does not match the schema
+  const streetTemplate = StreetTemplate.parse(DEFAULT_TEMPLATE)
 
   // Here possible errors are:
   // -- transforms to street data go wrong
