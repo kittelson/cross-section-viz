@@ -7,13 +7,8 @@ import {
 export const alternativeConfigSchema = z.object({
   id: z.string(),
   alternativeName: z.string().min(1, { error: 'Enter an alternative name.' }),
-  postedSpeedLimitMph: z
-    .number({ error: 'Enter a posted speed limit.' })
-    .int({ error: 'Speed limit must be a whole number.' })
-    .min(5, { error: 'Speed limit must be at least 5 mph.' })
-    .max(90, { error: 'Speed limit must be at most 90 mph.' }),
-  eightyFifthPctSpeedMph: z
-    .number({ error: 'Enter the 85th percentile speed.' })
+  targetSpeedMph: z
+    .number({ error: 'Enter the target speed.' })
     .min(0)
     .optional()
     .nullable(),
@@ -47,10 +42,9 @@ export function createAlternativeConfig(
   return {
     id: crypto.randomUUID(),
     alternativeName,
-    postedSpeedLimitMph: projectDetails.postedSpeedLimitMph,
-    eightyFifthPctSpeedMph: projectDetails.percentileSpeed85Mph,
     hasParallelBikeFacility: false,
     averageDailyTraffic: projectDetails.averageDailyTraffic || 6000,
+    targetSpeedMph: projectDetails.postedSpeedLimitMph,
   };
 }
 
