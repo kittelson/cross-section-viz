@@ -25,7 +25,7 @@ export function MinSafeDimensionIdeas() {
           <div
             key={idea.value}
             className={cn(
-              'cursor-pointer rounded-lg border p-3 hover:bg-muted/50',
+              'relative cursor-pointer rounded-lg border p-3 hover:bg-muted/50',
               selected && 'border-primary bg-primary/5',
             )}
             onClick={() => selectOption(idea.value, true)}
@@ -38,6 +38,9 @@ export function MinSafeDimensionIdeas() {
                 onChange={(checked) => selectOption(idea.value, checked)}
               />
             </div>
+            <p className="absolute right-0 bottom-1/2 left-0 rotate-30 text-center text-muted-foreground">
+              Placeholder
+            </p>
             <img
               src={idea.image}
               alt=""

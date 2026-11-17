@@ -5,6 +5,7 @@ import showDetails from '@/images/streetmixPlaceholders/showDetails.png';
 
 export const minSafeDimensionOptionValues = [
   'reduceSpeedsAddSharrows',
+  'reduceVolumes',
   'twoWayCycleTrack',
   'oneWayConversion',
   'addParallelBikeFacility',
@@ -22,6 +23,11 @@ export const minSafeDimensionIdeas = [
   {
     value: 'reduceSpeedsAddSharrows',
     label: 'Reduce speeds',
+    image: minSafeDimension,
+  },
+  {
+    value: 'reduceVolumes',
+    label: 'Reduce volumes',
     image: minSafeDimension,
   },
   {
