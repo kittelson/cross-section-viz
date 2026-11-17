@@ -42,31 +42,31 @@ export const projectGoalOptions = [
     name: 'safety',
     label: 'Safety',
     description:
-      'Safety reflects the level of crash risk and perceived comfort for all roadway users.',
+      'Improve perceived comfort and lower crash risk for all roadway users.',
   },
   {
     name: 'economic',
     label: 'Economic',
     description:
-      'Economic impact reflects how roadway design influences local business activity, property value, and overall economic vitality.',
+      'Increase local business activity, property value, and overall economic vitality.',
   },
   {
     name: 'environmental',
     label: 'Environmental',
     description:
-      'Environmental impact reflects how roadway design affects air quality, emissions, energy use, stormwater runoff, and urban heat.',
+      'Improve outcomes for air quality, emissions, energy use, stormwater runoff, and urban heat.',
   },
   {
     name: 'accessToDestinations',
     label: 'Access to destinations',
     description:
-      'Access to destinations reflects how safely and conveniently people of all ages, abilities, and incomes can reach jobs, services, and community resources.',
+      'Improve how safely and conveniently people of all ages, abilities, and incomes can reach jobs, services, and community resources.',
   },
   {
     name: 'modeShift',
     label: 'Mode Shift',
     description:
-      'Mode shift reflects the extent to which roadway design encourages travel by walking, bicycling, and transit instead of driving.',
+      'Encourage travel by walking, bicycling, and transit instead of driving.',
   },
 ] as const;
 
@@ -78,7 +78,6 @@ export const projectDetailsSchema = z.object({
     .number({ error: 'Enter the project corridor length.' })
     .min(0)
     .optional(),
-  alternativeName: z.string(),
   canMoveCurbLines: z.boolean(),
   isFreightCorridor: z.boolean(),
   isBusCorridor: z.boolean(),
@@ -137,7 +136,6 @@ export const defaultProjectDetails: ProjectDetailsFormValues = {
   roadwayName: '',
   projectExtents: '',
   corridorLengthMiles: undefined,
-  alternativeName: '',
   canMoveCurbLines: false,
   isFreightCorridor: false,
   isBusCorridor: false,

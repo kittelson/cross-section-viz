@@ -1,5 +1,18 @@
-import { Link } from 'react-router-dom';
+import { useAtom, useAtomValue } from 'jotai';
+import { Plus } from 'lucide-react';
+import { useCallback } from 'react';
+import {
+  createAlternativeConfig,
+  nextAlternativeName,
+  type AlternativeConfigFormValues,
+} from '@/alternativeConfig';
+import {
+  activeAlternativeIdAtom,
+  alternativesAtom,
+  projectDetailsAtom,
+} from '@/atoms';
 import { AlternativeConfigForm } from '@/components/AlternativeConfigForm';
+import { BottomNavButtons } from '@/components/BottomNavButtons';
 import { SuggestedEditsDialog } from '@/components/SuggestedEditsDialog';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -9,76 +22,139 @@ import tooWide from '@/images/streetmixPlaceholders/tooWide.png';
 import { paths } from '@/paths';
 
 export function EditCrossSectionPage() {
+  const projectDetails = useAtomValue(projectDetailsAtom);
+  const [alternatives, setAlternatives] = useAtom(alternativesAtom);
+  const [activeAlternativeId, setActiveAlternativeId] = useAtom(
+    activeAlternativeIdAtom,
+  );
+  const activeAlternative =
+    alternatives.find(
+      (alternative) => alternative.id === activeAlternativeId,
+    ) ?? alternatives[0];
+
+  const updateAlternative = useCallback(
+    (next: AlternativeConfigFormValues) => {
+      setAlternatives((current) =>
+        current.map((alternative) =>
+          alternative.id === next.id ? next : alternative,
+        ),
+      );
+    },
+    [setAlternatives],
+  );
+
+  function addAlternative() {
+    const next = createAlternativeConfig(
+      nextAlternativeName(alternatives),
+      projectDetails,
+    );
+    setAlternatives((current) => [...current, next]);
+    setActiveAlternativeId(next.id);
+  }
+
   return (
     <div className="mx-auto max-w-7xl">
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight">
-            Alternative 1 - Cross Section Creator
-          </h1>
-          <div className="mt-4 space-y-4 text-muted-foreground">
-            <p>
-              Now, it&apos;s your turn to create your new cross-section. First,
-              view the recommended cross-section changes based on your stated
-              goals on the suggestions tool to the right.
-            </p>
-            <p>
-              Then, using the minimum safe dimension as a start, insert
-              components until you meet the right-of-way.
-            </p>
-            <p>
-              If a dimension of an element is smaller than the minimum dimension
-              for that element, the text will appear red. If an element
-              dimension is larger than the minimum dimension, the text will
-              appear green, indicating that the element width could be reduced
-              if additional space is needed. Hover over the element in your
-              cross-section to see the recommended dimensions.
-            </p>
-            <p>
-              Use the input boxes to the right to change selected project inputs
-              to reflect future conditions.
-            </p>
-          </div>
-          <Tabs defaultValue="default" className="mt-6">
-            <TabsList>
-              <TabsTrigger value="default">Default</TabsTrigger>
-              <TabsTrigger value="show-details">Show Details</TabsTrigger>
-              <TabsTrigger value="too-wide">Element too wide</TabsTrigger>
-            </TabsList>
-            <TabsContent value="default" className="mt-4">
-              <img
-                src={minSafeDimension}
-                alt="Minimum safe dimension cross section"
-                className="w-full"
-              />
-            </TabsContent>
-            <TabsContent value="show-details" className="mt-4">
-              <img
-                src={showDetails}
-                alt="Cross section with element details"
-                className="w-full"
-              />
-            </TabsContent>
-            <TabsContent value="too-wide" className="mt-4">
-              <img
-                src={tooWide}
-                alt="Cross section with an element that is too wide"
-                className="w-full"
-              />
-            </TabsContent>
-          </Tabs>
+      <Tabs
+        value={activeAlternative?.id}
+        onValueChange={setActiveAlternativeId}
+        className="gap-6"
+      >
+        <div className="flex flex-wrap items-center gap-2">
+          <TabsList variant="line" className="h-auto flex-wrap">
+            {alternatives.map((alternative) => (
+              <TabsTrigger key={alternative.id} value={alternative.id}>
+                {alternative.alternativeName}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            aria-label="Add alternative"
+            onClick={addAlternative}
+          >
+            <Plus />
+          </Button>
         </div>
 
-        <aside className="space-y-4 lg:sticky lg:top-6 lg:self-start">
-          <SuggestedEditsDialog />
-          <AlternativeConfigForm />
-        </aside>
-      </div>
-      <div className="mt-8">
-        <Button asChild>
-          <Link to={paths.output}>Continue</Link>
-        </Button>
-      </div>
+        {alternatives.map((alternative) => (
+          <TabsContent key={alternative.id} value={alternative.id}>
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
+              <div>
+                <h1 className="text-2xl font-semibold tracking-tight">
+                  {alternative.alternativeName} - Cross Section Creator
+                </h1>
+                <div className="mt-4 space-y-4 text-muted-foreground">
+                  <p>
+                    Now, it&apos;s your turn to create your new cross-section.
+                    First, view the recommended cross-section changes based on
+                    your stated goals on the suggestions tool to the right.
+                  </p>
+                  <p>
+                    Then, using the minimum safe dimension as a start, insert
+                    components until you meet the right-of-way.
+                  </p>
+                  <p>
+                    If a dimension of an element is smaller than the minimum
+                    dimension for that element, the text will appear red. If an
+                    element dimension is larger than the minimum dimension, the
+                    text will appear green, indicating that the element width
+                    could be reduced if additional space is needed. Hover over
+                    the element in your cross-section to see the recommended
+                    dimensions.
+                  </p>
+                  <p>
+                    Use the input boxes to the right to change selected project
+                    inputs to reflect future conditions.
+                  </p>
+                </div>
+                <Tabs defaultValue="default" className="mt-6">
+                  <TabsList>
+                    <TabsTrigger value="default">Default</TabsTrigger>
+                    <TabsTrigger value="show-details">Show Details</TabsTrigger>
+                    <TabsTrigger value="too-wide">Element too wide</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="default" className="mt-4">
+                    <img
+                      src={minSafeDimension}
+                      alt="Minimum safe dimension cross section"
+                      className="w-full"
+                    />
+                  </TabsContent>
+                  <TabsContent value="show-details" className="mt-4">
+                    <img
+                      src={showDetails}
+                      alt="Cross section with element details"
+                      className="w-full"
+                    />
+                  </TabsContent>
+                  <TabsContent value="too-wide" className="mt-4">
+                    <img
+                      src={tooWide}
+                      alt="Cross section with an element that is too wide"
+                      className="w-full"
+                    />
+                  </TabsContent>
+                </Tabs>
+              </div>
+
+              <aside className="space-y-4 lg:sticky lg:top-6 lg:self-start">
+                <AlternativeConfigForm
+                  value={alternative}
+                  onChange={updateAlternative}
+                />
+                <SuggestedEditsDialog />
+              </aside>
+            </div>
+          </TabsContent>
+        ))}
+      </Tabs>
+
+      <BottomNavButtons
+        backTo={paths.minSafeDimension}
+        continueTo={paths.output}
+      />
     </div>
   );
 }

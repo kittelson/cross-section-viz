@@ -3,6 +3,7 @@ import { useAtom } from 'jotai';
 import { Controller, useForm, type Resolver } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { projectDetailsAtom } from '@/atoms';
+import { BottomNavButtons } from '@/components/BottomNavButtons';
 import { Button } from '@/components/ui/button';
 import { CheckboxField } from '@/components/ui/checkbox-field';
 import { FieldGroup, FieldLegend, FieldSet } from '@/components/ui/field';
@@ -20,6 +21,7 @@ import {
   roadwayFunctionOptions,
   type ProjectDetailsFormValues,
 } from '@/projectDetails';
+import { InfoTooltip } from '@/components/InfoTooltip';
 
 export function ProjectDetailsPage() {
   const [projectDetails, setProjectDetails] = useAtom(projectDetailsAtom);
@@ -101,24 +103,10 @@ export function ProjectDetailsPage() {
                   <NumberField
                     name={field.name}
                     label="Project Corridor Length"
+                    endAdornment="miles"
                     placeholder="0.5"
                     inputMode="decimal"
                     step="any"
-                    value={field.value}
-                    invalid={fieldState.invalid}
-                    error={fieldState.error}
-                    onChange={field.onChange}
-                  />
-                )}
-              />
-              <Controller
-                name="alternativeName"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    name={field.name}
-                    label="Alternative Name"
-                    placeholder="Alternative 1"
                     value={field.value}
                     invalid={fieldState.invalid}
                     error={fieldState.error}
@@ -260,6 +248,7 @@ export function ProjectDetailsPage() {
                     <NumberField
                       name={field.name}
                       label="What is the posted speed limit?"
+                      endAdornment="mph"
                       placeholder="30"
                       value={field.value}
                       invalid={fieldState.invalid}
@@ -275,6 +264,7 @@ export function ProjectDetailsPage() {
                     <NumberField
                       name={field.name}
                       label="What is the 85th percentile speed (if known)?"
+                      endAdornment="mph"
                       placeholder="32"
                       inputMode="decimal"
                       value={field.value}
@@ -291,6 +281,7 @@ export function ProjectDetailsPage() {
                     <NumberField
                       name={field.name}
                       label="What is the average daily traffic?"
+                      endAdornment="vehicles per day"
                       placeholder="6000"
                       value={field.value}
                       invalid={fieldState.invalid}
@@ -303,7 +294,16 @@ export function ProjectDetailsPage() {
             </FieldSet>
 
             <FieldSet>
-              <FieldLegend>Project Goals</FieldLegend>
+              <div className="flex items-center gap-2">
+                <FieldLegend className="mb-0">Project Goals</FieldLegend>
+                <InfoTooltip label="Project Goals">
+                  The tool uses your project goals to suggest helpful cross
+                  section changes in later steps.
+                </InfoTooltip>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Do project goals include any of the following outcomes?
+              </p>
               <div className="grid gap-3">
                 {projectGoalOptions.map((goal) => (
                   <Controller
@@ -329,8 +329,7 @@ export function ProjectDetailsPage() {
           </div>
         </FieldGroup>
 
-        <div className="mt-8 flex gap-2">
-          <Button type="submit">Continue</Button>
+        <div className="mt-8">
           <Button
             type="button"
             variant="outline"
@@ -345,6 +344,7 @@ export function ProjectDetailsPage() {
             Reset
           </Button>
         </div>
+        <BottomNavButtons backTo={paths.existingCrossSection} continueSubmit />
       </form>
     </div>
   );
