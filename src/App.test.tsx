@@ -1,43 +1,54 @@
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { Provider } from 'jotai'
-import { createMemoryRouter, RouterProvider } from 'react-router-dom'
-import { routes } from '@/routes'
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { createStore, Provider } from 'jotai';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { paths } from '@/paths';
+import { basename, routes } from '@/routes';
 
 function renderAt(path: string) {
-  const router = createMemoryRouter(routes, { initialEntries: [path] })
+  const router = createMemoryRouter(routes, {
+    basename,
+    initialEntries: [path],
+  });
   render(
-    <Provider>
+    <Provider store={createStore()}>
       <RouterProvider router={router} />
     </Provider>,
-  )
+  );
 }
 
 describe('App', () => {
-  it('shows an empty state on the home page', () => {
-    renderAt('/')
-    expect(screen.getByText('No name submitted yet.')).toBeInTheDocument()
-  })
-
-  it('shows a validation error for a too-short name', async () => {
-    const user = userEvent.setup()
-    renderAt('/form')
-
-    await user.type(screen.getByLabelText('Name'), 'A')
-    await user.click(screen.getByRole('button', { name: 'Submit' }))
-
+  it('shows the tool title on the home page', () => {
+    renderAt(paths.home);
     expect(
-      await screen.findByText('Name must be at least 2 characters.'),
-    ).toBeInTheDocument()
-  })
+      screen.getByRole('heading', {
+        name: 'MassDOT Cross Section Reallocation Tool',
+      }),
+    ).toBeTruthy();
+  });
 
-  it('stores a valid name and shows it on the home page', async () => {
-    const user = userEvent.setup()
-    renderAt('/form')
+  it('keeps About in the header and future steps unlinked', () => {
+    renderAt(paths.home);
 
-    await user.type(screen.getByLabelText('Name'), 'Ada')
-    await user.click(screen.getByRole('button', { name: 'Submit' }))
+    expect(screen.getByRole('link', { name: 'About' })).toBeTruthy();
+    expect(
+      screen.queryByRole('link', { name: 'Existing Cross Section' }),
+    ).toBeNull();
+    expect(screen.queryByRole('link', { name: 'Project Details' })).toBeNull();
+  });
 
-    expect(await screen.findByText('Ada')).toBeInTheDocument()
-  })
-})
+  it('lets you return to completed steps but not skip ahead', async () => {
+    const user = userEvent.setup();
+    renderAt(paths.home);
+
+    await user.click(screen.getByRole('link', { name: 'New Analysis' }));
+
+    expect(await screen.findByRole('link', { name: 'Home' })).toBeTruthy();
+    expect(screen.queryByRole('link', { name: 'Project Details' })).toBeNull();
+
+    await user.click(screen.getByRole('link', { name: 'Home' }));
+    expect(
+      await screen.findByRole('link', { name: 'Existing Cross Section' }),
+    ).toBeTruthy();
+  });
+});
