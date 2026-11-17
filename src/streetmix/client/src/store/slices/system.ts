@@ -1,0 +1,35 @@
+import { createSlice } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
+
+export interface SystemState {
+  safari: boolean
+  windows: boolean
+  devicePixelRatio: number
+}
+
+const initialState: SystemState = {
+  safari:
+    (navigator.userAgent.includes('Safari') &&
+      !navigator.userAgent.includes('Chrome')) ||
+    false,
+  windows: navigator.userAgent.includes('Windows') || false,
+  devicePixelRatio: window.devicePixelRatio || 1.0,
+}
+
+const systemSlice = createSlice({
+  name: 'system',
+  initialState,
+
+  reducers: {
+    setSystemFlags(state, action: PayloadAction<Partial<SystemState>>) {
+      return {
+        ...state,
+        ...action.payload,
+      }
+    },
+  },
+})
+
+export const { setSystemFlags } = systemSlice.actions
+
+export default systemSlice.reducer

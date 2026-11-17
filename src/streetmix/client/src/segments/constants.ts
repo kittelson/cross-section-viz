@@ -1,0 +1,41 @@
+// Originally, our images were drawn at 2x for Retina display.
+// As we've moved to vector images, "2x" is meaningless, but the intrinsic
+// height/width dimensions have not changed.
+export const TILESET_POINT_PER_PIXEL = 2.0 * 1.27 // this is a 1-inch to 1cm conversion
+export const TILE_SIZE = 12 / 0.3048 // pixels, using imperial conversion rate to preserve render scale
+export const TILE_SIZE_ACTUAL = TILE_SIZE * TILESET_POINT_PER_PIXEL // pixels
+
+export const MIN_SEGMENT_WIDTH = 0.25 // meters
+export const MAX_SEGMENT_WIDTH = 120 // meters
+
+export const MIN_ELEVATION = 0
+export const MAX_ELEVATION_METRIC = 5 // in meters
+export const MAX_ELEVATION_IMPERIAL = 4.8768 // 16' in meters
+
+export const DRAGGING_MOVE_HOLE_WIDTH = 40 // pixels
+
+export const SEGMENT_WIDTH_RESOLUTION_IMPERIAL = 0.25 * 0.3048 // feet => m
+export const SEGMENT_WIDTH_CLICK_INCREMENT_IMPERIAL = 0.5 * 0.3048 // feet => m
+export const SEGMENT_WIDTH_DRAGGING_RESOLUTION_IMPERIAL = 0.5 * 0.3048 // feet => m
+
+export const SEGMENT_WIDTH_RESOLUTION_METRIC = 0.05 // meters
+export const SEGMENT_WIDTH_CLICK_INCREMENT_METRIC = 0.1 // meters
+export const SEGMENT_WIDTH_DRAGGING_RESOLUTION_METRIC = 0.1 // meters
+
+export const DRAGGING_TYPE_NONE = 0
+export const DRAGGING_TYPE_MOVE = 2
+export const DRAGGING_TYPE_RESIZE = 3
+
+export const BOUNDARY_WIDTH = 360
+export const MAX_BUILDING_HEIGHT = 20 // floors
+export const BUILDING_LEFT_POSITION = 'left'
+export const BUILDING_RIGHT_POSITION = 'right'
+
+export const MAX_CANVAS_HEIGHT = 2048 // pixels
+export const CANVAS_HEIGHT = 600 // pixels
+export const GROUND_BASELINE_HEIGHT = 45 // pixels
+
+export const ELEVATION_INCREMENT = 0.15 // meters
+export const ELEVATION_INCREMENT_IMPERIAL = 0.5 * 0.3048 // feet => m
+export const CURB_HEIGHT = ELEVATION_INCREMENT * 1
+export const CURB_HEIGHT_IMPERIAL = ELEVATION_INCREMENT_IMPERIAL * 1

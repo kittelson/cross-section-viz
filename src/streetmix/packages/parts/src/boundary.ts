@@ -1,0 +1,13 @@
+import BOUNDARY_DEFS from '../data/boundary_defs.yaml'
+
+import type { BoundaryDefinition } from '@/streetmix/packages/types/src'
+
+export function getBoundaryItem(variant: string): BoundaryDefinition {
+  if (!(variant in BOUNDARY_DEFS)) {
+    throw new Error('Unknown boundary variant: ' + variant)
+  }
+
+  const item = BOUNDARY_DEFS[variant as keyof typeof BOUNDARY_DEFS]
+
+  return item as BoundaryDefinition
+}

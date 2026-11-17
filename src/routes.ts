@@ -3,6 +3,7 @@ import { AppLayout } from '@/components/layout/AppLayout';
 import { paths } from '@/paths';
 import { AboutPage } from '@/pages/AboutPage';
 import { EditCrossSectionPage } from '@/pages/EditCrossSectionPage';
+import { EditorPage } from '@/pages/EditorPage';
 import { ExistingCrossSectionPage } from '@/pages/ExistingCrossSectionPage';
 import { HomePage } from '@/pages/HomePage';
 import { MinSafeDimensionPage } from '@/pages/MinSafeDimensionPage';
@@ -27,6 +28,7 @@ export const routes: RouteObject[] = [
       { path: paths.minSafeDimension, Component: MinSafeDimensionPage },
       { path: paths.editCrossSection, Component: EditCrossSectionPage },
       { path: paths.output, Component: OutputPage },
+      { path: paths.editor, Component: EditorPage },
     ],
   },
 ];
