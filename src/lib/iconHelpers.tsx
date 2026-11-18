@@ -6,15 +6,15 @@ import {
   DollarSign,
   Footprints,
   Globe,
-  Lamp,
   Leaf,
+  RefreshCcw,
 } from 'lucide-react';
 
 export const safetyIcon = <AlertTriangle className="h-4 w-4" />;
 export const economicIcon = <DollarSign className="h-4 w-4" />;
 export const environmentalIcon = <Leaf className="h-4 w-4" />;
 export const accessToDestinationsIcon = <Globe className="h-4 w-4" />;
-export const modeShiftIcon = <Car className="h-4 w-4" />;
+export const modeShiftIcon = <RefreshCcw className="h-4 w-4" />;
 
 export const goalIcons = {
   safety: safetyIcon,

@@ -14,7 +14,6 @@ import {
 import { AlternativeConfigForm } from '@/components/AlternativeConfigForm';
 import { BottomNavButtons } from '@/components/BottomNavButtons';
 import { StreetEditor } from '@/components/StreetEditor';
-import { SuggestedEditsDialog } from '@/components/SuggestedEditsDialog';
 import { SuggestedEditsGrid } from '@/components/SuggestedEditsGrid';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -57,7 +56,6 @@ export function EditCrossSectionPage() {
         <h1 className="text-2xl font-semibold tracking-tight">
           Cross Section Creator
         </h1>
-        <SuggestedEditsDialog />
       </div>
       <ol className="mt-3 grid list-decimal gap-x-10 gap-y-1 pl-5 text-muted-foreground lg:grid-flow-col lg:grid-cols-2 lg:grid-rows-2">
         <li>

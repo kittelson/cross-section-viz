@@ -36,12 +36,24 @@ export const ImpactGradeToLabel: Record<ImpactGrade, string> = {
   high_adverse_effect: 'High Adverse Effect',
 };
 
-export type ImpactTerm = 'nearTerm' | 'longTerm';
+const longTermMarker = {
+  label: 'Long Term',
+  helperText: `This effect applies in the long term.`,
+};
+
+const nearTermMarker = {
+  label: 'Near Term',
+  helperText: `This effect applies in the near term.`,
+};
+
+const compoundMarker = {
+  label: 'Compound',
+  helperText: `This effect is compound: it combines multiple contributing factors.`,
+};
 
 export type ImpactEffect = {
   score: ImpactGrade;
   description: string;
-  term?: ImpactTerm;
   additionalMarkers?: { label: string; helperText: string }[];
 };
 
@@ -108,12 +120,12 @@ export const suggestedEditRows: SuggestedEditRow[] = [
     feasible: true,
     safety: [
       {
-        score: 'low_adverse_effect',
-        description: `Conflicts and friction due to the need for buses to pull in and out of traffic or stop in the travel lane.`,
-      },
-      {
         score: 'low_positive_effect',
         description: `Reduced crossing distance for people walking and biking.`,
+      },
+      {
+        score: 'low_adverse_effect',
+        description: `Conflicts and friction due to the need for buses to pull in and out of traffic or stop in the travel lane.`,
       },
     ],
     economic: [
@@ -490,52 +502,46 @@ FHWA cites an 88% crash reduction when providing sidewalks.`,
       {
         score: 'high_positive_effect',
         description: ``,
-        term: 'nearTerm',
+        additionalMarkers: [nearTermMarker],
       },
       {
         score: 'medium_positive_effect',
         description: `Can induce traffic reduction in the long term and reduce ADT, the most closely associated factor with crash risk.`,
-        term: 'longTerm',
-        additionalMarkers: [
-          {
-            label: 'compound',
-            helperText: `This effect is compound: it combines multiple contributing factors.`,
-          },
-        ],
+        additionalMarkers: [longTermMarker, compoundMarker],
       },
     ],
     economic: [
       {
-        score: 'medium_adverse_effect',
-        description: `Reduced automotive capacity, more delay, and higher cost of goods movement and lower mobility.`,
-        term: 'nearTerm',
-      },
-      {
         score: 'low_positive_effect',
         description: `Opportunity for placemaking.`,
-        term: 'nearTerm',
+        additionalMarkers: [nearTermMarker],
       },
       {
         score: 'low_positive_effect',
         description: `Potential for pass-by trips increased with mode shift from reduced vehicle travel lanes.`,
-        term: 'longTerm',
+        additionalMarkers: [longTermMarker],
+      },
+      {
+        score: 'medium_adverse_effect',
+        description: `Reduced automotive capacity, more delay, and higher cost of goods movement and lower mobility.`,
+        additionalMarkers: [nearTermMarker],
       },
     ],
     environmental: [
       {
-        score: 'medium_adverse_effect',
-        description: `Worsened local air quality effects due to increased number of stops, stop-and-go traffic, and idling (vehicles occupy smaller area for longer period of time).`,
-        term: 'nearTerm',
-      },
-      {
         score: 'medium_positive_effect',
         description: `Reduced long-term demand for driving and developments associated with driving (less pavement, smaller parking lots, less runoff, lower pollution). These long-term benefits are expected to outweigh short-term adverse effects, which may be partially mitigated by changes in vehicle fleet characteristics (EVs).`,
-        term: 'longTerm',
+        additionalMarkers: [longTermMarker],
+      },
+      {
+        score: 'medium_adverse_effect',
+        description: `Worsened local air quality effects due to increased number of stops, stop-and-go traffic, and idling (vehicles occupy smaller area for longer period of time).`,
+        additionalMarkers: [nearTermMarker],
       },
       {
         score: 'medium_adverse_effect',
         description: `If buses share a travel lane, congestion can decrease transit reliability and travel times, thereby decreasing the viability of and attractiveness of transit, reducing the likelihood for mode shift to transit.`,
-        term: 'longTerm',
+        additionalMarkers: [longTermMarker],
       },
     ],
     accessToDestinations: [
@@ -616,52 +622,46 @@ FHWA cites an 88% crash reduction when providing sidewalks.`,
       {
         score: 'high_adverse_effect',
         description: `Allows/promotes higher speeds, which are associated with increased crash severity. Longer distances to cross. More challenging clearance intervals for bicyclists. May decrease propensity for double parking.`,
-        term: 'nearTerm',
+        additionalMarkers: [nearTermMarker],
       },
       {
         score: 'medium_adverse_effect',
         description: `Potentially induces more driving in the long term and increases ADT, the most closely associated factor with crash risk.`,
-        term: 'longTerm',
-        additionalMarkers: [
-          {
-            label: 'compound',
-            helperText: `This effect is compound: it combines multiple contributing factors.`,
-          },
-        ],
+        additionalMarkers: [longTermMarker, compoundMarker],
       },
     ],
     economic: [
       {
         score: 'medium_positive_effect',
         description: `Increased automotive capacity, lower cost of goods movement and improved mobility.`,
-        term: 'nearTerm',
+        additionalMarkers: [nearTermMarker],
       },
       {
         score: 'medium_adverse_effect',
         description: `Less opportunity for placemaking.`,
-        term: 'nearTerm',
+        additionalMarkers: [nearTermMarker],
       },
       {
         score: 'low_adverse_effect',
         description: `Potential for reduced pass-by trips with induced driving demand (as opposed to other modes)`,
-        term: 'longTerm',
+        additionalMarkers: [longTermMarker],
       },
     ],
     environmental: [
       {
         score: 'medium_positive_effect',
         description: `Improved local air quality effects due to decreased number of stops, stop-and-go traffic, and idling (vehicles occupy smaller area for longer period of time).`,
-        term: 'nearTerm',
-      },
-      {
-        score: 'medium_adverse_effect',
-        description: `Induced demand and developments associated with driving (more pavement, bigger parking lots, more runoff, more pollution). These long-term adverse effects are expected to outweigh short-term positive effects.`,
-        term: 'longTerm',
+        additionalMarkers: [nearTermMarker],
       },
       {
         score: 'medium_positive_effect',
         description: `If buses share a travel lane, decreased congestion can improve reliability and travel times, increasing attractiveness of transit, reducing the amount of induced demand.`,
-        term: 'longTerm',
+        additionalMarkers: [longTermMarker],
+      },
+      {
+        score: 'medium_adverse_effect',
+        description: `Induced demand and developments associated with driving (more pavement, bigger parking lots, more runoff, more pollution). These long-term adverse effects are expected to outweigh short-term positive effects.`,
+        additionalMarkers: [longTermMarker],
       },
     ],
     accessToDestinations: [
@@ -855,12 +855,12 @@ FHWA cites an 88% crash reduction when providing sidewalks.`,
     ],
     environmental: [
       {
-        score: 'medium_adverse_effect',
-        description: `May increase VMT/pollution due to less direct access to sites with off-site parking.`,
-      },
-      {
         score: 'medium_positive_effect',
         description: `If landscaped median will have trees or other stormwater management/drainage benefits (reduce runoff area).`,
+      },
+      {
+        score: 'medium_adverse_effect',
+        description: `May increase VMT/pollution due to less direct access to sites with off-site parking.`,
       },
     ],
     accessToDestinations: [
@@ -894,12 +894,12 @@ FHWA cites an 88% crash reduction when providing sidewalks.`,
       {
         score: 'medium_positive_effect',
         description: `Decreased parking access can reduce demand for driving over time, reducing VMT/pollution.`,
-        term: 'longTerm',
+        additionalMarkers: [longTermMarker],
       },
       {
         score: 'medium_adverse_effect',
         description: `Can lead to increased circling for parking and associated pollution, provided that street parking constitutes a meaningful share of area parking.`,
-        term: 'nearTerm',
+        additionalMarkers: [nearTermMarker],
       },
     ],
     accessToDestinations: [
@@ -956,12 +956,12 @@ FHWA cites an 88% crash reduction when providing sidewalks.`,
     feasible: true,
     safety: [
       {
-        score: 'low_adverse_effect',
-        description: `Increased conflicts from parking maneuvers; increased access to parking may increase driving demand/VMT, thereby increasing crashes. Potential sight distance issues for driveways or at intersections.`,
-      },
-      {
         score: 'low_positive_effect',
         description: `All else is equal, decreased likelihood of double parking (hazardous behavior); street parking can act as traffic calming and serves as a buffer to sidewalks and some bicycle facilities.`,
+      },
+      {
+        score: 'low_adverse_effect',
+        description: `Increased conflicts from parking maneuvers; increased access to parking may increase driving demand/VMT, thereby increasing crashes. Potential sight distance issues for driveways or at intersections.`,
       },
     ],
     economic: [

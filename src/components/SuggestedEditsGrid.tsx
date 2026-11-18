@@ -69,12 +69,12 @@ function EffectPill({
         'inline-flex h-8 items-center justify-center gap-1 rounded-md px-2 text-xs font-medium',
         pillWidthClass[magnitude] ?? 'w-16',
         variant === 'positive' &&
-          'bg-emerald-600 text-white dark:bg-emerald-500',
+          'border-1 border-emerald-600 bg-background text-emerald-600',
         variant === 'adverse' &&
-          'border-2 border-destructive bg-background text-destructive',
+          'border-1 border-destructive bg-background text-destructive',
       )}
     >
-      <span className="[&_svg]:size-3.5">{goalIcons[goal]}</span>
+      <span className="[&_svg]:size-4">{goalIcons[goal]}</span>
     </span>
   );
 }
@@ -157,27 +157,6 @@ function SuggestedEditCard({
                 )}
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <Minus
-                className="size-4 shrink-0 text-destructive"
-                aria-label="Adverse effects"
-              />
-              <div className="flex flex-wrap gap-1.5">
-                {adverseEffects.length ? (
-                  adverseEffects.map(({ goal, label, effect }, index) => (
-                    <EffectPill
-                      key={`${goal}-adverse-${index}`}
-                      goal={goal}
-                      label={label}
-                      effect={effect}
-                      variant="adverse"
-                    />
-                  ))
-                ) : (
-                  <span className="text-xs text-muted-foreground">None</span>
-                )}
-              </div>
-            </div>
             {neutralGoals.length ? (
               <div className="flex flex-wrap gap-1.5 pl-6">
                 {neutralGoals.map((goal) => {
@@ -199,6 +178,27 @@ function SuggestedEditCard({
                 })}
               </div>
             ) : null}
+            <div className="flex items-center gap-2">
+              <Minus
+                className="size-4 shrink-0 text-destructive"
+                aria-label="Adverse effects"
+              />
+              <div className="flex flex-wrap gap-1.5">
+                {adverseEffects.length ? (
+                  adverseEffects.map(({ goal, label, effect }, index) => (
+                    <EffectPill
+                      key={`${goal}-adverse-${index}`}
+                      goal={goal}
+                      label={label}
+                      effect={effect}
+                      variant="adverse"
+                    />
+                  ))
+                ) : (
+                  <span className="text-xs text-muted-foreground">None</span>
+                )}
+              </div>
+            </div>
           </div>
 
           {expanded ? (
@@ -210,21 +210,38 @@ function SuggestedEditCard({
                     <div
                       key={`${goal}-detail-${index}`}
                       className={cn(
-                        'rounded-lg px-3 py-2 text-sm',
-                        positive ? 'bg-emerald-600/10' : 'bg-destructive/10',
+                        'rounded-lg border-1 px-3 py-2 text-sm',
+                        positive ? 'border-emerald-600' : 'border-destructive',
                       )}
                     >
-                      <p className="font-medium">
+                      <p className="flex items-center gap-2 font-medium">
+                        <span
+                          className={cn(
+                            positive ? 'text-emerald-600' : 'text-destructive',
+                          )}
+                        >
+                          {goalIcons[goal]}
+                        </span>{' '}
                         {label}
-                        {effect.term
-                          ? ` (${effect.term === 'nearTerm' ? 'Near term' : 'Long term'})`
-                          : ''}
                         {' · '}
                         {ImpactGradeToLabel[effect.score]}
                       </p>
                       <p className="mt-1 text-pretty">
                         {effect.description || 'No description provided.'}
                       </p>
+                      {effect.additionalMarkers?.length ? (
+                        <div className="mt-2 flex flex-wrap gap-1.5">
+                          {effect.additionalMarkers.map((marker) => (
+                            <span
+                              key={marker.label}
+                              title={marker.helperText}
+                              className="rounded-full border border-border bg-background/70 px-2 py-0.5 text-xs text-muted-foreground"
+                            >
+                              {marker.label}
+                            </span>
+                          ))}
+                        </div>
+                      ) : null}
                     </div>
                   );
                 })
