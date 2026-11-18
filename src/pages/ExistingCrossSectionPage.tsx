@@ -12,7 +12,6 @@ import {
   existingCrossSectionSchema,
   type ExistingCrossSectionFormValues,
 } from '@/existingCrossSection';
-import existingCrossSection from '@/images/streetmixPlaceholders/existing.png';
 import { paths } from '@/paths';
 
 export function ExistingCrossSectionPage() {
@@ -74,13 +73,7 @@ export function ExistingCrossSectionPage() {
             )}
           />
         </div>
-
-        <img
-          src={existingCrossSection}
-          alt="Existing roadway cross section"
-          className="mt-6 w-full"
-        />
-
+        <StreetEditor className="mt-6" />
         <Controller
           name="location"
           control={form.control}
@@ -96,7 +89,6 @@ export function ExistingCrossSectionPage() {
             />
           )}
         />
-        <StreetEditor className="mt-6" />
         <BottomNavButtons backTo={paths.home} continueSubmit />
       </form>
     </div>

@@ -175,7 +175,7 @@ export function CrossSectionLocationMap({
   }
 
   return (
-    <Field className="mt-8 gap-4" data-invalid={invalid}>
+    <Field className="mt-8 max-w-3xl gap-4" data-invalid={invalid}>
       <div>
         <h2 className="text-lg font-semibold tracking-tight">
           Cross section location
@@ -191,6 +191,7 @@ export function CrossSectionLocationMap({
         <div className="flex flex-col gap-2 sm:flex-row">
           <Input
             id={searchId}
+            className="max-w-150"
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
@@ -274,7 +275,7 @@ export function CrossSectionLocationMap({
           center={center}
           zoom={14}
           scrollWheelZoom
-          className="h-80 w-full"
+          className="h-80 w-full !cursor-crosshair [&_.leaflet-interactive]:!cursor-crosshair"
           attributionControl
         >
           <TileLayer
