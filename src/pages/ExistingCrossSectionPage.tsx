@@ -1,19 +1,44 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useAtom } from 'jotai';
-import { Ruler } from 'lucide-react';
 import { roadwayRightOfWayFtAtom } from '@/atoms';
 import { BottomNavButtons } from '@/components/BottomNavButtons';
 import { StreetEditor } from '@/components/StreetEditor';
-import { Field, FieldLabel } from '@/components/ui/field';
+import { Controller, useForm, type Resolver } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { crossSectionLocationAtom } from '@/atoms';
+import { CrossSectionLocationMap } from '@/components/CrossSectionLocationMap';
+import { NumberField } from '@/components/ui/number-field';
 import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-  InputGroupText,
-} from '@/components/ui/input-group';
+  existingCrossSectionSchema,
+  type ExistingCrossSectionFormValues,
+} from '@/existingCrossSection';
+import existingCrossSection from '@/images/streetmixPlaceholders/existing.png';
 import { paths } from '@/paths';
 
 export function ExistingCrossSectionPage() {
+  const navigate = useNavigate();
   const [rightOfWay, setRightOfWay] = useAtom(roadwayRightOfWayFtAtom);
+  const [location, setLocation] = useAtom(crossSectionLocationAtom);
+
+  const form = useForm<ExistingCrossSectionFormValues>({
+    resolver: zodResolver(
+      existingCrossSectionSchema,
+    ) as Resolver<ExistingCrossSectionFormValues>,
+    defaultValues: {
+      rightOfWayFt: rightOfWay,
+      location,
+    },
+  });
+
+  function onSubmit(values: ExistingCrossSectionFormValues) {
+    if (values.rightOfWayFt == null || values.location == null) {
+      return;
+    }
+
+    setRightOfWay(values.rightOfWayFt);
+    setLocation(values.location);
+    navigate(paths.projectDetails);
+  }
 
   return (
     <div>
@@ -23,33 +48,57 @@ export function ExistingCrossSectionPage() {
       <p className="mt-2 max-w-5xl text-muted-foreground">
         Use the widgets below to build your existing cross section.
       </p>
-      <div className="mt-6">
-        <Field className="max-w-40">
-          <FieldLabel htmlFor="roadway-width">Right-of-way</FieldLabel>
-          <InputGroup>
-            <InputGroupInput
-              id="roadway-width"
-              type="number"
-              inputMode="decimal"
-              min={1}
-              step="any"
-              value={rightOfWay ?? ''}
-              onChange={(event) => {
-                const value = event.target.value;
-                setRightOfWay(value === '' ? null : Number(value));
+
+      <form className="mt-6" onSubmit={form.handleSubmit(onSubmit)} noValidate>
+        <div className="max-w-40">
+          <Controller
+            name="rightOfWayFt"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <NumberField
+                name={field.name}
+                label="Right-of-way"
+                min={1}
+                inputMode="decimal"
+                step="any"
+                endAdornment="ft"
+                value={field.value}
+                invalid={fieldState.invalid}
+                error={fieldState.error}
+                onChange={(nextValue) => {
+                  field.onChange(nextValue);
+                  setRightOfWay(nextValue);
+                }}
+                onBlur={field.onBlur}
+              />
+            )}
+          />
+        </div>
+
+        <img
+          src={existingCrossSection}
+          alt="Existing roadway cross section"
+          className="mt-6 w-full"
+        />
+
+        <Controller
+          name="location"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <CrossSectionLocationMap
+              value={field.value}
+              onChange={(nextLocation) => {
+                field.onChange(nextLocation);
+                setLocation(nextLocation);
               }}
+              invalid={fieldState.invalid}
+              error={fieldState.error}
             />
-            <InputGroupAddon>
-              <Ruler aria-hidden />
-            </InputGroupAddon>
-            <InputGroupAddon align="inline-end">
-              <InputGroupText>ft</InputGroupText>
-            </InputGroupAddon>
-          </InputGroup>
-        </Field>
-      </div>
-      <StreetEditor className="mt-6" />
-      <BottomNavButtons backTo={paths.home} continueTo={paths.projectDetails} />
+          )}
+        />
+        <StreetEditor className="mt-6" />
+        <BottomNavButtons backTo={paths.home} continueSubmit />
+      </form>
     </div>
   );
 }
