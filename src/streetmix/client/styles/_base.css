@@ -1,58 +1,34 @@
 /**
- *  Global base styles and resets
+ *  Base styles and resets, scoped to the editor
  *  ------------------------------------------------------- */
 
-html {
-  height: 100%;
-  overflow: hidden;
+.streetmix-root {
+  /* The editor root is Streetmix's page: a column the main screen fills */
+  display: flex;
+  flex-direction: column;
 
   /* Global box-sizing "reset" to the "quirks" box model */
   box-sizing: border-box;
 
   /* Prevent overscrolling from navigating back/forward in browser */
   overscroll-behavior: none;
-
-  /* Hack for WAVE */
-  margin-left: 0 !important;
-}
-
-/* Hacks for WAVE */
-
-/* stylelint-disable-next-line selector-id-pattern */
-#wave_sidebar_container ~ #react-app {
-  inset-inline-start: 380px;
-  transition: all 0.2s;
-}
-
-/* stylelint-disable-next-line selector-id-pattern */
-#wave_sidebar_container[inert] ~ #react-app {
-  inset-inline-start: 0;
-}
-
-/* Inherit the box-sizing everywhere */
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position: relative; /* Fixes iOS Safari overflow: hidden not working bug */
   background: white;
   text-size-adjust: none;
 
-  &:not(.safari) {
+  body:not(.safari) & {
     perspective: 500px;
   }
 }
 
+/* Inherit the box-sizing everywhere */
+.streetmix-root *,
+.streetmix-root *::before,
+.streetmix-root *::after {
+  box-sizing: inherit;
+}
+
 /* Reset buttons to have no default appearance */
-button {
+.streetmix-root button {
   appearance: none;
   border: 0;
   padding: 0;

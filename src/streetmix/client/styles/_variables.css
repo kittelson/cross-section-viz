@@ -1,8 +1,8 @@
 /**
- *  Global variables (via CSS custom properties)
+ *  Editor variables (via CSS custom properties)
  *  ------------------------------------------------------- */
 
-:root {
+.streetmix-root {
   /* Dimensions */
   --tile-size: 12px;
   --canvas-height: 600px;
@@ -11,7 +11,7 @@
      a minimum of 190px */
   --street-section-baseline: min(
     max(
-      calc(50vh - (var(--canvas-height) / 1.25)),
+      calc(50cqh - (var(--canvas-height) / 1.25)),
       var(--street-section-min-baseline)
     ),
     var(--street-section-max-baseline)

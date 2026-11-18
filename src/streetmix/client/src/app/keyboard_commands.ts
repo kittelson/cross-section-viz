@@ -44,7 +44,7 @@ export function registerKeypresses(): void {
     'ctrl s',
     {
       preventDefault: true,
-      requireFocusOnBody: false,
+      requireFocusOnEditor: false,
     },
     () => {} // noop
   )
@@ -55,7 +55,7 @@ export function registerKeypresses(): void {
     ['backspace', 'delete'],
     {
       preventDefault: true,
-      requireFocusOnBody: true,
+      requireFocusOnEditor: true,
     },
     () => {} // noop
   )
@@ -65,7 +65,7 @@ export function registerKeypresses(): void {
     'ctrl z',
     {
       preventDefault: true,
-      requireFocusOnBody: true,
+      requireFocusOnEditor: true,
       shiftKey: false,
     },
     () => {
@@ -78,7 +78,7 @@ export function registerKeypresses(): void {
     ['shift ctrl z', 'ctrl y'],
     {
       preventDefault: true,
-      requireFocusOnBody: true,
+      requireFocusOnEditor: true,
     },
     () => {
       store.dispatch(handleRedo())

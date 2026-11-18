@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { minSafeDimensionAtom, roadwayRightOfWayFtAtom } from '@/atoms';
 import { BottomNavButtons } from '@/components/BottomNavButtons';
 import { MinSafeDimensionIdeas } from '@/components/MinSafeDimensionIdeas';
-import minSafeDimension from '@/images/streetmixPlaceholders/minSafeDimension.png';
+import { StreetEditor } from '@/components/StreetEditor';
 import { minDimensionWidthFt } from '@/lib/utils';
 import { paths } from '@/paths';
 
@@ -22,11 +22,11 @@ export function MinSafeDimensionPage() {
   const requiresIdeaSelection = remainingRightOfWayFt <= 0;
 
   return (
-    <div className="mx-auto max-w-5xl">
+    <div>
       <h1 className="text-2xl font-semibold tracking-tight">
         Minimum Safe Dimension
       </h1>
-      <p className="mt-2 text-muted-foreground">
+      <p className="mt-2 max-w-5xl text-muted-foreground">
         This cross section provides the minimum safe travel width for
         pedestrians, cyclists, and motorists. It does not include turn lanes or
         parking lanes, just the minimum space needed for all modes to travel
@@ -34,7 +34,7 @@ export function MinSafeDimensionPage() {
       </p>
       {remainingRightOfWayFt > 0 ? (
         <div>
-          <p className="mt-4 text-muted-foreground">
+          <p className="mt-4 max-w-5xl text-muted-foreground">
             The minimum safe dimension cross-section takes up{' '}
             <span className="font-semibold">{minDimensionWidthFt}'</span> of
             right-of-way and the existing right-of-way is{' '}
@@ -42,15 +42,11 @@ export function MinSafeDimensionPage() {
             <span className="font-semibold">{remainingRightOfWayFt}'</span>{' '}
             remaining.
           </p>
-          <img
-            src={minSafeDimension}
-            alt="Minimum safe dimension cross section"
-            className="mt-6 w-full"
-          />
+          <StreetEditor readOnly className="mt-6" />
         </div>
       ) : (
         <div>
-          <p className="mt-4 text-muted-foreground">
+          <p className="mt-4 max-w-5xl text-muted-foreground">
             The minimum safe dimension cross-section takes up{' '}
             <span className="font-semibold">{minDimensionWidthFt}'</span> of
             right-of-way and the existing right-of-way is only{' '}
@@ -61,12 +57,8 @@ export function MinSafeDimensionPage() {
             </span>{' '}
             .
           </p>
-          <img
-            src={minSafeDimension}
-            alt="Minimum safe dimension cross section"
-            className="mt-6 w-full"
-          />
-          <p className="mt-4 text-muted-foreground">
+          <StreetEditor readOnly className="mt-6" />
+          <p className="mt-4 max-w-5xl text-muted-foreground">
             Here are some options for how to design a smaller cross section that
             still works for all modes. Select one of these ideas to continue.
           </p>

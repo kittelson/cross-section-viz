@@ -13,7 +13,7 @@ export function SuggestedEditsDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button type="button" variant="default" className="w-full">
+        <Button type="button" variant="default">
           View Suggested Edits
         </Button>
       </DialogTrigger>

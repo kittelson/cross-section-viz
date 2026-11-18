@@ -20,12 +20,25 @@ const IMAGES_TO_BE_LOADED = [
   { key: 'sky-rear', url: skyRearUrl },
 ]
 
+/**
+ * Sprite sheets are page-level resources: `<use href="#icon-…">` references
+ * resolve against the document, so they must outlive any one editor mount.
+ */
+function createSVGStagingElement(): HTMLElement {
+  const el = document.createElement('div')
+  el.id = 'svg'
+  el.hidden = true
+  document.body.append(el)
+  return el
+}
+
 export async function loadImages(): Promise<string[]> {
   const loading: Promise<string | undefined>[] = []
+  const stagingEl = createSVGStagingElement()
 
   for (const { key, url } of IMAGES_TO_BE_LOADED) {
     loading.push(
-      loadImage(key, url).catch((error) => {
+      loadImage(stagingEl, key, url).catch((error) => {
         console.error('loading svg error', error)
         return undefined
       })
@@ -39,10 +52,7 @@ export async function loadImages(): Promise<string[]> {
   return results.filter((result): result is string => result !== undefined)
 }
 
-async function loadImage(key: string, url: string) {
-  const SVGStagingEl = document.getElementById('svg')
-  if (!SVGStagingEl) throw new Error('element not found')
-
+async function loadImage(SVGStagingEl: HTMLElement, key: string, url: string) {
   const response = await window.fetch(url)
   const body = await response.text()
 

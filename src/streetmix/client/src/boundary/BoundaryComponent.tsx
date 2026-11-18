@@ -18,6 +18,7 @@ import { getElevation } from '@/streetmix/client/src/segments/view.js'
 import { PopupContainer } from '../info_bubble/PopupContainer.js'
 import { getBoundaryImageHeight } from './boundary.js'
 import { drawBoundary } from './draw.js'
+import { getEditorRoot } from '../app/editor_root.js'
 import './BoundaryComponent.css'
 
 import type { BoundaryPosition } from '@/streetmix/packages/types/src'
@@ -200,7 +201,7 @@ export function Boundary({
     // Event handler is only added on mouseover, but definitely remove if
     // component is unmounted.
     return () => {
-      document.removeEventListener('keydown', handleKeyDown)
+      getEditorRoot()?.removeEventListener('keydown', handleKeyDown)
     }
   }, [handleKeyDown])
 
@@ -211,7 +212,7 @@ export function Boundary({
     if (!isEditable) return
 
     dispatch(setActiveSegment(position))
-    document.addEventListener('keydown', handleKeyDown)
+    getEditorRoot()?.addEventListener('keydown', handleKeyDown)
   }
 
   function handleElementMouseLeave(_event: React.MouseEvent) {
@@ -221,7 +222,7 @@ export function Boundary({
     if (!isEditable) return
 
     dispatch(setActiveSegment(null))
-    document.removeEventListener('keydown', handleKeyDown)
+    getEditorRoot()?.removeEventListener('keydown', handleKeyDown)
   }
 
   function changeRefs(ref: HTMLElement | null, isPreviousElement: boolean) {

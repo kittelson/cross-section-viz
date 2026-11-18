@@ -4,6 +4,7 @@ import { debounce } from 'es-toolkit'
 import { Button } from '@/streetmix/client/src/ui/Button.js'
 import { Icon } from '@/streetmix/client/src/ui/Icon.js'
 import { Tooltip } from '@/streetmix/client/src/ui/Tooltip.js'
+import { loseAnyFocus } from '@/streetmix/client/src/util/focus.js'
 import './UpDownInput.css'
 
 const EDIT_INPUT_DELAY = 200
@@ -198,7 +199,7 @@ export function UpDownInput(props: UpDownInputProps) {
       case 'Escape':
         // Lose focus from input but place focus on body
         inputEl.current?.blur()
-        document.body.focus()
+        loseAnyFocus()
 
         // Reset to previous value
         onUpdatedValue(oldValue.current ?? '', true)

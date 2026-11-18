@@ -1,16 +1,15 @@
+import { getEditorRoot } from '../app/editor_root.js'
+
 /**
- * Refocusing on the body immediately after some other element is
- * removed from the page allows the application to continue to receive
- * keydown events. (Otherwise the browser could capture those events
- * and do browser default actions instead.)
- * However, loseAnyFocus() is very aggressive, because if it is called at
- * the wrong time, it could cause the user to lose focus on something
- * (like an input box) improperly, so be very careful when using it.
+ * The editor root holds focus whenever no specific control inside the editor
+ * does, so keyboard commands keep reaching the editor. Be careful: calling
+ * this at the wrong time takes focus away from an input the user is typing in.
  */
-export function loseAnyFocus (): void {
-  document.body.focus()
+export function loseAnyFocus(): void {
+  getEditorRoot()?.focus({ preventScroll: true })
 }
 
-export function isFocusOnBody (): boolean {
-  return document.activeElement === document.body
+export function isFocusOnEditor(): boolean {
+  const root = getEditorRoot()
+  return root !== null && document.activeElement === root
 }

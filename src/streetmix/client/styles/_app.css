@@ -2,13 +2,6 @@
  *  Generic top-level app styles
  *  ------------------------------------------------------- */
 
-.app {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  inset: 0;
-}
-
 .main-screen {
   position: relative;
   z-index: var(--z-00-main-screen);
@@ -28,10 +21,6 @@
   background-image: url("../images/logo_main.svg");
   background-position: center center;
   background-repeat: no-repeat;
-}
-
-#svg {
-  display: none;
 }
 
 #loading {

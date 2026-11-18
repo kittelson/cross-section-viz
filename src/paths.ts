@@ -6,5 +6,4 @@ export const paths = {
   minSafeDimension: '/min-safe-dimension',
   editCrossSection: '/edit-cross-section',
   output: '/output',
-  editor: '/editor',
 } as const;

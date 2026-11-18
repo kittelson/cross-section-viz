@@ -13,12 +13,10 @@ import {
 } from '@/atoms';
 import { AlternativeConfigForm } from '@/components/AlternativeConfigForm';
 import { BottomNavButtons } from '@/components/BottomNavButtons';
+import { StreetEditor } from '@/components/StreetEditor';
 import { SuggestedEditsDialog } from '@/components/SuggestedEditsDialog';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import minSafeDimension from '@/images/streetmixPlaceholders/minSafeDimension.png';
-import showDetails from '@/images/streetmixPlaceholders/showDetails.png';
-import tooWide from '@/images/streetmixPlaceholders/tooWide.png';
 import { paths } from '@/paths';
 
 export function EditCrossSectionPage() {
@@ -53,11 +51,32 @@ export function EditCrossSectionPage() {
   }
 
   return (
-    <div className="mx-auto max-w-7xl">
+    <div>
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <h1 className="text-2xl font-semibold tracking-tight">
+          Cross Section Creator
+        </h1>
+        <SuggestedEditsDialog />
+      </div>
+      <ol className="mt-3 grid list-decimal gap-x-10 gap-y-1 pl-5 text-muted-foreground lg:grid-flow-col lg:grid-cols-2 lg:grid-rows-2">
+        <li>
+          Review the suggested edits (top right) for changes that support your
+          goals.
+        </li>
+        <li>
+          Starting from the minimum safe dimension, add elements until you reach
+          the right-of-way.
+        </li>
+        <li>Hover over an element to see its recommended width.</li>
+        <li>
+          Update the inputs above the editor to reflect future conditions.
+        </li>
+      </ol>
+
       <Tabs
         value={activeAlternative?.id}
         onValueChange={setActiveAlternativeId}
-        className="gap-6"
+        className="mt-5 gap-0"
       >
         <div className="flex flex-wrap items-center gap-2">
           <TabsList variant="line" className="h-auto flex-wrap">
@@ -79,74 +98,16 @@ export function EditCrossSectionPage() {
         </div>
 
         {alternatives.map((alternative) => (
-          <TabsContent key={alternative.id} value={alternative.id}>
-            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
-              <div>
-                <h1 className="text-2xl font-semibold tracking-tight">
-                  {alternative.alternativeName} - Cross Section Creator
-                </h1>
-                <div className="mt-4 space-y-4 text-muted-foreground">
-                  <p>
-                    Now, it&apos;s your turn to create your new cross-section.
-                    First, view the recommended cross-section changes based on
-                    your stated goals on the suggestions tool to the right.
-                  </p>
-                  <p>
-                    Then, using the minimum safe dimension as a start, insert
-                    components until you meet the right-of-way.
-                  </p>
-                  <p>
-                    If a dimension of an element is smaller than the minimum
-                    dimension for that element, the text will appear red. If an
-                    element dimension is larger than the minimum dimension, the
-                    text will appear green, indicating that the element width
-                    could be reduced if additional space is needed. Hover over
-                    the element in your cross-section to see the recommended
-                    dimensions.
-                  </p>
-                  <p>
-                    Use the input boxes to the right to change selected project
-                    inputs to reflect future conditions.
-                  </p>
-                </div>
-                <Tabs defaultValue="default" className="mt-6">
-                  <TabsList>
-                    <TabsTrigger value="default">Default</TabsTrigger>
-                    <TabsTrigger value="show-details">Show Details</TabsTrigger>
-                    <TabsTrigger value="too-wide">Element too wide</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="default" className="mt-4">
-                    <img
-                      src={minSafeDimension}
-                      alt="Minimum safe dimension cross section"
-                      className="w-full"
-                    />
-                  </TabsContent>
-                  <TabsContent value="show-details" className="mt-4">
-                    <img
-                      src={showDetails}
-                      alt="Cross section with element details"
-                      className="w-full"
-                    />
-                  </TabsContent>
-                  <TabsContent value="too-wide" className="mt-4">
-                    <img
-                      src={tooWide}
-                      alt="Cross section with an element that is too wide"
-                      className="w-full"
-                    />
-                  </TabsContent>
-                </Tabs>
-              </div>
-
-              <aside className="space-y-4 lg:sticky lg:top-6 lg:self-start">
-                <AlternativeConfigForm
-                  value={alternative}
-                  onChange={updateAlternative}
-                />
-                <SuggestedEditsDialog />
-              </aside>
-            </div>
+          <TabsContent
+            key={alternative.id}
+            value={alternative.id}
+            className="mt-1 space-y-3 rounded-lg border bg-muted/30 p-3"
+          >
+            <AlternativeConfigForm
+              value={alternative}
+              onChange={updateAlternative}
+            />
+            <StreetEditor />
           </TabsContent>
         ))}
       </Tabs>

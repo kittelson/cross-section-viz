@@ -1,3 +1,7 @@
+/* Streetmix (src/streetmix) sits above Tailwind's preflight so its own resets
+   apply inside the editor, and below utilities so it never overrides them. */
+@layer theme, base, streetmix, components, utilities;
+
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
