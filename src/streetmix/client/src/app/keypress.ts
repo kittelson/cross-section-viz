@@ -7,7 +7,7 @@
  *    - Keypress.js (https://dmauro.github.io/Keypress/)
  *    - keymaster.js (https://github.com/madrobby/keymaster)
  */
-import { isFocusOnBody } from '../util/focus.js'
+import { isFocusOnEditor } from '../util/focus.js'
 
 // Types
 export type KeypressCommands = string | string[]
@@ -18,7 +18,7 @@ export interface KeypressOptions {
   altKey?: boolean | 'optional'
   preventDefault?: boolean
   stopPropagation?: boolean
-  requireFocusOnBody?: boolean
+  requireFocusOnEditor?: boolean
   onKeypress?: KeypressCallback
   condition?: () => unknown
   fireOnce?: boolean
@@ -47,11 +47,12 @@ const returnTrue = function () {
 }
 
 /**
- * Initiates keypress manager. Sets a global event listener on the window.
- * This should only have to be called once, when the application bootstraps.
+ * Routes keydown events inside `root` to registered commands. Returns a
+ * function that stops listening.
  */
-export function startListening(): void {
-  window.addEventListener('keydown', onGlobalKeyDown)
+export function startListening(root: HTMLElement): () => void {
+  root.addEventListener('keydown', onGlobalKeyDown)
+  return () => root.removeEventListener('keydown', onGlobalKeyDown)
 }
 
 /**
@@ -101,11 +102,11 @@ export function startListening(): void {
  *    If `true`, `event.stopPropagation()` should be called to prevent other
  *    key handlers from triggering. Defaults to `false`, but as a special
  *    case, this is automatically set to `true` if the command is `esc`.
- * @param {(boolean)} [options.requireFocusOnBody=true]
- *    If `true`, the key handler is not triggered if the browser has focused
- *    on a specific element, like an input field.  Defaults to `true`, but as
- *    a special case, this is automatically set to `false` if the command is
- *    `esc`.
+ * @param {(boolean)} [options.requireFocusOnEditor=true]
+ *    If `true`, the key handler is only triggered when the editor root itself
+ *    has focus, not a specific element inside it, like an input field.
+ *    Defaults to `true`, but as a special case, this is automatically set
+ *    to `false` if the command is `esc`.
  * @param {(function)} [options.onKeyPress]
  *    It is possible to set the callback function to execute on key press on
  *    the `options` object instead of in the `callback` parameter.
@@ -151,7 +152,7 @@ export function registerKeypress(
     condition: returnTrue,
     preventDefault: true,
     stopPropagation: false,
-    requireFocusOnBody: true,
+    requireFocusOnEditor: true,
     fireOnce: false,
   }
 
@@ -185,9 +186,9 @@ export function registerKeypress(
         originalCommands,
       }
 
-      // Special case for 'ESC' key; it defaults to global (window) focus
+      // Special case for 'ESC' key; it fires wherever focus is inside the editor
       if (key === 'Esc' || key === 'Escape') {
-        mergedCommand.requireFocusOnBody = false
+        mergedCommand.requireFocusOnEditor = false
         mergedCommand.stopPropagation = true
       }
 
@@ -416,7 +417,7 @@ function execute(input: ProcessedCommand, event: KeyboardEvent): void {
   if (input.condition?.() === false) return
 
   // Check if focus is on the correct place
-  if (input.requireFocusOnBody === true && isFocusOnBody() === false) return
+  if (input.requireFocusOnEditor === true && isFocusOnEditor() === false) return
 
   if (event && input.preventDefault) {
     event.preventDefault()

@@ -28,6 +28,7 @@ import type {
 } from '@floating-ui/react'
 import type { Optional } from '@/streetmix/packages/types/src'
 
+import { getEditorRoot } from '../app/editor_root.js'
 import './Tooltip.css'
 
 // Default settings
@@ -139,13 +140,16 @@ export function Tooltip({
   }
 
   // Note: tooltips are sent to a container portal that will be rendered in
-  // the document root so that it can be "stacked" on top of other UI.
+  // the editor root so that it can be "stacked" on top of other UI.
   return (
     <>
       {tooltipTriggerElement}
       <FloatingNode id={nodeId}>
         {isMounted && (
-          <FloatingPortal id="floating-tooltip-container">
+          <FloatingPortal
+            id="floating-tooltip-container"
+            root={getEditorRoot()}
+          >
             {/* Outer div is our main tooltip wrapper */}
             <div
               ref={refs.setFloating}

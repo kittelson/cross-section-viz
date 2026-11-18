@@ -1,7 +1,6 @@
 import { initSystemCapabilities } from '../preinit/system_capabilities'
 import { initLocale } from '../locales/locale'
 import { setLastStreet, setIgnoreStreetChanges } from '../streets/data_model'
-import { initStreetNameChangeListener } from '../streets/name'
 import { initStreetDataChangedListener } from '../streets/street'
 import { prepareStreet } from '../streets/templates'
 import { initSkyboxChangedListener } from '../sky'
@@ -15,8 +14,30 @@ import { addEventListeners } from './event_listeners'
 import { startListening } from './keypress'
 import { registerKeypresses } from './keyboard_commands'
 import { loadImages } from './load_resources'
+import { setEditorRoot } from './editor_root'
 
-function preInit() {
+// Classes the editor toggles on <body>; removed again on detach.
+const BODY_CLASSES = [
+  'windows',
+  'safari',
+  'read-only',
+  'dark-skybox-invert-ui',
+  'segment-move-dragging',
+  'segment-resize-dragging',
+]
+
+let loading = null
+
+/**
+ * One-time setup: settings, sprites, locale, and the initial street.
+ * Safe to call repeatedly; every call returns the same promise.
+ */
+export function loadOnce() {
+  loading ??= load()
+  return loading
+}
+
+async function load() {
   initSystemCapabilities()
   setIgnoreStreetChanges(true)
 
@@ -27,47 +48,42 @@ function preInit() {
   }
 
   registerKeypresses()
-
-  // Start listening for keypresses
-  startListening()
-
-  observeStoreToUpdateBodyClasses()
-}
-
-export async function initialize() {
-  preInit()
-
-  window.dispatchEvent(new window.CustomEvent('stmx:init'))
-
   loadSettings()
   await Promise.all([loadImages(), initLocale()])
   prepareStreet()
 
-  onEverythingLoaded()
-}
-
-function onEverythingLoaded() {
   store.dispatch(segmentsChanged())
-
   setIgnoreStreetChanges(false)
   setLastStreet()
-  initStreetDataChangedListener()
-  initSettingsStoreObserver()
-
-  initStreetNameChangeListener()
-  initSkyboxChangedListener()
-  initDragTypeSubscriber()
-
-  addEventListeners()
-
   store.dispatch(everythingLoaded())
 }
 
 /**
- * Toggle features based on system state. (This allows toggling to debug things,
- * which will allow us to remove the debug URL parameters as a future TODO)
+ * Connects the editor to the page while it is mounted in `root`: keyboard
+ * and pointer listeners, store observers, and body classes. Returns a
+ * function that undoes all of it.
  */
-function observeStoreToUpdateBodyClasses() {
+export function attach(root) {
+  setEditorRoot(root)
+
+  const cleanups = [
+    startListening(root),
+    addEventListeners(root),
+    observeBodyClasses(),
+    initStreetDataChangedListener(),
+    initSettingsStoreObserver(),
+    initSkyboxChangedListener(),
+    initDragTypeSubscriber(),
+  ]
+
+  return function detach() {
+    for (const cleanup of cleanups) cleanup()
+    document.body.classList.remove(...BODY_CLASSES)
+    setEditorRoot(null)
+  }
+}
+
+function observeBodyClasses() {
   const select = (state) => ({ system: state.system, app: state.app })
   const onChange = (state) => {
     document.body.classList.toggle('windows', state.system.windows)
@@ -75,5 +91,6 @@ function observeStoreToUpdateBodyClasses() {
     document.body.classList.toggle('read-only', state.app.readOnly)
   }
 
+  onChange(select(store.getState()))
   return observeStore(select, onChange)
 }

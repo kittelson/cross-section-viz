@@ -24,6 +24,7 @@ import {
   createSliceDropTargetSpec,
 } from './drag_and_drop.js'
 import { RESIZE_TYPE_INCREMENT } from './resizing.js'
+import { getEditorRoot } from '../app/editor_root.js'
 import './Segment.css'
 
 import type { SliceItem, UnitsSetting } from '@/streetmix/packages/types/src'
@@ -164,7 +165,7 @@ export function Segment(props: SliceProps) {
     // Event handler is only added on mouseover, but definitely remove if
     // component is unmounted.
     return () => {
-      document.removeEventListener('keydown', handleKeyDown)
+      getEditorRoot()?.removeEventListener('keydown', handleKeyDown)
     }
   }, [handleKeyDown])
 
@@ -185,14 +186,14 @@ export function Segment(props: SliceProps) {
   function handleSegmentMouseEnter() {
     if (readOnly) return
     dispatch(setActiveSegment(sliceIndex))
-    document.addEventListener('keydown', handleKeyDown)
+    getEditorRoot()?.addEventListener('keydown', handleKeyDown)
   }
 
   function handleSegmentMouseLeave() {
     if (readOnly) return
 
     dispatch(setActiveSegment(null))
-    document.removeEventListener('keydown', handleKeyDown)
+    getEditorRoot()?.removeEventListener('keydown', handleKeyDown)
   }
 
   function renderSegmentCanvas(

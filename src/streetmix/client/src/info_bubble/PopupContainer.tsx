@@ -22,6 +22,7 @@ import {
 
 import { useSelector } from '@/streetmix/client/src/store/hooks.js'
 import { PopupContent } from './PopupContent.js'
+import { getEditorRoot } from '@/streetmix/client/src/app/editor_root.js'
 import './PopupContainer.css'
 
 import type { FloatingDelayGroupProps } from '@floating-ui/react'
@@ -196,7 +197,7 @@ export function PopupContainer({
       {tooltipTriggerElement}
       <FloatingNode id={nodeId}>
         {isMounted && (
-          <FloatingPortal>
+          <FloatingPortal root={getEditorRoot()}>
             {/* Outer div is our main tooltip wrapper */}
             <div
               ref={refs.setFloating}
