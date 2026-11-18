@@ -101,9 +101,9 @@ export function StreetView() {
   })
 
   const onResize = useCallback((): number | undefined => {
-    if (!sectionCanvasEl.current) return
+    if (!sectionCanvasEl.current || !sectionEl.current) return
 
-    const viewportWidth = window.innerWidth
+    const viewportWidth = sectionEl.current.clientWidth
     const streetWidth = street.width * TILE_SIZE
     let streetSectionCanvasLeft =
       (viewportWidth - streetWidth) / 2 - BOUNDARY_WIDTH
@@ -137,19 +137,6 @@ export function StreetView() {
     })
   }, [onResize, street.width])
 
-  useEffect(() => {
-    handleStreetResize()
-    window.addEventListener('resize', handleStreetResize)
-
-    return () => {
-      window.removeEventListener('resize', handleStreetResize)
-    }
-  }, [handleStreetResize])
-
-  useEffect(() => {
-    handleStreetResize()
-  }, [handleStreetResize, street.width])
-
   const updateScrollLeft = useCallback(
     (deltaX?: number): void => {
       if (!sectionEl.current) return
@@ -162,13 +149,43 @@ export function StreetView() {
         const streetWidth = street.width * TILE_SIZE
         const currBuildingSpace = boundaryWidth
         scrollLeft =
-          (streetWidth + currBuildingSpace * 2 - window.innerWidth) / 2
+          (streetWidth +
+            currBuildingSpace * 2 -
+            sectionEl.current.clientWidth) /
+          2
       }
 
       sectionEl.current.scrollLeft = scrollLeft
     },
     [boundaryWidth, street.width]
   )
+
+  const updateScrollLeftRef = useRef(updateScrollLeft)
+  useEffect(() => {
+    updateScrollLeftRef.current = updateScrollLeft
+  })
+
+  // Lays out the street and centers it in view. Queued after
+  // handleStreetResize's frame so it centers against the new layout.
+  const layoutAndCenterStreet = useCallback(() => {
+    handleStreetResize()
+    window.requestAnimationFrame(() => updateScrollLeftRef.current())
+  }, [handleStreetResize])
+
+  // The street is laid out against its own container, which can resize
+  // without the window resizing (e.g. page layout changes). The observer
+  // also fires once on mount.
+  useEffect(() => {
+    const el = sectionEl.current
+    if (!el) return
+
+    const observer = new ResizeObserver(layoutAndCenterStreet)
+    observer.observe(el)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [layoutAndCenterStreet])
 
   useEffect(() => {
     // Two cases where scrollLeft might have to be updated:
@@ -285,8 +302,11 @@ export function StreetView() {
    * tracking scroll position, etc.
    */
   function getBoundaryWidth(el: HTMLElement | null): void {
-    if (el === null) return
-    const left = el.getBoundingClientRect().left + getStreetScrollPosition()
+    if (el === null || !sectionEl.current) return
+    const left =
+      el.getBoundingClientRect().left -
+      sectionEl.current.getBoundingClientRect().left +
+      getStreetScrollPosition()
 
     let width = left
     if (width < BOUNDARY_WIDTH) {
@@ -309,10 +329,11 @@ export function StreetView() {
    * from this function.
    */
   function updatePerspective(el: HTMLElement | null): void {
-    if (el === null) return
+    if (el === null || !sectionEl.current) return
 
-    const left = el.getBoundingClientRect().left
-    const perspective = -(left - window.innerWidth / 2)
+    const outer = sectionEl.current.getBoundingClientRect()
+    const left = el.getBoundingClientRect().left - outer.left
+    const perspective = -(left - outer.width / 2)
 
     el.style.perspectiveOrigin = perspective / 2 + 'px 50%'
   }
