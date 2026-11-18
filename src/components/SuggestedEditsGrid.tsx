@@ -135,31 +135,28 @@ function SuggestedEditCard({
             </div>
           </div>
 
-          <div className="mt-4 space-y-2">
-            <div className="flex items-center gap-2">
-              <Plus
-                className="size-4 shrink-0 text-emerald-600"
-                aria-label="Positive effects"
-              />
-              <div className="flex flex-wrap gap-1.5">
-                {positiveEffects.length ? (
-                  positiveEffects.map(({ goal, label, effect }, index) => (
-                    <EffectPill
-                      key={`${goal}-positive-${index}`}
-                      goal={goal}
-                      label={label}
-                      effect={effect}
-                      variant="positive"
-                    />
-                  ))
-                ) : (
-                  <span className="text-xs text-muted-foreground">None</span>
-                )}
-              </div>
+          <div className="mt-4 grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-2">
+            <span className="text-xs text-muted-foreground">Positives</span>
+            <div className="flex flex-wrap gap-1.5">
+              {positiveEffects.length ? (
+                positiveEffects.map(({ goal, label, effect }, index) => (
+                  <EffectPill
+                    key={`${goal}-positive-${index}`}
+                    goal={goal}
+                    label={label}
+                    effect={effect}
+                    variant="positive"
+                  />
+                ))
+              ) : (
+                <span className="text-xs text-muted-foreground">None</span>
+              )}
             </div>
-            {neutralGoals.length ? (
-              <div className="flex flex-wrap gap-1.5 pl-6">
-                {neutralGoals.map((goal) => {
+
+            <span className="text-xs text-muted-foreground">Neutral</span>
+            <div className="flex flex-wrap gap-1.5">
+              {neutralGoals.length ? (
+                neutralGoals.map((goal) => {
                   const label =
                     projectGoalOptions.find((option) => option.name === goal)
                       ?.label ?? goal;
@@ -175,29 +172,27 @@ function SuggestedEditCard({
                       <span className="truncate">No significant effect</span>
                     </span>
                   );
-                })}
-              </div>
-            ) : null}
-            <div className="flex items-center gap-2">
-              <Minus
-                className="size-4 shrink-0 text-destructive"
-                aria-label="Adverse effects"
-              />
-              <div className="flex flex-wrap gap-1.5">
-                {adverseEffects.length ? (
-                  adverseEffects.map(({ goal, label, effect }, index) => (
-                    <EffectPill
-                      key={`${goal}-adverse-${index}`}
-                      goal={goal}
-                      label={label}
-                      effect={effect}
-                      variant="adverse"
-                    />
-                  ))
-                ) : (
-                  <span className="text-xs text-muted-foreground">None</span>
-                )}
-              </div>
+                })
+              ) : (
+                <span className="text-xs text-muted-foreground">None</span>
+              )}
+            </div>
+
+            <span className="text-xs text-muted-foreground">Negatives</span>
+            <div className="flex flex-wrap gap-1.5">
+              {adverseEffects.length ? (
+                adverseEffects.map(({ goal, label, effect }, index) => (
+                  <EffectPill
+                    key={`${goal}-adverse-${index}`}
+                    goal={goal}
+                    label={label}
+                    effect={effect}
+                    variant="adverse"
+                  />
+                ))
+              ) : (
+                <span className="text-xs text-muted-foreground">None</span>
+              )}
             </div>
           </div>
 
@@ -324,17 +319,19 @@ export function SuggestedEditsGrid() {
           scored suggested edits.
         </p>
       ) : (
-        <div className="mt-4 grid gap-4 md:grid-cols-2">
-          {sortedRows.map((row, index) => (
-            <SuggestedEditCard
-              key={row.measure}
-              row={row}
-              selectedGoals={selectedGoals}
-              expanded={expandedMeasures.has(row.measure)}
-              applied={index === 0}
-              onToggle={() => toggleMeasure(row.measure)}
-            />
-          ))}
+        <div className="mt-4 max-h-[70vh] overflow-y-auto">
+          <div className="grid gap-4 md:grid-cols-2">
+            {sortedRows.map((row, index) => (
+              <SuggestedEditCard
+                key={row.measure}
+                row={row}
+                selectedGoals={selectedGoals}
+                expanded={expandedMeasures.has(row.measure)}
+                applied={index === 0}
+                onToggle={() => toggleMeasure(row.measure)}
+              />
+            ))}
+          </div>
         </div>
       )}
     </section>
