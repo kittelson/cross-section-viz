@@ -2,31 +2,27 @@
  *  Typography
  *  ------------------------------------------------------- */
 
-/* Set root font-size */
-html {
+/* Set the editor's base font-size */
+.streetmix-root,
+.streetmix-root input,
+.streetmix-root select,
+.streetmix-root option {
+  font-family: var(--font-family);
   font-size: var(--font-size-base);
 }
 
-body,
-input,
-select,
-option {
-  font-family: var(--font-family);
-  font-size: 1rem;
-}
-
-b,
-strong {
+.streetmix-root b,
+.streetmix-root strong {
   font-weight: 550;
 }
 
 /* Locale-specific rules */
-html[lang="ko"] {
+html[lang="ko"] .streetmix-root {
   word-break: keep-all;
 }
 
 /* Baseline size and appearance for h1 */
-h1 {
+.streetmix-root h1 {
   margin: 0;
   line-height: 1;
   font-size: 250%;
