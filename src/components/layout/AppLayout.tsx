@@ -32,7 +32,7 @@ export function AppLayout() {
         <aside className="w-64 shrink-0 border-r bg-card px-5 py-8">
           <Stepper />
         </aside>
-        <main className="flex-1 px-6 py-10">
+        <main className="flex-1 px-6 py-6">
           <Outlet />
         </main>
       </div>
