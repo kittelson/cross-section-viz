@@ -7,20 +7,53 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { suggestedEditRows, type ImpactMarks } from '@/suggestedEdits';
+import {
+  suggestedEditRows,
+  type ImpactEffect,
+  type ImpactGrade,
+} from '@/suggestedEdits';
 
-function MarksRow({
-  checks = 0,
-  crosses = 0,
-  neutral = false,
-}: {
-  checks?: number;
-  crosses?: number;
-  neutral?: boolean;
-}) {
+function intensityFromScore(score: ImpactGrade) {
+  if (score.startsWith('low_medium_')) {
+    return 2;
+  }
+  if (score.startsWith('medium_high_')) {
+    return 3;
+  }
+  if (score.startsWith('low_')) {
+    return 1;
+  }
+  if (score.startsWith('medium_')) {
+    return 2;
+  }
+  if (score.startsWith('high_')) {
+    return 3;
+  }
+  return 0;
+}
+
+function marksFromEffects(effects: ImpactEffect[]) {
+  let positives = 0;
+  let negatives = 0;
+
+  for (const effect of effects) {
+    const intensity = intensityFromScore(effect.score);
+    if (effect.score.includes('positive')) {
+      positives = Math.max(positives, intensity);
+    } else if (effect.score.includes('adverse')) {
+      negatives = Math.max(negatives, intensity);
+    }
+  }
+
+  return { positives, negatives };
+}
+
+function MarksRow({ effects }: { effects: ImpactEffect[] }) {
+  const { positives, negatives } = marksFromEffects(effects);
+  const neutral = positives === 0 && negatives === 0;
   const summary = [
-    checks ? `${checks} positive` : null,
-    crosses ? `${crosses} negative` : null,
+    positives ? `${positives} positive` : null,
+    negatives ? `${negatives} negative` : null,
     neutral ? 'neutral' : null,
   ]
     .filter(Boolean)
@@ -35,18 +68,18 @@ function MarksRow({
         {neutral ? (
           <CircleMinus className="size-4 text-muted-foreground" aria-hidden />
         ) : null}
-        {Array.from({ length: checks }, (_, index) => (
+        {Array.from({ length: positives }, (_, index) => (
           <Check
-            key={`check-${index}`}
+            key={`positive-${index}`}
             className="size-4 text-secondary"
             aria-hidden
           />
         ))}
       </span>
       <span className="flex items-center gap-0.5">
-        {Array.from({ length: crosses }, (_, index) => (
+        {Array.from({ length: negatives }, (_, index) => (
           <X
-            key={`cross-${index}`}
+            key={`negative-${index}`}
             className="size-4 text-destructive"
             aria-hidden
           />
@@ -56,27 +89,32 @@ function MarksRow({
   );
 }
 
-function ImpactCell({ marks }: { marks: ImpactMarks }) {
-  if (marks.nearTerm || marks.longTerm) {
+function ImpactCell({ effects }: { effects: ImpactEffect[] }) {
+  const nearTerm = effects.filter((effect) => effect.term === 'nearTerm');
+  const longTerm = effects.filter((effect) => effect.term === 'longTerm');
+  const untimed = effects.filter((effect) => effect.term == null);
+
+  if (nearTerm.length || longTerm.length) {
     return (
       <div className="space-y-2">
-        {marks.nearTerm ? (
+        {nearTerm.length ? (
           <div>
             <p className="text-xs text-muted-foreground">Near term</p>
-            <MarksRow {...marks.nearTerm} />
+            <MarksRow effects={nearTerm} />
           </div>
         ) : null}
-        {marks.longTerm ? (
+        {longTerm.length ? (
           <div>
             <p className="text-xs text-muted-foreground">Long term</p>
-            <MarksRow {...marks.longTerm} />
+            <MarksRow effects={longTerm} />
           </div>
         ) : null}
+        {untimed.length ? <MarksRow effects={untimed} /> : null}
       </div>
     );
   }
 
-  return <MarksRow {...marks} />;
+  return <MarksRow effects={effects} />;
 }
 
 export function SuggestedEditsTable() {
@@ -113,19 +151,19 @@ export function SuggestedEditsTable() {
             </TableCell>
             <TableCell>{row.feasible ? 'Y' : 'N'}</TableCell>
             <TableCell>
-              <ImpactCell marks={row.safety} />
+              <ImpactCell effects={row.safety} />
             </TableCell>
             <TableCell>
-              <ImpactCell marks={row.economic} />
+              <ImpactCell effects={row.economic} />
             </TableCell>
             <TableCell>
-              <ImpactCell marks={row.environmental} />
+              <ImpactCell effects={row.environmental} />
             </TableCell>
             <TableCell>
-              <ImpactCell marks={row.accessToDestinations} />
+              <ImpactCell effects={row.accessToDestinations} />
             </TableCell>
             <TableCell>
-              <ImpactCell marks={row.modeShift} />
+              <ImpactCell effects={row.modeShift} />
             </TableCell>
           </TableRow>
         ))}
