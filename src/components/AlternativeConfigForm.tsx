@@ -73,14 +73,14 @@ export function AlternativeConfigForm({
         )}
       />
       <div className="flex flex-col gap-2">
-        <p className="text-muted-foreground">
+        <p className="text-xs text-muted-foreground">
           Existing posted speed:{' '}
           <span className="font-semibold">
             {projectDetails.postedSpeedLimitMph} mph
           </span>
         </p>
         {!!projectDetails.percentileSpeed85Mph && (
-          <p className="text-muted-foreground">
+          <p className="text-xs text-muted-foreground">
             Existing 85th percentile speed:{' '}
             <span className="font-semibold">
               {projectDetails.percentileSpeed85Mph} mph
