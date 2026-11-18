@@ -15,6 +15,7 @@ import { AlternativeConfigForm } from '@/components/AlternativeConfigForm';
 import { BottomNavButtons } from '@/components/BottomNavButtons';
 import { StreetEditor } from '@/components/StreetEditor';
 import { SuggestedEditsDialog } from '@/components/SuggestedEditsDialog';
+import { SuggestedEditsGrid } from '@/components/SuggestedEditsGrid';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { paths } from '@/paths';
@@ -111,23 +112,7 @@ export function EditCrossSectionPage() {
           </TabsContent>
         ))}
       </Tabs>
-      {/* add a new component here called SuggestedEdits 
-        it can be a a grid of cards that each have a collapsed and expanded view.
-        when expanded they show some lorem ipsum text. each card can have an icon related to its relevant mode (bike, ped, car, lamp), a title.
-        on the bottom is a row of 5 scores that correspond to the project goals. they should have an
-        icon, a small label, and a score from -3 to 3. 3 can be 3 green boxes in a col. 0 can be a gray dash, -2 can be 2 red outlined
-        boxes in a col going into negative territory. -3 can be 3 red outlined boxes in a col going into negative territory. etc.
-        only show scores for goals that the person selected to show in the project goals section.
-        at the top there should be a sort by score select that lists total, environment, safety, etc. and a button for asc and desc.
-        the cards can then be sorted by score with positive to negative with no impact and mixed in the middle.
-        the grid can have a suggested edits header that says "Suggested Edits"
-        there can be a down chevron icon at the right side of each card that when clicked expands the card. when clicked again it collapses the card.
-        there can also be a expand all button and a collapse all btn.
-        instead of the checkmark in the upper right, let's use a pill with a checkmark inside that says "Applied" when someone
-        has added that edit to the cross section. for now the logic for determining that can be a placeholder.
-
-        the suggestions can be those that are in the suggested edits dialog. 
-        */}
+      <SuggestedEditsGrid />
       <BottomNavButtons
         backTo={paths.minSafeDimension}
         continueTo={paths.output}

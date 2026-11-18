@@ -1,6 +1,4 @@
 export type ImpactGrade =
-  | 'no_impact'
-  | 'no_significant_effect'
   | 'low_positive_effect'
   | 'low_adverse_effect'
   | 'low_medium_positive_effect'
@@ -11,6 +9,32 @@ export type ImpactGrade =
   | 'medium_high_adverse_effect'
   | 'high_positive_effect'
   | 'high_adverse_effect';
+
+export const ImpactGradeToScore: Record<ImpactGrade, number> = {
+  low_positive_effect: 1,
+  low_adverse_effect: -1,
+  low_medium_positive_effect: 1.5,
+  low_medium_adverse_effect: -1.5,
+  medium_positive_effect: 2,
+  medium_adverse_effect: -2,
+  medium_high_positive_effect: 2.5,
+  medium_high_adverse_effect: -2.5,
+  high_positive_effect: 3,
+  high_adverse_effect: -3,
+};
+
+export const ImpactGradeToLabel: Record<ImpactGrade, string> = {
+  low_positive_effect: 'Low Positive Effect',
+  low_adverse_effect: 'Low Adverse Effect',
+  low_medium_positive_effect: 'Low/Medium Positive Effect',
+  low_medium_adverse_effect: 'Low/Medium Adverse Effect',
+  medium_positive_effect: 'Medium Positive Effect',
+  medium_adverse_effect: 'Medium Adverse Effect',
+  medium_high_positive_effect: 'Medium/High Positive Effect',
+  medium_high_adverse_effect: 'Medium/High Adverse Effect',
+  high_positive_effect: 'High Positive Effect',
+  high_adverse_effect: 'High Adverse Effect',
+};
 
 export type ImpactTerm = 'nearTerm' | 'longTerm';
 
@@ -30,6 +54,53 @@ export type SuggestedEditRow = {
   accessToDestinations: ImpactEffect[];
   modeShift: ImpactEffect[];
 };
+
+export const impactGoalKeys = [
+  'safety',
+  'economic',
+  'environmental',
+  'accessToDestinations',
+  'modeShift',
+] as const;
+
+export type ImpactGoalKey = (typeof impactGoalKeys)[number];
+
+export function isPositiveImpactGrade(score: ImpactGrade) {
+  return ImpactGradeToScore[score] > 0;
+}
+
+export function impactGradeMagnitude(score: ImpactGrade) {
+  return Math.abs(ImpactGradeToScore[score]);
+}
+
+export function getSuggestedEditTotalScore(
+  row: SuggestedEditRow,
+  goals: readonly ImpactGoalKey[],
+) {
+  return goals.reduce((total, goal) => {
+    return (
+      total +
+      row[goal].reduce(
+        (goalTotal, effect) => goalTotal + ImpactGradeToScore[effect.score],
+        0,
+      )
+    );
+  }, 0);
+}
+
+export function getSuggestedEditMode(measure: string) {
+  const value = measure.toLowerCase();
+  if (value.includes('bike')) {
+    return 'bike' as const;
+  }
+  if (value.includes('pedestrian')) {
+    return 'pedestrian' as const;
+  }
+  if (value.includes('bus')) {
+    return 'transit' as const;
+  }
+  return 'vehicle' as const;
+}
 
 export const suggestedEditRows: SuggestedEditRow[] = [
   {
@@ -821,14 +892,14 @@ FHWA cites an 88% crash reduction when providing sidewalks.`,
     ],
     environmental: [
       {
-        score: 'medium_adverse_effect',
-        description: `Can lead to increased circling for parking and associated pollution, provided that street parking constitutes a meaningful share of area parking.`,
-        term: 'nearTerm',
-      },
-      {
         score: 'medium_positive_effect',
         description: `Decreased parking access can reduce demand for driving over time, reducing VMT/pollution.`,
         term: 'longTerm',
+      },
+      {
+        score: 'medium_adverse_effect',
+        description: `Can lead to increased circling for parking and associated pollution, provided that street parking constitutes a meaningful share of area parking.`,
+        term: 'nearTerm',
       },
     ],
     accessToDestinations: [
@@ -867,12 +938,12 @@ FHWA cites an 88% crash reduction when providing sidewalks.`,
     feasible: true,
     safety: [
       {
-        score: 'low_adverse_effect',
-        description: `Increases pedestrian crossing exposure if space is allocated from pedestrian facilities.`,
-      },
-      {
         score: 'low_positive_effect',
         description: `If bicycle facilities are adjacent, it may decrease likelihood of "dooring"; may decrease conflicts between people entering/exiting their vehicles and moving motor vehicles.`,
+      },
+      {
+        score: 'low_adverse_effect',
+        description: `Increases pedestrian crossing exposure if space is allocated from pedestrian facilities.`,
       },
     ],
     economic: [],
