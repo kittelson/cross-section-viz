@@ -2,6 +2,7 @@ import { useAtom } from 'jotai';
 import { Ruler } from 'lucide-react';
 import { roadwayRightOfWayFtAtom } from '@/atoms';
 import { BottomNavButtons } from '@/components/BottomNavButtons';
+import { StreetEditor } from '@/components/StreetEditor';
 import { Field, FieldLabel } from '@/components/ui/field';
 import {
   InputGroup,
@@ -9,18 +10,17 @@ import {
   InputGroupInput,
   InputGroupText,
 } from '@/components/ui/input-group';
-import existingCrossSection from '@/images/streetmixPlaceholders/existing.png';
 import { paths } from '@/paths';
 
 export function ExistingCrossSectionPage() {
   const [rightOfWay, setRightOfWay] = useAtom(roadwayRightOfWayFtAtom);
 
   return (
-    <div className="mx-auto max-w-5xl">
+    <div>
       <h1 className="text-2xl font-semibold tracking-tight">
         Existing Cross Section
       </h1>
-      <p className="mt-2 text-muted-foreground">
+      <p className="mt-2 max-w-5xl text-muted-foreground">
         Use the widgets below to build your existing cross section.
       </p>
       <div className="mt-6">
@@ -48,11 +48,7 @@ export function ExistingCrossSectionPage() {
           </InputGroup>
         </Field>
       </div>
-      <img
-        src={existingCrossSection}
-        alt="Existing roadway cross section"
-        className="mt-6 w-full"
-      />
+      <StreetEditor className="mt-6" />
       <BottomNavButtons backTo={paths.home} continueTo={paths.projectDetails} />
     </div>
   );
