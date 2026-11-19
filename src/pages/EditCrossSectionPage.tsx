@@ -1,5 +1,5 @@
 import { useAtom, useAtomValue } from 'jotai';
-import { Plus, Trash, X } from 'lucide-react';
+import { Plus, Trash } from 'lucide-react';
 import { useCallback } from 'react';
 import {
   createAlternativeConfig,
