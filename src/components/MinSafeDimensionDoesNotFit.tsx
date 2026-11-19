@@ -32,7 +32,7 @@ export function MinSafeDimensionDoesNotFit({
       <img
         src={minSafeDimension}
         alt="Minimum safe dimension cross section"
-        className="mt-6 w-full"
+        className="mt-6 w-full max-w-5xl"
       />
       <p className="mt-4 text-muted-foreground">
         Here are some options for how to design a smaller cross section that

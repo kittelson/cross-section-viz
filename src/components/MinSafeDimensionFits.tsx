@@ -28,7 +28,7 @@ export function MinSafeDimensionFits({
       <img
         src={minSafeDimension}
         alt="Minimum safe dimension cross section"
-        className="mt-6 w-full"
+        className="mt-6 w-full max-w-5xl"
       />
       <p className="mt-4 text-muted-foreground">
         Next, let's edit our cross section to fill in the remaining space and

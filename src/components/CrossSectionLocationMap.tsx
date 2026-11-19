@@ -3,7 +3,7 @@ import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png?url';
 import markerIcon from 'leaflet/dist/images/marker-icon.png?url';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png?url';
 import 'leaflet/dist/leaflet.css';
-import { Search } from 'lucide-react';
+import { ChevronRight, Search, X } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 import {
   MapContainer,
@@ -243,7 +243,7 @@ export function CrossSectionLocationMap({
             <li key={result.place_id}>
               <button
                 type="button"
-                className="w-full px-3 py-2 text-left text-sm hover:bg-muted/50 focus-visible:bg-muted/50 focus-visible:outline-none"
+                className="group flex w-full justify-between gap-2 px-3 py-2 text-left text-sm hover:bg-muted/50 focus-visible:bg-muted/50"
                 onClick={() => {
                   const lat = Number(result.lat);
                   const lng = Number(result.lon);
@@ -253,6 +253,7 @@ export function CrossSectionLocationMap({
                 }}
               >
                 {result.display_name}
+                <ChevronRight className="invisible ml-2 h-4 w-4 group-hover:visible group-focus-visible:visible" />
               </button>
             </li>
           ))}
@@ -260,10 +261,25 @@ export function CrossSectionLocationMap({
       ) : null}
 
       {value ? (
-        <p className="text-sm text-muted-foreground" aria-live="polite">
-          Selected coordinates: {formatCoordinate(value.lat)},{' '}
-          {formatCoordinate(value.lng)}
-        </p>
+        <div className="flex items-center gap-2">
+          <p className="text-sm text-muted-foreground" aria-live="polite">
+            Selected coordinates: {formatCoordinate(value.lat)},{' '}
+            {formatCoordinate(value.lng)}
+          </p>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-sm"
+            aria-label="Clear selected location"
+            onClick={() => {
+              onChange(null);
+              setStatusMessage('No cross section location selected yet.');
+            }}
+            title="Clear selected location"
+          >
+            <X aria-hidden />
+          </Button>
+        </div>
       ) : (
         <p className="text-sm text-muted-foreground">
           No location selected yet. Use search or the map to choose one.

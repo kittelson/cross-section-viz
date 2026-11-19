@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 import { ExportAnalysisDialog } from '@/components/ExportAnalysisDialog';
 import { Stepper } from '@/components/layout/Stepper';
 import { cn } from '@/lib/utils';
@@ -9,9 +9,11 @@ export function AppLayout() {
     <div className="flex min-h-svh flex-col bg-muted/40">
       <header className="bg-primary text-primary-foreground shadow-sm">
         <div className="flex h-14 items-center justify-between px-6">
-          <span className="text-lg font-semibold tracking-tight">
-            MassDOT Cross Section Reallocation Tool
-          </span>
+          <Link to={paths.home} className="flex items-center gap-2">
+            <span className="text-lg font-semibold tracking-tight hover:underline">
+              MassDOT Cross Section Reallocation Tool
+            </span>
+          </Link>
           <div className="flex items-center gap-1">
             <ExportAnalysisDialog />
             <NavLink

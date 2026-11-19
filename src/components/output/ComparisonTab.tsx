@@ -1,5 +1,6 @@
 import { useAtomValue } from 'jotai';
 import { alternativesAtom } from '@/atoms';
+import { UnderConstruction } from '@/components/UnderConstruction';
 import finalAlternative1 from '@/images/streetmixPlaceholders/finalAlternative1.png';
 import finalExisting from '@/images/streetmixPlaceholders/finalExisting.png';
 
@@ -12,11 +13,13 @@ export function ComparisonTab() {
         <figcaption className="text-center text-base font-medium">
           Existing
         </figcaption>
-        <img
-          src={finalExisting}
-          alt="Existing cross section"
-          className="mt-3 w-full"
-        />
+        <UnderConstruction>
+          <img
+            src={finalExisting}
+            alt="Existing cross section"
+            className="mt-3 w-full"
+          />
+        </UnderConstruction>
       </figure>
       {alternatives.map((alternative) => (
         <figure key={alternative.id} className="min-w-0">
