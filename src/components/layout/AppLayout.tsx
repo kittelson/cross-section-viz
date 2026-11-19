@@ -1,8 +1,23 @@
 import { Link, NavLink, Outlet } from 'react-router-dom';
+import Userback from '@userback/widget';
 import { ExportAnalysisDialog } from '@/components/ExportAnalysisDialog';
 import { Stepper } from '@/components/layout/Stepper';
 import { cn } from '@/lib/utils';
 import { paths } from '@/paths';
+
+// identify your logged-in users (optional)
+const options = {
+  user_data: {
+    id: '123456', // example data
+    info: {
+      name: 'someone', // example data
+      email: 'someone@example.com', // example data
+    },
+  },
+};
+
+// initialize Userback
+await Userback('A-eeYuutQIhHQAs5pegjunETiA7', options);
 
 export function AppLayout() {
   return (
