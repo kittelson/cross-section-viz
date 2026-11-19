@@ -1,6 +1,7 @@
 import { cn } from 'cn';
 import { useAtom } from 'jotai';
 import { minSafeDimensionAtom } from '@/atoms';
+import { UnderConstruction } from '@/components/UnderConstruction';
 import { CheckboxField } from '@/components/ui/checkbox-field';
 import {
   minSafeDimensionIdeas,
@@ -25,7 +26,7 @@ export function MinSafeDimensionIdeas() {
           <div
             key={idea.value}
             className={cn(
-              'cursor-pointer rounded-lg border p-3 hover:bg-muted/50',
+              'relative cursor-pointer rounded-lg border p-3 hover:bg-muted/50',
               selected && 'border-primary bg-primary/5',
             )}
             onClick={() => selectOption(idea.value, true)}
@@ -38,11 +39,13 @@ export function MinSafeDimensionIdeas() {
                 onChange={(checked) => selectOption(idea.value, checked)}
               />
             </div>
-            <img
-              src={idea.image}
-              alt=""
-              className="pointer-events-none mt-3 w-full rounded-md"
-            />
+            <UnderConstruction>
+              <img
+                src={idea.image}
+                alt=""
+                className="pointer-events-none mt-3 w-full rounded-md"
+              />
+            </UnderConstruction>
           </div>
         );
       })}

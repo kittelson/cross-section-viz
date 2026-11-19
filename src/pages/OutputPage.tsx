@@ -1,7 +1,7 @@
 import { BottomNavButtons } from '@/components/BottomNavButtons';
 import { CapacityTab } from '@/components/output/CapacityTab';
 import { ComparisonTab } from '@/components/output/ComparisonTab';
-import { ImpactsTab } from '@/components/output/ImpactsTab';
+import { SuggestedEditsGrid } from '@/components/SuggestedEditsGrid';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { paths } from '@/paths';
 
@@ -19,7 +19,7 @@ export function OutputPage() {
           <ComparisonTab />
         </TabsContent>
         <TabsContent value="impacts" className="mt-6">
-          <ImpactsTab />
+          <SuggestedEditsGrid />
         </TabsContent>
         <TabsContent value="capacity" className="mt-6">
           <CapacityTab />

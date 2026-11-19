@@ -54,12 +54,12 @@ export function AlternativeConfigForm({
         />
       </div>
       <Controller
-        name="postedSpeedLimitMph"
+        name="targetSpeedMph"
         control={form.control}
         render={({ field, fieldState }) => (
           <NumberField
             name={field.name}
-            label="Posted speed limit"
+            label="Target speed"
             endAdornment="mph"
             step={5}
             min={5}
@@ -72,24 +72,22 @@ export function AlternativeConfigForm({
           />
         )}
       />
-      {projectDetails.percentileSpeed85Mph != null ? (
-        <Controller
-          name="eightyFifthPctSpeedMph"
-          control={form.control}
-          render={({ field, fieldState }) => (
-            <NumberField
-              name={field.name}
-              label="Target 85th pct speed"
-              endAdornment="mph"
-              value={field.value}
-              invalid={fieldState.invalid}
-              error={fieldState.error}
-              onChange={field.onChange}
-              onBlur={field.onBlur}
-            />
-          )}
-        />
-      ) : null}
+      <div className="flex flex-col gap-2">
+        <p className="text-xs text-muted-foreground">
+          Existing posted speed:{' '}
+          <span className="font-semibold">
+            {projectDetails.postedSpeedLimitMph} mph
+          </span>
+        </p>
+        {!!projectDetails.percentileSpeed85Mph && (
+          <p className="text-xs text-muted-foreground">
+            Existing 85th percentile speed:{' '}
+            <span className="font-semibold">
+              {projectDetails.percentileSpeed85Mph} mph
+            </span>
+          </p>
+        )}
+      </div>
       <Controller
         name="hasParallelBikeFacility"
         control={form.control}

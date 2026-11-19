@@ -20,6 +20,13 @@ export const projectDetailsAtom = atom<ProjectDetailsFormValues>({
 
 export const roadwayRightOfWayFtAtom = atom<number | null>(82);
 
+export type CrossSectionLocation = {
+  lat: number;
+  lng: number;
+} | null;
+
+export const crossSectionLocationAtom = atom<CrossSectionLocation>(null);
+
 export const minSafeDimensionAtom = atom<MinSafeDimensionState>({
   ...defaultMinSafeDimension,
 });

@@ -1,5 +1,5 @@
 import { useAtom, useAtomValue } from 'jotai';
-import { Plus } from 'lucide-react';
+import { Plus, Trash } from 'lucide-react';
 import { useCallback } from 'react';
 import {
   createAlternativeConfig,
@@ -14,7 +14,7 @@ import {
 import { AlternativeConfigForm } from '@/components/AlternativeConfigForm';
 import { BottomNavButtons } from '@/components/BottomNavButtons';
 import { StreetEditor } from '@/components/StreetEditor';
-import { SuggestedEditsDialog } from '@/components/SuggestedEditsDialog';
+import { SuggestedEditsGrid } from '@/components/SuggestedEditsGrid';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { paths } from '@/paths';
@@ -50,29 +50,29 @@ export function EditCrossSectionPage() {
     setActiveAlternativeId(next.id);
   }
 
+  const deleteAlternative = useCallback(
+    (id: string) => {
+      if (window.confirm('Are you sure you want to delete this alternative?')) {
+        setAlternatives((current) =>
+          current.filter((alternative) => alternative.id !== id),
+        );
+      }
+    },
+    [setAlternatives],
+  );
+
   return (
     <div>
       <div className="flex flex-wrap items-start justify-between gap-4">
         <h1 className="text-2xl font-semibold tracking-tight">
-          Cross Section Creator
+          Edit Cross Section
         </h1>
-        <SuggestedEditsDialog />
       </div>
-      <ol className="mt-3 grid list-decimal gap-x-10 gap-y-1 pl-5 text-muted-foreground lg:grid-flow-col lg:grid-cols-2 lg:grid-rows-2">
-        <li>
-          Review the suggested edits (top right) for changes that support your
-          goals.
-        </li>
-        <li>
-          Starting from the minimum safe dimension, add elements until you reach
-          the right-of-way.
-        </li>
-        <li>Hover over an element to see its recommended width.</li>
-        <li>
-          Update the inputs above the editor to reflect future conditions.
-        </li>
-      </ol>
-
+      <p className="mt-3 text-muted-foreground">
+        Add alternatives and customize their cross sections using the given
+        cross section elements. Enter AADT, target speed and other inputs to
+        reflect future conditions.
+      </p>
       <Tabs
         value={activeAlternative?.id}
         onValueChange={setActiveAlternativeId}
@@ -89,14 +89,12 @@ export function EditCrossSectionPage() {
           <Button
             type="button"
             variant="outline"
-            size="icon"
             aria-label="Add alternative"
             onClick={addAlternative}
           >
-            <Plus />
+            Add Alternative <Plus className="ml-2 h-4 w-4" />
           </Button>
         </div>
-
         {alternatives.map((alternative) => (
           <TabsContent
             key={alternative.id}
@@ -107,11 +105,19 @@ export function EditCrossSectionPage() {
               value={alternative}
               onChange={updateAlternative}
             />
+            <Button
+              type="button"
+              variant="destructive"
+              aria-label="Delete alternative"
+              onClick={() => deleteAlternative(alternative.id)}
+            >
+              Delete <Trash className="ml-2 h-4 w-4" />
+            </Button>
             <StreetEditor />
           </TabsContent>
         ))}
       </Tabs>
-
+      <SuggestedEditsGrid />
       <BottomNavButtons
         backTo={paths.minSafeDimension}
         continueTo={paths.output}

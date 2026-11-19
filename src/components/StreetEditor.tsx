@@ -1,4 +1,5 @@
 import { lazy, Suspense, type ComponentProps } from 'react';
+import { UnderConstruction } from '@/components/UnderConstruction';
 import { cn } from '@/lib/utils';
 
 const LazyStreetEditor = lazy(() =>
@@ -12,7 +13,9 @@ type StreetEditorProps = ComponentProps<typeof LazyStreetEditor> & {
 // Sets the editor's size for every step that shows it.
 export function StreetEditor({ className, ...props }: StreetEditorProps) {
   return (
-    <div className={cn('h-[clamp(480px,55vh,640px)] w-full', className)}>
+    <UnderConstruction
+      className={cn('h-[clamp(480px,55vh,640px)] w-full', className)}
+    >
       <Suspense
         fallback={
           <div className="h-full w-full animate-pulse rounded-lg border bg-muted" />
@@ -20,6 +23,6 @@ export function StreetEditor({ className, ...props }: StreetEditorProps) {
       >
         <LazyStreetEditor {...props} />
       </Suspense>
-    </div>
+    </UnderConstruction>
   );
 }
