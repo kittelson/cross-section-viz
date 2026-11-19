@@ -1,36 +1,19 @@
-import { cn } from 'cn';
 import { useAtomValue } from 'jotai';
-import { Check, ChevronDown, Minus, Plus } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { projectDetailsAtom } from '@/atoms';
+import { SuggestedEditCard } from '@/components/SuggestedEditCard';
 import { Button } from '@/components/ui/button';
-import { goalIcons, measureModeIcons } from '@/lib/iconHelpers';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { projectGoalOptions } from '@/projectDetails';
 import {
-  getSuggestedEditMode,
   getSuggestedEditTotalScore,
-  impactGradeMagnitude,
-  ImpactGradeToLabel,
-  isPositiveImpactGrade,
   suggestedEditRows,
-  type ImpactEffect,
   type ImpactGoalKey,
-  type SuggestedEditRow,
 } from '@/suggestedEdits';
 
-const pillWidthClass: Record<number, string> = {
-  1: 'w-10',
-  1.5: 'w-14',
-  2: 'w-16',
-  2.5: 'w-20',
-  3: 'w-24',
-};
-
-type GoalEffect = {
-  goal: ImpactGoalKey;
-  label: string;
-  effect: ImpactEffect;
-};
+const CARD_MIN_WIDTH_PX = 320;
+const CARD_GAP_PX = 16;
 
 function getSelectedGoals(goals: Record<ImpactGoalKey, boolean>) {
   return projectGoalOptions
@@ -38,219 +21,12 @@ function getSelectedGoals(goals: Record<ImpactGoalKey, boolean>) {
     .filter((goal) => goals[goal]);
 }
 
-function getGoalEffects(
-  row: SuggestedEditRow,
-  selectedGoals: ImpactGoalKey[],
-): GoalEffect[] {
-  return selectedGoals.flatMap((goal) => {
-    const label =
-      projectGoalOptions.find((option) => option.name === goal)?.label ?? goal;
-    return row[goal].map((effect) => ({ goal, label, effect }));
-  });
-}
-
-function EffectPill({
-  goal,
-  label,
-  effect,
-  variant,
-}: {
-  goal: ImpactGoalKey;
-  label: string;
-  effect: ImpactEffect;
-  variant: 'positive' | 'adverse';
-}) {
-  const magnitude = impactGradeMagnitude(effect.score);
-
-  return (
-    <span
-      title={`${label}: ${ImpactGradeToLabel[effect.score]}`}
-      className={cn(
-        'inline-flex h-8 items-center justify-center gap-1 rounded-md px-2 text-xs font-medium',
-        pillWidthClass[magnitude] ?? 'w-16',
-        variant === 'positive' &&
-          'border-1 border-emerald-600 bg-background text-emerald-600',
-        variant === 'adverse' &&
-          'border-1 border-destructive bg-background text-destructive',
-      )}
-    >
-      <span className="[&_svg]:size-4">{goalIcons[goal]}</span>
-    </span>
-  );
-}
-
-function SuggestedEditCard({
-  row,
-  selectedGoals,
-  expanded,
-  applied,
-  onToggle,
-}: {
-  row: SuggestedEditRow;
-  selectedGoals: ImpactGoalKey[];
-  expanded: boolean;
-  applied: boolean;
-  onToggle: () => void;
-}) {
-  const mode = getSuggestedEditMode(row.measure);
-  const goalEffects = getGoalEffects(row, selectedGoals);
-  const positiveEffects = goalEffects.filter(({ effect }) =>
-    isPositiveImpactGrade(effect.score),
-  );
-  const adverseEffects = goalEffects.filter(
-    ({ effect }) => !isPositiveImpactGrade(effect.score),
-  );
-  const neutralGoals = selectedGoals.filter((goal) => row[goal].length === 0);
-
-  return (
-    <button
-      type="button"
-      onClick={onToggle}
-      aria-expanded={expanded}
-      className="w-full rounded-2xl border bg-card p-4 text-left shadow-sm transition-colors hover:bg-muted/30"
-    >
-      <div className="flex items-start gap-3">
-        <span className="mt-0.5 text-muted-foreground">
-          {measureModeIcons[mode]}
-        </span>
-        <div className="min-w-0 flex-1">
-          <div className="flex items-start justify-between gap-3">
-            <h3 className="text-base font-semibold tracking-tight">
-              {row.measure}
-            </h3>
-            <div className="flex shrink-0 items-center gap-2">
-              {applied ? (
-                <span className="inline-flex items-center gap-1 rounded-full border border-gray-600 px-2.5 py-1 text-xs font-medium">
-                  <Check className="size-3.5" aria-hidden />
-                  Applied
-                </span>
-              ) : null}
-              <ChevronDown
-                className={cn(
-                  'size-5 text-muted-foreground transition-transform',
-                  expanded && 'rotate-180',
-                )}
-                aria-hidden
-              />
-            </div>
-          </div>
-
-          <div className="mt-4 grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-2">
-            <span className="text-xs text-muted-foreground">Positives</span>
-            <div className="flex flex-wrap gap-1.5">
-              {positiveEffects.length ? (
-                positiveEffects.map(({ goal, label, effect }, index) => (
-                  <EffectPill
-                    key={`${goal}-positive-${index}`}
-                    goal={goal}
-                    label={label}
-                    effect={effect}
-                    variant="positive"
-                  />
-                ))
-              ) : (
-                <span className="text-xs text-muted-foreground">None</span>
-              )}
-            </div>
-
-            <span className="text-xs text-muted-foreground">Neutral</span>
-            <div className="flex flex-wrap gap-1.5">
-              {neutralGoals.length ? (
-                neutralGoals.map((goal) => {
-                  const label =
-                    projectGoalOptions.find((option) => option.name === goal)
-                      ?.label ?? goal;
-                  return (
-                    <span
-                      key={`${goal}-neutral`}
-                      title={`${label}: No significant effect`}
-                      className="inline-flex h-8 min-w-28 items-center justify-center gap-1 rounded-md border border-border bg-muted px-2 text-xs font-medium text-muted-foreground"
-                    >
-                      <span className="[&_svg]:size-3.5">
-                        {goalIcons[goal]}
-                      </span>
-                      <span className="truncate">No significant effect</span>
-                    </span>
-                  );
-                })
-              ) : (
-                <span className="text-xs text-muted-foreground">None</span>
-              )}
-            </div>
-
-            <span className="text-xs text-muted-foreground">Negatives</span>
-            <div className="flex flex-wrap gap-1.5">
-              {adverseEffects.length ? (
-                adverseEffects.map(({ goal, label, effect }, index) => (
-                  <EffectPill
-                    key={`${goal}-adverse-${index}`}
-                    goal={goal}
-                    label={label}
-                    effect={effect}
-                    variant="adverse"
-                  />
-                ))
-              ) : (
-                <span className="text-xs text-muted-foreground">None</span>
-              )}
-            </div>
-          </div>
-
-          {expanded ? (
-            <div className="mt-4 space-y-2 border-t pt-4">
-              {goalEffects.length ? (
-                goalEffects.map(({ goal, label, effect }, index) => {
-                  const positive = isPositiveImpactGrade(effect.score);
-                  return (
-                    <div
-                      key={`${goal}-detail-${index}`}
-                      className={cn(
-                        'rounded-lg border-1 px-3 py-2 text-sm',
-                        positive ? 'border-emerald-600' : 'border-destructive',
-                      )}
-                    >
-                      <p className="flex items-center gap-2 font-medium">
-                        <span
-                          className={cn(
-                            positive ? 'text-emerald-600' : 'text-destructive',
-                          )}
-                        >
-                          {goalIcons[goal]}
-                        </span>{' '}
-                        {label}
-                        {' · '}
-                        {ImpactGradeToLabel[effect.score]}
-                      </p>
-                      <p className="mt-1 text-pretty">
-                        {effect.description || 'No description provided.'}
-                      </p>
-                      {effect.additionalMarkers?.length ? (
-                        <div className="mt-2 flex flex-wrap gap-1.5">
-                          {effect.additionalMarkers.map((marker) => (
-                            <span
-                              key={marker.label}
-                              title={marker.helperText}
-                              className="rounded-full border border-border bg-background/70 px-2 py-0.5 text-xs text-muted-foreground"
-                            >
-                              {marker.label}
-                            </span>
-                          ))}
-                        </div>
-                      ) : null}
-                    </div>
-                  );
-                })
-              ) : (
-                <p className="text-sm text-muted-foreground">
-                  No scored effects for the selected project goals.
-                </p>
-              )}
-            </div>
-          ) : null}
-        </div>
-      </div>
-    </button>
-  );
+function chunkItems<T>(items: T[], size: number) {
+  const pages: T[][] = [];
+  for (let index = 0; index < items.length; index += size) {
+    pages.push(items.slice(index, index + size));
+  }
+  return pages.length ? pages : [[]];
 }
 
 export function SuggestedEditsGrid() {
@@ -259,79 +35,158 @@ export function SuggestedEditsGrid() {
     () => getSelectedGoals(projectDetails.goals),
     [projectDetails.goals],
   );
-  const [expandedMeasures, setExpandedMeasures] = useState<Set<string>>(
-    () => new Set(),
-  );
+  const [pageIndex, setPageIndex] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(1);
+  const viewportRef = useRef<HTMLDivElement>(null);
 
-  const sortedRows = useMemo(() => {
-    return [...suggestedEditRows].sort((left, right) => {
-      return (
-        getSuggestedEditTotalScore(right, selectedGoals) -
-        getSuggestedEditTotalScore(left, selectedGoals)
-      );
-    });
+  const rankedRows = useMemo(() => {
+    return suggestedEditRows
+      .filter((row) => getSuggestedEditTotalScore(row, selectedGoals) > 0)
+      .sort((left, right) => {
+        return (
+          getSuggestedEditTotalScore(right, selectedGoals) -
+          getSuggestedEditTotalScore(left, selectedGoals)
+        );
+      });
   }, [selectedGoals]);
 
-  function expandAll() {
-    setExpandedMeasures(new Set(sortedRows.map((row) => row.measure)));
-  }
+  const pages = useMemo(
+    () => chunkItems(rankedRows, itemsPerPage),
+    [rankedRows, itemsPerPage],
+  );
+  const pageCount = pages.length;
+  const safePageIndex = Math.min(pageIndex, pageCount - 1);
+  const currentPage = pages[safePageIndex] ?? [];
+  const canGoPrevious = safePageIndex > 0;
+  const canGoNext = safePageIndex < pageCount - 1;
 
-  function collapseAll() {
-    setExpandedMeasures(new Set());
-  }
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) {
+      return;
+    }
 
-  function toggleMeasure(measure: string) {
-    setExpandedMeasures((current) => {
-      const next = new Set(current);
-      if (next.has(measure)) {
-        next.delete(measure);
-      } else {
-        next.add(measure);
+    function updateItemsPerPage(width: number) {
+      const nextItemsPerPage = Math.max(
+        1,
+        Math.floor((width + CARD_GAP_PX) / (CARD_MIN_WIDTH_PX + CARD_GAP_PX)),
+      );
+      setItemsPerPage(nextItemsPerPage);
+    }
+
+    updateItemsPerPage(viewport.clientWidth);
+
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (!entry) {
+        return;
       }
-      return next;
+      updateItemsPerPage(entry.contentRect.width);
     });
-  }
+
+    observer.observe(viewport);
+    return () => observer.disconnect();
+  }, [selectedGoals.length]);
+
+  useEffect(() => {
+    setPageIndex((current) => Math.min(current, Math.max(0, pageCount - 1)));
+  }, [pageCount]);
 
   return (
     <section className="mt-10">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-xl font-semibold tracking-tight">
-          Suggested Edits
-        </h2>
-        <div className="flex flex-wrap gap-2">
-          <Button type="button" variant="outline" size="sm" onClick={expandAll}>
-            Expand all
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={collapseAll}
-          >
-            Collapse all
-          </Button>
-        </div>
-      </div>
+      <h2 className="text-xl font-semibold tracking-tight">Suggested Edits</h2>
 
       {selectedGoals.length === 0 ? (
         <p className="mt-4 text-sm text-muted-foreground">
           Select at least one project goal on the Project Details page to see
           scored suggested edits.
         </p>
+      ) : rankedRows.length === 0 ? (
+        <p className="mt-4 text-sm text-muted-foreground">
+          No suggested edits have a positive score for the selected project
+          goals.
+        </p>
       ) : (
-        <div className="mt-4 max-h-[70vh] overflow-y-auto">
-          <div className="grid gap-4 md:grid-cols-2">
-            {sortedRows.map((row, index) => (
-              <SuggestedEditCard
-                key={row.measure}
-                row={row}
-                selectedGoals={selectedGoals}
-                expanded={expandedMeasures.has(row.measure)}
-                applied={index === 0}
-                onToggle={() => toggleMeasure(row.measure)}
-              />
-            ))}
+        <div className="mt-4">
+          <div className="flex items-start gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="mt-8 shrink-0"
+              disabled={!canGoPrevious}
+              aria-label="Previous suggested edits"
+              onClick={() =>
+                setPageIndex((current) => Math.max(0, current - 1))
+              }
+            >
+              <ChevronLeft aria-hidden />
+            </Button>
+
+            <div
+              ref={viewportRef}
+              className="min-w-0 flex-1"
+              aria-live="polite"
+              aria-atomic="false"
+            >
+              <div
+                className="grid gap-4"
+                style={{
+                  gridTemplateColumns: `repeat(${itemsPerPage}, minmax(0, 1fr))`,
+                }}
+              >
+                {currentPage.map((row, index) => {
+                  const absoluteIndex = safePageIndex * itemsPerPage + index;
+                  return (
+                    <div key={row.measure} className="min-w-0">
+                      <SuggestedEditCard
+                        row={row}
+                        selectedGoals={selectedGoals}
+                        applied={absoluteIndex === 0}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="mt-8 shrink-0"
+              disabled={!canGoNext}
+              aria-label="Next suggested edits"
+              onClick={() =>
+                setPageIndex((current) => Math.min(pageCount - 1, current + 1))
+              }
+            >
+              <ChevronRight aria-hidden />
+            </Button>
           </div>
+
+          {pageCount > 1 ? (
+            <div className="mt-4 flex flex-col items-center gap-2">
+              <p className="sr-only" aria-live="polite">
+                Page {safePageIndex + 1} of {pageCount}
+              </p>
+              <RadioGroup
+                value={String(safePageIndex)}
+                onValueChange={(value) => setPageIndex(Number(value))}
+                aria-label="Suggested edits pages"
+                className="flex w-auto flex-row items-center justify-center gap-2"
+              >
+                {pages.map((_, index) => (
+                  <RadioGroupItem
+                    key={index}
+                    value={String(index)}
+                    label={`Page ${index + 1} of ${pageCount}`}
+                    className="size-2.5 border-muted-foreground/40 data-checked:border-foreground data-checked:bg-foreground"
+                  />
+                ))}
+              </RadioGroup>
+            </div>
+          ) : null}
         </div>
       )}
     </section>
